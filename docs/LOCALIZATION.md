@@ -42,7 +42,8 @@ key not present in enUS, file does not load, non-string value. Warning: untransl
 | Scope | enUS | deDE | zhCN | zhTW | koKR |
 |---|---|---|---|---|---|
 | PaTiShared (15 keys) | ✓ | ✓ | ✓ unreviewed | – (fallback) | ✓ unreviewed |
-| Addons | hard-coded German text, no Locales/ yet — migrate per addon when its UI is touched (FOLLOW_UPS.md) |
+| PaTiHeal (27 own keys) | ✓ | ✓ | – (fallback) | – (fallback) | – (fallback) |
+| Tank, Quest, Dungeon, Group | hard-coded German text, no Locales/ yet — migrate per addon when its UI is touched (FOLLOW_UPS F5) |
 
 zhCN/koKR shared strings were written by an AI agent and need a native-speaker check. Rendering of
 Chinese/Korean on the deDE client is unverified (manual test).

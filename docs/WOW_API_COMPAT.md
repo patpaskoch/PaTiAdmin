@@ -17,7 +17,11 @@ explicit test recorded) · **assumed** (not yet used/tested).
 | `CreateMacro`, `EditMacro`, `GetMacroIndexByName`, `GetMacroInfo` | in use (PaTiGroup) | needs a free character macro slot |
 | `SetBindingClick`, `GetBindingAction`, `SaveBindings(GetCurrentBindingSet())` | in use (PaTiGroup) | only sets Ctrl+Left click if it is unbound |
 | `DoReadyCheck`, `C_PartyInfo.DoCountdown` | in use (PaTiGroup) | leader/assistant only, `pcall` |
-| `C_SpellBook.IsSpellKnown`, `C_SpellBook.FindSpellBookSlotForSpell`, `C_Spell.GetSpellInfo` | in use (PaTiHeal) | `pcall`/existence-guarded; fallback `GetSpellInfo` |
+| `C_SpellBook.IsSpellKnown`, `C_Spell.GetSpellInfo` | in use (PaTiHeal) | `pcall`/existence-guarded; fallback `GetSpellInfo` |
+| `C_Spell.GetSpellTexture` | assumed (PaTiHeal dropdown icons) | fallback `GetSpellTexture`; missing icon only hides the icon |
+| `RegisterUnitWatch` / `UnregisterUnitWatch` on `SecureUnitButtonTemplate` rows | assumed (PaTiHeal) | fallback: Show/Hide out of combat only |
+| Unassigned modifier click (e.g. Shift+Left with only Left bound) falls back to the plain `type1` binding or does nothing | **unknown** (PaTiHeal, same in 0.6.0) | test: bind only Left, Shift+Left-click a row |
+| `C_AddOns.GetAddOnMetadata` | assumed (PaTiHeal debug) | fallback `GetAddOnMetadata` |
 | `UnitDetailedThreatSituation` | in use (PaTiTank) | 3rd return = threat percent |
 | `C_QuestLog.GetSelectedQuest`, `GetTitleForQuestID`, `GetQuestObjectives` | in use (PaTiQuest) | all `pcall`-guarded |
 | `GetInstanceInfo`, `IsInInstance`, `GetNumGroupMembers`, `UnitIsGroupLeader` | in use (PaTiDungeon) | |

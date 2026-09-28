@@ -3,31 +3,33 @@
 Found during the engineering-foundation review (2026-09-28). Not implemented on purpose (AGENTS.md §12).
 Take one item per task; move finished items to the addon's CHANGELOG and delete them here.
 
-### F1 · PaTiHeal: stale secure click attributes — **high**
+### F1 · PaTiHeal: stale secure click attributes — **high** · FIXED IN CODE (PaTiHeal [Unreleased]), awaiting in-game test
 - Problem: `applyClickSpell()` clears only the unmodified `type<n>/spell<n>`. After switching e.g. Ctrl+Left → Shift+Left, `ctrl-type1/ctrl-spell1` stay set, plus `spell` from the first (overwritten) definition.
 - Affected: `PaTiHeal.lua` `applyClickSpell` (second definition).
 - Why: an old binding keeps casting although the UI shows another one.
 - Approach: clear every known modifier/button attribute before setting the chosen ones; covered by the planned PaTiHeal settings migration.
 - Risk: medium (secure attributes) · Tests: manual click test for every combination; unit test for an extracted "binding → attribute table" function.
 
-### F2 · PaTiHeal: secure rows and parent frame shown/hidden in combat — **high**
+### F2 · PaTiHeal: secure rows and parent frame shown/hidden in combat — **high** · FIXED IN CODE (PaTiHeal [Unreleased]), awaiting in-game test
 - Problem: `refresh()` calls `row:Show()/Hide()` on `SecureUnitButtonTemplate` rows on `GROUP_ROSTER_UPDATE` etc. also in combat; the close X and `/ph hide` hide the parent.
 - Why: `ADDON_ACTION_BLOCKED` and rows that stay wrong until combat ends.
 - Approach: `RegisterUnitWatch(row)` for visibility; block hide/collapse in combat (menu entries disabled).
 - Risk: medium · Tests: manual — join/leave party members during combat.
 
-### F3 · PaTiHeal: duplicated definitions / inline-then-modal settings — medium
+### F3 · PaTiHeal: duplicated definitions / inline-then-modal settings — medium · FIXED IN CODE (PaTiHeal [Unreleased])
 - Problem: `settings`, `gear:OnClick`, `applyClickSpell` exist twice; `updateLayout` still sizes for the old inline panel.
 - Approach: replace with PaTiShared Window + Modal during the planned migration (already specified, not started).
 - Risk: medium (touches F1/F2 code) · Tests: manual UI + click tests.
 
 ### F4 · Position saved with the wrong anchor — medium
+- Status: fixed for PaTiHeal (PaTiShared Window); Tank/Quest/Dungeon open.
 - Problem: Heal/Tank/Quest/Dungeon save `x, y` from `GetPoint()` after dragging but restore them as `CENTER` offsets; the window can jump after `/reload`.
 - Approach: PaTiShared `Window:SavePosition` stores point + relativePoint; old saves keep working.
 - Risk: low · Tests: manual drag → reload.
 
 ### F5 · Hard-coded German UI text in all addons — medium
-- Problem: every label, tooltip and chat line is German in code; README of PaTiHeal documents `/ph spell <ID>` which no longer exists.
+- Status: done for PaTiHeal (enUS + deDE); Tank, Quest, Dungeon, Group open.
+- Problem: every label, tooltip and chat line is German in code.
 - Approach: per addon, when its UI is touched: `Locales/enUS.lua` (source) + `deDE.lua` with the current German text; other locales fall back to English.
 - Risk: low · Tests: locale validation (automatic) + visual check.
 
@@ -50,7 +52,7 @@ Take one item per task; move finished items to the addon's CHANGELOG and delete 
 - Problem: "Große Heilung" uses 2061 (Flash Heal's ID); the real Greater Heal is never offered.
 - Approach: correct ID after verifying in this client (docs/WOW_API_COMPAT.md). Product data change → owner decision.
 
-### F10 · No separable logic, therefore no addon unit tests — low
+### F10 · No separable logic, therefore no addon unit tests — low · PaTiHeal done (Logic.lua + tests)
 - Problem: one file per addon mixes events, API and UI; nothing can be loaded without frames.
 - Approach: when touching logic, extract pure functions (e.g. `unitData` normalisation, click-binding table, quest objective formatting) into a small file without frame creation, then test it.
 - Risk: low if done per touched function.

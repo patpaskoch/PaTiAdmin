@@ -15,11 +15,12 @@ exclude_files = { "**/.git/**", "**/dist/**" }
 -- WoW API used by the suite. Before adding a name, confirm it exists in the Interface 16001
 -- client (docs/WOW_API_COMPAT.md). Keep alphabetical.
 read_globals = {
-    "C_PartyInfo", "C_QuestLog", "C_Spell", "C_SpellBook",
+    "C_AddOns", "C_PartyInfo", "C_QuestLog", "C_Spell", "C_SpellBook",
     "CreateFrame", "CreateMacro", "DoReadyCheck", "EditMacro",
-    "GameTooltip", "GetBindingAction", "GetBuildInfo", "GetCurrentBindingSet", "GetInstanceInfo",
-    "GetLocale", "GetMacroIndexByName", "GetMacroInfo", "GetNumGroupMembers", "GetSpellInfo",
+    "GameTooltip", "GetAddOnMetadata", "GetBindingAction", "GetBuildInfo", "GetCurrentBindingSet", "GetInstanceInfo",
+    "GetLocale", "GetMacroIndexByName", "GetMacroInfo", "GetNumGroupMembers", "GetSpellInfo", "GetSpellTexture",
     "InCombatLockdown", "IsAltKeyDown", "IsControlKeyDown", "IsInGroup", "IsInInstance", "IsShiftKeyDown",
+    "LOCALIZED_CLASS_NAMES_MALE", "RegisterUnitWatch", "UnregisterUnitWatch",
     "SaveBindings", "SetBinding", "SetBindingClick",
     "UIParent", "UISpecialFrames",
     "UnitAffectingCombat", "UnitClass", "UnitDetailedThreatSituation", "UnitExists", "UnitGroupRolesAssigned",

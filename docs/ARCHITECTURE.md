@@ -6,7 +6,7 @@ State of 2026-09-28. Update this file when an addon's structure, SavedVariables,
 
 - Seven Git repos (see `AGENTS.md` §2). No monorepo, no submodules, no runtime dependency between addons.
 - **PaTiShared** (UI design system) is embedded per addon under `Shared/` via `sync-shared.sh`
-  (`PaTiShared/README.md`). No addon embeds it yet — PaTiHeal is the planned first.
+  (`PaTiShared/README.md`). PaTiHeal embeds it; the others follow when their UI is touched.
 - **PaTiAdmin** holds rules, docs, the check/package tools and CI templates. It ships nothing to players.
 
 ## Data flow (target for new and changed code)
@@ -33,21 +33,24 @@ accepted legacy: apply the flow when you touch a part, do not rewrite files for 
 | Window chrome | `PaTiSharedPanel.Attach` (global, copied file) → gear, chevron, close | Tank, Quest, Dungeon |
 | Combat guard | `if InCombatLockdown() then print(...) return end` before secure changes; re-apply on `PLAYER_REGEN_ENABLED` | Heal, Group |
 | Missing APIs | `if C_X and C_X.Fn then` + `pcall(...)` | Heal, Quest, Group |
-| Shared UI | `PaTiShared` components in `ns.UI` (Window, Modal, Dropdown, …) | none yet (PaTiHeal next) |
-| Localization | `Locales/<code>.lua` → `ns.Locales[code].KEY`, lookup `UI.L.KEY` | PaTiShared only |
+| Shared UI | `PaTiShared` components in `ns.UI` (Window, Modal, Dropdown, …) | PaTiHeal |
+| Localization | `Locales/<code>.lua` → `ns.Locales[code].KEY`, lookup `UI.L.KEY` | PaTiShared, PaTiHeal |
+| Pure logic + migration | `Logic.lua` without WoW calls, `Logic.Migrate(db)` with `DB.schema` | PaTiHeal |
 
 New code uses the PaTiShared rows instead of `PaTiSharedPanel` and hard-coded text.
 
 ## Addons
 
-### PaTiHeal 0.6.0 — `PaTiHeal.lua` (338 lines)
-- SavedVariablesPerCharacter `PaTiHealDB`: `x, y, locked, collapsed, clickSpellID, clickButton, clickModifier`.
-- Secure: `PaTiHealUnit1..5` (`SecureUnitButtonTemplate`, units player, party1–4); attributes
-  `[modifier-]type<n>` / `[modifier-]spell<n>` set in `applyClickSpell()` only out of combat.
+### PaTiHeal 0.6.0 (+ unreleased PaTiShared migration) — reference for the target structure
+- Files: `Shared/` (PaTiShared 0.1.0) → `Locales/` → `Logic.lua` (pure, tested) → `PaTiHeal.lua`
+  (adapters `unitData`/`isKnownSpell`, rows, settings modal, menu, slash, events).
+- SavedVariablesPerCharacter `PaTiHealDB`, schema 1: `point, relativePoint, x, y, locked, collapsed, language,
+  bindings{LEFT..ALT_RIGHT = spellID}`; `Logic.Migrate` converts 0.6.0 (`clickSpellID/clickButton/clickModifier`).
+- Secure: `PaTiHealUnit1..5` (`SecureUnitButtonTemplate`, units player, party1–4). `applyBindings()` writes every
+  owned attribute (`[modifier-]type<n>`, `[modifier-]spell<n>`, 0.6.0 leftovers) out of combat; visibility via `RegisterUnitWatch`.
 - Events: PLAYER_LOGIN, PLAYER_ENTERING_WORLD, GROUP_ROSTER_UPDATE, UNIT_HEALTH, UNIT_POWER_UPDATE,
-  UNIT_CONNECTION, UNIT_FLAGS, PLAYER_REGEN_ENABLED, SPELLS_CHANGED → every event runs a full `refresh()`.
-- Slash `/ph`, `/patiheal`: test, show, hide, lock, unlock, spells, debug.
-- Known structure debt: settings panel and handlers defined twice (second definition wins). See FOLLOW_UPS.md.
+  UNIT_CONNECTION, UNIT_FLAGS, PLAYER_REGEN_ENABLED, SPELLS_CHANGED → content `refresh()` of all rows (F7).
+- Slash `/ph`, `/patiheal`: settings, test, show, hide, lock, unlock, spells, debug.
 
 ### PaTiTank 0.1.0 — `PaTiTank.lua` + `PaTiSharedPanel.lua`
 - `PaTiTankDB`: `x, y, locked`. Events: PLAYER_LOGIN, PLAYER_ENTERING_WORLD, UNIT_HEALTH, PLAYER_TARGET_CHANGED,

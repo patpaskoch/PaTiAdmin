@@ -18,7 +18,13 @@ LUA="${LUA:-$(command -v lua5.1 || command -v luajit || command -v lua || true)}
 LUACHECK="${LUACHECK:-$(command -v luacheck || true)}"
 if [ -z "$LUA" ]; then echo "No Lua interpreter found (install LuaJIT or Lua 5.1, or set LUA=...)." >&2; exit 2; fi
 
-if [ $# -gt 0 ]; then targets=("$@"); else
+if [ $# -gt 0 ]; then
+    targets=()
+    for arg in "$@"; do
+        abs="$(cd "$arg" 2>/dev/null && pwd)" || { echo "Not a folder: $arg" >&2; exit 2; }
+        targets+=("$abs")
+    done
+else
     targets=("$ADMIN")
     [ -d "$CODE/PaTiShared" ] && targets+=("$CODE/PaTiShared")
     for dir in "$CODE"/PaTiAddons/*/; do [ -f "$dir/$(basename "$dir").toc" ] && targets+=("${dir%/}"); done
@@ -36,9 +42,9 @@ hash_file() {
 }
 
 for target in "${targets[@]}"; do
-    target="$(cd "$target" && pwd)"; name="$(basename "$target")"
+    name="$(basename "$target")"
     echo "== $name"
-    cd "$target" || continue
+    cd "$target" || exit 2
     files="$(list_files)"
 
     if echo "$files" | grep -q '\.lua$'; then
