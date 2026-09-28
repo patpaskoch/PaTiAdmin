@@ -52,6 +52,14 @@ New code uses the PaTiShared rows instead of `PaTiSharedPanel` and hard-coded te
   UNIT_CONNECTION, UNIT_FLAGS, PLAYER_REGEN_ENABLED, SPELLS_CHANGED → content `refresh()` of all rows (F7).
 - Slash `/ph`, `/patiheal`: settings, test, show, hide, lock, unlock, spells, debug.
 
+### PaTiAuras 0.1.0 (new) — aura and buff watch, standalone and optional
+- Files: `Shared/` → `Locales/` → `Config.lua` (DB defaults, pure) → `SpellBook.lua` (copy of PaTiHeal's) → `Auras.lua`
+  (states, pure) → `AuraScan.lua` (C_UnitAuras/UnitAura adapter + test data) → `Profiles/Shaman.lua` → `Watch.lua` → `AuraWindow.lua` → `PaTiAuras.lua`.
+- `PaTiAurasDB` (per character), schema 1 (`Config.DEFAULTS`, `watch`, position, `lastChangelog`).
+- Events: UNIT_AURA/UNIT_CONNECTION/UNIT_FLAGS (only player, party1-4, one unit re-read), GROUP_ROSTER_UPDATE,
+  PLAYER_ENTERING_WORLD, SPELLS_CHANGED + talent/spec events (pcall-registered). Timer redraw every 0.5 s only while a timer is visible.
+- No secure frames in 0.1. Planned: Priest profile, click-to-buff (fixed unit+spell buttons), optional `PaTiAurasAPI` for PaTiHeal.
+
 ### PaTiTank 0.1.0 — `PaTiTank.lua` + `PaTiSharedPanel.lua`
 - `PaTiTankDB`: `x, y, locked`. Events: PLAYER_LOGIN, PLAYER_ENTERING_WORLD, UNIT_HEALTH, PLAYER_TARGET_CHANGED,
   UNIT_THREAT_LIST_UPDATE, UNIT_THREAT_SITUATION_UPDATE. API: `UnitDetailedThreatSituation`. Slash `/pt`.

@@ -22,7 +22,8 @@ C:\Users\patpa\code\                     (not a repo; macOS: same layout under ~
     ├── PaTiTank/     own health, target, threat bar                        /pt
     ├── PaTiGroup/    raid markers (secure), ready check, pull timer        /pg /ptg /patigroup
     ├── PaTiQuest/    selected quest + objectives                           /phq
-    └── PaTiDungeon/  instance, group and combat status                     /pd
+    ├── PaTiDungeon/  instance, group and combat status                     /pd
+    └── PaTiAuras/    aura/buff watch (optional, standalone)                  /pa /patiauras
 ```
 Each addon repo: `<Addon>.toc`, one main `<Addon>.lua` (+ `PaTiSharedPanel.lua` in Tank/Quest/Dungeon,
 `Bindings.xml` in Group), `README.md`, `CHANGELOG.md`, `AGENTS.md` (addon specifics), `.github/workflows/ci.yml`.
