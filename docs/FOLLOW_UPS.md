@@ -38,7 +38,7 @@ Take one item per task; move finished items to the addon's CHANGELOG and delete 
 - Approach: replace with embedded PaTiShared Window when each addon is migrated; then remove it from `.luacheckrc`.
 - Risk: low · Tests: load each addon alone and all together.
 
-### F7 · Full refresh on every unit event — low
+### F7 · Full refresh on every unit event — low · FIXED IN CODE for PaTiHeal (per-unit repaint); PaTiTank open
 - Problem: PaTiHeal redraws all rows on each `UNIT_HEALTH`/`UNIT_POWER_UPDATE` for any unit (incl. nameplates/target); PaTiTank updates on every `UNIT_HEALTH`.
 - Approach: `RegisterUnitEvent` for the watched units, update only the matching row.
 - Risk: low · Tests: manual in a busy fight; no functional change.
@@ -48,7 +48,7 @@ Take one item per task; move finished items to the addon's CHANGELOG and delete 
 - Approach: document in README; define the binding strings; consider an opt-in setting.
 - Risk: low · Tests: manual on a character with a full macro list / existing Ctrl+Left binding.
 
-### F9 · PaTiHeal spell table contains 2061 twice — low
+### F9 · PaTiHeal spell table contains 2061 twice — low · wrong entry removed; Greater Heal still needs its confirmed ID
 - Problem: "Große Heilung" uses 2061 (Flash Heal's ID); the real Greater Heal is never offered.
 - Approach: correct ID after verifying in this client (docs/WOW_API_COMPAT.md). Product data change → owner decision.
 
@@ -66,6 +66,6 @@ Take one item per task; move finished items to the addon's CHANGELOG and delete 
 - Options: keep multi-repo (current, works) or move to one monorepo with per-addon packaging. Owner decision; do not start without it.
 
 ### F13 · PaTiHeal.lua above 400 lines — low
-- Problem: 413 lines after ranks and dispels (rows, settings, menu, events in one file).
+- Problem: 441 lines after ranks, dispels and the frame UX pass (rows, settings, menu, events in one file).
 - Approach: move the settings modal (`spellItems`, `rankItems`, `bindingControls`, `buildSettings`) into `Settings.lua` next time it is touched.
 - Risk: low · Tests: existing smoke paths (settings open, rank change).
