@@ -36,7 +36,7 @@ globals = { "SlashCmdList" }
 
 -- Globals an addon may create: its SavedVariables, SLASH_* names and binding functions — nothing else.
 files["**/PaTiHeal/**/*.lua"] = { globals = { "PaTiHealDB", "SLASH_PATIHEAL1", "SLASH_PATIHEAL2" } }
-files["**/PaTiTank/**/*.lua"] = { globals = { "PaTiTankDB", "SLASH_PATITANK1", "SLASH_PATITANK2", "PaTiSharedPanel" } }
+files["**/PaTiTank/**/*.lua"] = { globals = { "PaTiTankDB", "SLASH_PATITANK1", "SLASH_PATITANK2" } }
 files["**/PaTiQuest/**/*.lua"] = { globals = { "PaTiQuestDB", "SLASH_PATIQUEST1", "SLASH_PATIQUEST2", "PaTiSharedPanel" } }
 files["**/PaTiDungeon/**/*.lua"] = { globals = { "PaTiDungeonDB", "SLASH_PATIDUNGEON1", "SLASH_PATIDUNGEON2", "PaTiSharedPanel" } }
 files["**/PaTiAuras/**/*.lua"] = { globals = { "PaTiAurasDB", "SLASH_PATIAURAS1", "SLASH_PATIAURAS2" } }
