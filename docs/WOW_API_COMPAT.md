@@ -13,9 +13,11 @@ explicit test recorded) · **assumed** (not yet used/tested).
 |---|---|---|
 | `SetRaidTarget` from addon Lua | verified protected (before 2026-09-28) | PaTiGroup uses `SecureActionButtonTemplate` `type=raidtarget` and a `/tm` macro instead |
 | `SecureUnitButtonTemplate` with `[mod-]type<n>=spell`, `[mod-]spell<n>` | in use (PaTiHeal) | set only out of combat |
-| `SecureActionButtonTemplate` `type=raidtarget`, `type=macro` | in use (PaTiGroup) | |
-| `CreateMacro`, `EditMacro`, `GetMacroIndexByName`, `GetMacroInfo` | in use (PaTiGroup) | needs a free character macro slot |
-| `SetBindingClick`, `GetBindingAction`, `SaveBindings(GetCurrentBindingSet())` | in use (PaTiGroup) | only sets Ctrl+Left click if it is unbound |
+| `SecureActionButtonTemplate` `type=raidtarget`, `action=set` | in use (PaTiGroup <= 0.4) | |
+| `type=raidtarget` with `marker=0` clears the target's marker | assumed (PaTiGroup Clear) | test Clear button + binding |
+| `type=macro` with `macrotext` running `/tm` lines | assumed (PaTiGroup Reset All, replaces the character macro) | test Reset All |
+| Bindings.xml `CLICK <Button>:LeftButton` + `BINDING_NAME_CLICK ...` names | assumed (PaTiGroup) | check the key binding menu |
+| `RAID_TARGET_1..8` global marker names | assumed (PaTiGroup) | fallback: own L.MARKER_n |
 | `DoReadyCheck`, `C_PartyInfo.DoCountdown` | in use (PaTiGroup) | leader/assistant only, `pcall` |
 | `C_SpellBook.IsSpellKnown`, `C_Spell.GetSpellInfo` | in use (PaTiHeal) | `pcall`/existence-guarded; fallback `GetSpellInfo` |
 | Spellbook scan: `C_SpellBook.GetSpellBookItemInfo` (modern) or `GetSpellBookItemName/Info` (classic) | assumed (PaTiHeal ranks) | pcall-guarded; no ranks shown if neither works |

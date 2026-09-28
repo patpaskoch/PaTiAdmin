@@ -73,13 +73,15 @@ New code uses the PaTiShared rows instead of `PaTiSharedPanel` and hard-coded te
 - `PaTiDungeonDB`: `x, y, locked`. Events: PLAYER_LOGIN, PLAYER_ENTERING_WORLD, GROUP_ROSTER_UPDATE,
   ZONE_CHANGED_NEW_AREA, PLAYER_REGEN_DISABLED/ENABLED. API: `GetInstanceInfo`, `IsInInstance`. Slash `/pd`.
 
-### PaTiGroup 0.4.0 — `PaTiGroup.lua` + `Bindings.xml`
-- No SavedVariables (position not saved, by design of the first test version).
-- Secure: four `SecureActionButtonTemplate` marker buttons (`type=raidtarget`), `PaTiGroupQuickSkull`
-  (bound to Ctrl+Left click only if that binding is free), reset button running a character macro `PaTiG_Reset`
-  that the addon creates/updates on login (`/tm` lines — `SetRaidTarget` is protected in this client).
-- `DoReadyCheck`, `C_PartyInfo.DoCountdown` (leader/assistant, out of combat). Binding `PATIGROUP_TOGGLE`.
-- Slash `/pg`, `/ptg`, `/patigroup`: show|an, hide|aus, toggle.
+### PaTiGroup 0.4.0 (+ unreleased PaTiShared migration)
+- Files: `Shared/` → `Locales/` → `Logic.lua` (settings, marker slots, reset text; pure, tested) → `Bar.lua` (window,
+  secure buttons, layout, paint) → `PaTiGroup.lua` (settings modal, commands, binding names, events) + `Bindings.xml`.
+- `PaTiGroupDB` (per character, new): position, locked, scale, language, showPull, showGroupInfo, showNote, note, markers[8].
+- Secure: `PaTiGroupMarker1..8` / `PaTiGroupClear` (`type=raidtarget`, `action=set`, `marker` 0-8), `PaTiGroupReset`
+  (`type=macro`, `macrotext` = eight `/tm [@player] n` + `/tm [@player] 0`), invisible binding buttons on UIParent
+  (`PaTiGroupQuickSkull`, `PaTiGroupBindMarker1..7`, `PaTiGroupBindClear`). No macro creation, no automatic key binding.
+- `DoReadyCheck`, `C_PartyInfo.DoCountdown` (leader/assist, out of combat). Binding `PATIGROUP_TOGGLE` + CLICK bindings.
+- Slash `/pg`, `/ptg`, `/patigroup`.
 
 ## Decisions
 

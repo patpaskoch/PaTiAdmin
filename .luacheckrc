@@ -22,7 +22,7 @@ read_globals = {
     "InCombatLockdown", "IsAltKeyDown", "IsControlKeyDown", "IsInGroup", "IsInInstance", "IsShiftKeyDown",
     "LOCALIZED_CLASS_NAMES_MALE", "RegisterUnitWatch", "UnregisterUnitWatch",
     "DebuffTypeColor", "Enum", "GetNumSpellTabs", "GetSpellBookItemInfo", "GetSpellBookItemName", "GetSpellTabInfo",
-    "GetTime", "UnitAura", "issecretvalue", "IsInRaid", "GetSpecialization", "GetSpecializationInfo",
+    "GetTime", "UnitAura", "issecretvalue", "IsInRaid", "GetSpecialization", "GetSpecializationInfo", "GetRaidTargetIndex", "GetBindingKey",
     "SaveBindings", "SetBinding", "SetBindingClick",
     "UIParent", "UISpecialFrames",
     "UnitAffectingCombat", "UnitClass", "UnitDetailedThreatSituation", "UnitExists", "UnitGroupRolesAssigned",
@@ -40,7 +40,7 @@ files["**/PaTiTank/**/*.lua"] = { globals = { "PaTiTankDB", "SLASH_PATITANK1", "
 files["**/PaTiQuest/**/*.lua"] = { globals = { "PaTiQuestDB", "SLASH_PATIQUEST1", "SLASH_PATIQUEST2", "PaTiSharedPanel" } }
 files["**/PaTiDungeon/**/*.lua"] = { globals = { "PaTiDungeonDB", "SLASH_PATIDUNGEON1", "SLASH_PATIDUNGEON2", "PaTiSharedPanel" } }
 files["**/PaTiAuras/**/*.lua"] = { globals = { "PaTiAurasDB", "SLASH_PATIAURAS1", "SLASH_PATIAURAS2" } }
-files["**/PaTiGroup/**/*.lua"] = { globals = { "SLASH_PATIGROUP1", "SLASH_PATIGROUP2", "SLASH_PATIGROUP3", "PaTiGroup_Toggle" } }
+files["**/PaTiGroup/**/*.lua"] = { globals = { "PaTiGroupDB", "SLASH_PATIGROUP1", "SLASH_PATIGROUP2", "SLASH_PATIGROUP3", "PaTiGroup_Toggle" } }
 -- PaTiSharedPanel above is a known legacy global (docs/FOLLOW_UPS.md); do not add new ones.
 
 -- Specs run under tools/lua/test.lua (busted-compatible); mocks install WoW functions as globals.

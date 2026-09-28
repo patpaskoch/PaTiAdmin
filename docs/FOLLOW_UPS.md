@@ -43,7 +43,7 @@ Take one item per task; move finished items to the addon's CHANGELOG and delete 
 - Approach: `RegisterUnitEvent` for the watched units, update only the matching row.
 - Risk: low · Tests: manual in a busy fight; no functional change.
 
-### F8 · PaTiGroup side effects on login — low
+### F8 · PaTiGroup side effects on login — low · FIXED IN CODE (PaTiGroup [Unreleased]): no macro, no automatic binding
 - Problem: creates/edits a character macro and may bind Ctrl+Left click and call `SaveBindings` on every login; not visible in settings; binding header strings `BINDING_HEADER_PATIGROUP` / `BINDING_NAME_PATIGROUP_TOGGLE` are not defined.
 - Approach: document in README; define the binding strings; consider an opt-in setting.
 - Risk: low · Tests: manual on a character with a full macro list / existing Ctrl+Left binding.
