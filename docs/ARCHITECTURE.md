@@ -55,7 +55,8 @@ one `<Addon>.lua` with a clearly separated adapter function, window, settings, c
 - Files: `Shared/` → `Locales/` → `Config.lua` (DB defaults, pure) → `SpellBook.lua` (copy of PaTiHeal's) → `Auras.lua`
   (states, pure) → `AuraScan.lua` (C_UnitAuras/UnitAura adapter + test data) → `Profiles/Shaman.lua`, `Profiles/Priest.lua`
   (data; `variants` join spells that give the same buff) → `Watch.lua` → `AuraWindow.lua` → `PaTiAuras.lua`.
-- `PaTiAurasDB` (per character), schema 1 (`Config.DEFAULTS`, `watch`, position, scale, `lastChangelog`).
+- `PaTiAurasDB` (per character), schema 1 (`Config.DEFAULTS`, `watch`, `seen`, position, scale, `lastChangelog`).
+  "New auras" dialog: entries you can use (`Watch.IsOffered`) that are not in `seen` are offered once, out of combat.
 - Events: UNIT_AURA/UNIT_CONNECTION/UNIT_FLAGS (player, party1-4, one unit re-read), GROUP_ROSTER_UPDATE,
   PLAYER_ENTERING_WORLD, SPELLS_CHANGED + talent/spec events (pcall-registered). Timer redraw every 0.5 s only while a timer is visible.
 - Unreadable aura data (secret values, API errors) → `AuraScan.UNREADABLE` → state UNKNOWN, never MISSING.
