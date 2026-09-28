@@ -4,9 +4,10 @@ Dieses private Repository enthält die Arbeitsregeln, den Entwicklungsstand und 
 
 | Addon | Repository | Stand |
 | --- | --- | --- |
-| PaTiGroup | https://github.com/patpaskoch/PaTiGroup | manuelle Zielmarker, Ready Check und Pull-Countdown |
-| PaTiHeal | https://github.com/patpaskoch/PaTiHeal | Gruppen- und Manaanzeige für Schamanen |
-| PaTiTank | geplant | noch nicht angelegt |
+| PaTiGroup | https://github.com/patpaskoch/PaTiGroup | manuelle Zielmarker, Ready Check und Pull-Countdown |`r`n| PaTiQuest | https://github.com/patpaskoch/PaTiQuest | ausgewählte Quest und Ziele |`r`n| PaTiDungeon | https://github.com/patpaskoch/PaTiDungeon | Instanz- und Gruppenstatus |
+| PaTiHeal | https://github.com/patpaskoch/PaTiHeal | Gruppenanzeige und manuelle Klickzauber |
+| PaTiTank | https://github.com/patpaskoch/PaTiTank | Gesundheits- und Bedrohungsanzeige |
 
 Die Addons werden in `C:\Users\patpa\code` entwickelt und danach zum Testen in den WoW-AddOns-Ordner kopiert.
+
 
