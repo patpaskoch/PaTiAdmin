@@ -31,8 +31,12 @@ Unit-Tests und CI geprüft.
 ## PaTiTank, PaTiQuest, PaTiDungeon (TOC 0.1.0, Änderungen unter [Unreleased])
 - Auf PaTiShared umgestellt: `•••`-Menü, Einstellungen (Sprache, Größe, Sperre), Einklappen, Testmodus, Sprachen,
   gespeicherte Position (alte Position bleibt), `reset`/`settings`/`debug`/`version`; `PaTiSharedPanel.lua` entfernt
-- Funktionen unverändert (Tank: Leben/Ziel/Bedrohung, Quest: ausgewählte Quest, Dungeon: Instanz/Gruppe/Kampf)
-- Offen im Spiel: alles seit der Umstellung
+- Funktionen: Tank: Leben/Ziel/Bedrohung + neu Aggro-Kontrolle („x / y unter Kontrolle“, Warnzeilen verlorener
+  Gegner mit Rolle des Halters, Testmodus 6 Gegner); Quest: ausgewählte Quest; Dungeon: Instanz/Gruppe/Kampf
+- Offen im Spiel: alles seit der Umstellung, besonders die Aggro-Kontrolle im echten Kampf
+
+## Alle sechs Addons
+- Ein-/Ausklappen im `•••`-Menü, gespeichert als `collapsed`; bei Heal, Group und Auras im Kampf gesperrt (Secure-Rahmen)
 
 ## Nächster Schritt
 - Manuelle Tests im Spiel nach `PaTiAdmin/docs/TESTING.md`, besonders `/pa auras`, Kampf-Tests und Secure-Aktionen.

@@ -53,4 +53,6 @@ Owner runs them in the client after `/reload`; agents list which are needed, nev
 | Visuals | layout at UI scale 0.64–1.0, locked/unlocked, test mode badge, long German/zh/ko strings fit |
 | Fonts | zhCN, zhTW, koKR texts render (not boxes) on the deDE client |
 | Group/dungeon | real party: roster changes, offline/dead members, ready check, pull timer, instance change |
+| Aggro monitor (PaTiTank) | `/pt test` shows 5 / 6, Ghoul → Healer, Zombie barely held; real pull with 3+ enemies: counts match, a mob on the healer shows "→ Healer" within ~1 s, dead enemies disappear, no Lua errors in combat; `/pt debug` aggro line |
+| Collapse (all six) | ••• → Collapse/Expand; state survives `/reload`; Heal/Group/Auras: entry disabled in combat |
 | SavedVariables | settings survive `/reload` and relog; old saved files load after an update |

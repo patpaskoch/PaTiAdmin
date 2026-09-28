@@ -64,3 +64,17 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
   `Profiles/Priest.lua` was briefly not listed (2026-09-28): the addon would silently lack the profile in game.
 - Smallest solution: make "not loaded by <Addon>.toc" an error for files outside `tests/` and `Shared/`.
 - Alternative without change: read the check output on every commit. · Risk: low · Tests: `tests/toc_spec.lua` case.
+
+### F16 · PaTiTank: highlight lost enemies on their nameplates — low
+- Problem: the aggro monitor lists lost enemies, but their nameplates are not marked.
+- Why not done: nameplate frames belong to Blizzard (possibly forbidden frames in this client); drawing on them risks
+  taint or errors. Needs `C_NamePlate.GetNamePlateForUnit` behaviour verified in this client first.
+- Smallest solution: own overlay frame anchored to the plate, only if the plate is not forbidden (`IsForbidden`), pcall-guarded.
+- Risk: medium (taint) · Tests: taint log in combat with 5+ enemies.
+
+### F17 · PaTiTank: click an aggro row to target that enemy — decision needed
+- Problem: the rows cannot be clicked to target the enemy.
+- Limitation: targeting needs a secure button with `unit` = the enemy's token; nameplate tokens change as plates
+  appear and vanish, and secure attributes cannot change in combat, so rows would target the wrong enemy mid-fight.
+- Possible: only rows backed by a stable token (e.g. `party1target`) — a partial feature; owner decides whether that is worth it.
+- Never: automatic targeting or taunting.
