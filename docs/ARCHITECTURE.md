@@ -58,6 +58,7 @@ New code uses the PaTiShared rows instead of `PaTiSharedPanel` and hard-coded te
 - `PaTiAurasDB` (per character), schema 1 (`Config.DEFAULTS`, `watch`, position, `lastChangelog`).
 - Events: UNIT_AURA/UNIT_CONNECTION/UNIT_FLAGS (only player, party1-4, one unit re-read), GROUP_ROSTER_UPDATE,
   PLAYER_ENTERING_WORLD, SPELLS_CHANGED + talent/spec events (pcall-registered). Timer redraw every 0.5 s only while a timer is visible.
+- Unreadable aura data (secret values, API errors) → `AuraScan.UNREADABLE` → state UNKNOWN, never MISSING.
 - No secure frames in 0.1. Planned: Priest profile, click-to-buff (fixed unit+spell buttons), optional `PaTiAurasAPI` for PaTiHeal.
 
 ### PaTiTank 0.1.0 — `PaTiTank.lua` + `PaTiSharedPanel.lua`
