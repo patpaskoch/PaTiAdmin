@@ -13,4 +13,9 @@ Dieses private Repository enthält die Arbeitsregeln, den Entwicklungsstand und 
 
 Die Addons werden in `C:\Users\patpa\code` entwickelt und danach zum Testen in den WoW-AddOns-Ordner kopiert.
 
+## Engineering
 
+- Regeln für alle Agenten und Menschen: [`AGENTS.md`](AGENTS.md)
+- Doku: [`docs/`](docs/) — Architektur, Entwicklung, Tests, Übersetzungen, WoW-API, Release, Follow-ups
+- Prüfungen: `tools/check.sh` (lokal und in CI), Release-ZIP: `tools/package.sh`
+- CI-Vorlage für die Addon-Repos: `templates/ci.yml`

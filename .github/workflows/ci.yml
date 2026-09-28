@@ -1,0 +1,30 @@
+# PaTiAdmin CI: tests the tools themselves, then runs the full suite check against the public addon repos.
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: PaTiAdmin
+
+      - name: Check out the public addon repos next to PaTiAdmin
+        run: |
+          for addon in PaTiHeal PaTiTank PaTiGroup PaTiQuest PaTiDungeon; do
+            git clone --depth 1 "https://github.com/patpaskoch/$addon.git" "PaTiAddons/$addon"
+          done
+
+      - uses: leafo/gh-actions-lua@v10
+        with:
+          luaVersion: "5.1"
+      - uses: leafo/gh-actions-luarocks@v4
+      - run: luarocks install luacheck
+
+      - name: Checks
+        run: bash PaTiAdmin/tools/check.sh
