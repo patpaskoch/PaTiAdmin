@@ -26,6 +26,7 @@ read_globals = {
     "SaveBindings", "SetBinding", "SetBindingClick",
     "UIParent", "UISpecialFrames",
     "UnitAffectingCombat", "UnitClass", "UnitDetailedThreatSituation", "UnitExists", "UnitGroupRolesAssigned",
+    "UnitCanAttack", "UnitGUID", "UnitIsDead", "UnitThreatSituation",
     "UnitHealth", "UnitHealthMax", "UnitIsConnected", "UnitIsDeadOrGhost", "UnitIsGroupAssistant",
     "UnitIsGroupLeader", "UnitName", "UnitPower", "UnitPowerMax", "UnitPowerType",
     "tinsert", "unpack",
