@@ -1,6 +1,6 @@
 # PaTi Addons – Verwaltung
 
-Dieses private Repository enthält die Arbeitsregeln, den Entwicklungsstand und Verweise auf die einzelnen Addon-Repositories.
+Dieses öffentliche Repository enthält die Arbeitsregeln, den Entwicklungsstand und Verweise auf die einzelnen Addon-Repositories.
 
 | Addon | Repository | Stand |
 | --- | --- | --- |

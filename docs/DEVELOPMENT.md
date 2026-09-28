@@ -46,4 +46,6 @@ Issue → Builder agent → tools/check.sh → CI → Reviewer agent → finding
 - Default branch `main`. One topic per commit; message says what and why.
 - Commit only what you checked. In-game-untested fixes may be committed, but the commit message or
   CHANGELOG must not claim an in-game test.
-- `PaTiAdmin` is private; addon repos are public on github.com/patpaskoch.
+- PaTiAdmin and the addon repos are public on github.com/patpaskoch (never commit secrets); PaTiShared is private.
+  Addon/PaTiShared CI checks out PaTiAdmin for the tools without a token.
+- Pushing needs `gh auth login` once per machine (plus `gh auth setup-git`).

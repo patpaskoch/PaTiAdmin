@@ -15,7 +15,7 @@ abstraction · existing patterns before new patterns · no bloat.**
 
 ```
 C:\Users\patpa\code\                     (not a repo; macOS: same layout under ~/code)
-├── PaTiAdmin/     THIS repo: rules, docs, tools, CI templates, suite status (private)
+├── PaTiAdmin/     THIS repo: rules, docs, tools, CI templates, suite status (public)
 ├── PaTiShared/    design system + UI components, embedded into addons (not a WoW addon)
 └── PaTiAddons/
     ├── PaTiHeal/     healer party frames + manual click casting (secure)   /ph
