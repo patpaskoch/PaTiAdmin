@@ -30,8 +30,9 @@ Results: PASS / FAIL / SKIP (tool missing locally) / NONE (nothing to check yet)
 - What to test: defaults/config, SavedVariables migrations (old table in → new table out, no data lost),
   version parsing, locale lookup/fallback, protocol encode/decode/validation, quest comparison,
   state transformations, pure helpers.
-- Current coverage: PaTiAdmin tools (TOC parser incl. the `` `r`n `` regression, locale validator),
-  PaTiShared locale handling. The addons have no testable pure logic separated yet (FOLLOW_UPS.md).
+- Current coverage: PaTiAdmin tools (TOC parser incl. the `` `r`n `` regression, locale validator), PaTiShared locale
+  handling, PaTiHeal (bindings → attributes, migration, ranks, health percent), PaTiAuras (states, config, spellbook,
+  unreadable auras → UNKNOWN), PaTiGroup (settings, marker slots, secret-value helpers). Tank/Quest/Dungeon: none yet.
 
 ## Regression rule
 
@@ -47,7 +48,7 @@ Owner runs them in the client after `/reload`; agents list which are needed, nev
 | Secure click casting (PaTiHeal) | every configured button/modifier casts the chosen spell on the clicked unit; nothing casts in test mode |
 | Combat lockdown | enter combat, use every menu/slash command; no `ADDON_ACTION_BLOCKED`/`ADDON_ACTION_FORBIDDEN` |
 | Taint | `/console taintLog 1`, play, check `Logs/taint.log` for PaTi entries |
-| Raid markers (PaTiGroup) | each button marks the current target; reset clears all; Ctrl+Left click only if unbound before |
+| Raid markers (PaTiGroup) | each marker + Clear on the current target; Reset All clears all; key bindings from the WoW menu; no binding/macro created |
 | Visuals | layout at UI scale 0.64–1.0, locked/unlocked, test mode badge, long German/zh/ko strings fit |
 | Fonts | zhCN, zhTW, koKR texts render (not boxes) on the deDE client |
 | Group/dungeon | real party: roster changes, offline/dead members, ready check, pull timer, instance change |

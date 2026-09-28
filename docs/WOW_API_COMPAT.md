@@ -12,7 +12,7 @@ explicit test recorded) · **assumed** (not yet used/tested).
 | API / behaviour | Status | Notes |
 |---|---|---|
 | `SetRaidTarget` from addon Lua | verified protected (before 2026-09-28) | PaTiGroup uses `SecureActionButtonTemplate` `type=raidtarget` and a `/tm` macro instead |
-| `SecureUnitButtonTemplate` with `[mod-]type<n>=spell`, `[mod-]spell<n>` | in use (PaTiHeal) | set only out of combat |
+| `SecureUnitButtonTemplate` with `[mod-]type<n>=spell`, `[mod-]spell<n>` | **verified 2026-09-28** (owner: Left and Shift+Right cast the chosen spell) | other combinations still to test |
 | `SecureActionButtonTemplate` `type=raidtarget`, `action=set` | in use (PaTiGroup <= 0.4) | |
 | `type=raidtarget` with `marker=0` clears the target's marker | assumed (PaTiGroup Clear) | test Clear button + binding |
 | `type=macro` with `macrotext` running `/tm` lines | assumed (PaTiGroup Reset All, replaces the character macro) | test Reset All |
@@ -32,12 +32,13 @@ explicit test recorded) · **assumed** (not yet used/tested).
 | `UnitDetailedThreatSituation` | in use (PaTiTank) | 3rd return = threat percent |
 | `C_QuestLog.GetSelectedQuest`, `GetTitleForQuestID`, `GetQuestObjectives` | in use (PaTiQuest) | all `pcall`-guarded |
 | `GetInstanceInfo`, `IsInInstance`, `GetNumGroupMembers`, `UnitIsGroupLeader` | in use (PaTiDungeon) | |
-| `UnitGroupRolesAssigned` | in use (PaTiHeal) | may return NONE without LFG roles |
+| `UnitGroupRolesAssigned` | in use (PaTiHeal, PaTiGroup) | may return NONE without LFG roles; checked for secret values first |
+| `issecretvalue` | assumed present only in clients with restricted values | code treats a missing function as "nothing is secret" |
 | `BackdropTemplate` | in use (all) | |
 | `GLOBAL_MOUSE_DOWN` event | assumed (PaTiShared popup, `pcall`-registered) | popup still closes by click/ESC without it |
 | `Texture:SetRotation` | assumed (PaTiShared line icons) | verify × and ▾ render |
 | `FontString:GetUnboundedStringWidth` | assumed, fallback `GetStringWidth` | |
-| XML `<Script file>` inside an addon passes `(addonName, ns)` | assumed (PaTiShared `Shared.xml`) | verify when the first addon embeds PaTiShared |
+| XML `<Script file>` inside an addon passes `(addonName, ns)` | **verified 2026-09-28** (PaTiHeal with embedded PaTiShared loaded without Lua errors) | |
 | CJK glyphs via Blizzard font objects on a deDE client | assumed | manual font test |
 
 ## Rules that hold regardless of client
@@ -45,7 +46,8 @@ explicit test recorded) · **assumed** (not yet used/tested).
 - Protected functions and secure attributes: never during `InCombatLockdown()`.
 - Secret values: hand to widgets only; no arithmetic/comparison/string operations.
 - No automation: one hardware click → one explicit action chosen earlier by the player.
-- Aura APIs: use `C_UnitAuras` only if present, else `UnitAura`; check availability first (not used yet).
+- Aura APIs: `C_UnitAuras.GetAuraDataByIndex` if present, else `UnitAura` (PaTiAuras `AuraScan.lua`, PaTiHeal `Dispels.lua`).
+  Which one this client offers is unconfirmed — `/pa auras` prints it.
 - Addon communication (`C_ChatInfo.SendAddonMessage`, prefix registration): not used yet; verify limits in this client before designing a protocol.
 
 ## How to verify something

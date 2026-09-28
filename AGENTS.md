@@ -25,8 +25,8 @@ C:\Users\patpa\code\                     (not a repo; macOS: same layout under ~
     ├── PaTiDungeon/  instance, group and combat status                     /pd
     └── PaTiAuras/    aura/buff watch (optional, standalone)                  /pa /patiauras
 ```
-Each addon repo: `<Addon>.toc`, one main `<Addon>.lua` (+ `PaTiSharedPanel.lua` in Tank/Quest/Dungeon,
-`Bindings.xml` in Group), `README.md`, `CHANGELOG.md`, `AGENTS.md` (addon specifics), `.github/workflows/ci.yml`.
+Each addon repo: `<Addon>.toc`, `<Addon>.lua` (+ split files per responsibility, `Locales/`, embedded `Shared/`, `tests/`;
+Tank/Quest/Dungeon still use the legacy `PaTiSharedPanel.lua`), `README.md`, `CHANGELOG.md`, `AGENTS.md`, `.github/workflows/ci.yml`.
 Installed copies in `...\_classic_beta_\Interface\AddOns\` are **test targets only, never a source**.
 Architecture and data flow: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 
@@ -90,7 +90,8 @@ Split a file when it mixes responsibilities, not before. PaTiShared decides *how
 - **Secret values** (restricted unit data): pass straight to widgets (`SetValue`, `SetText`); no arithmetic, comparisons or string ops.
 - No gameplay automation: no automatic target, spell, marker or decision. The player clicks, the addon executes exactly that one click.
 - Never work around Blizzard protection (taint tricks, hidden click forwarding, OnUpdate spamming protected calls).
-- Keybindings and macros are the player's: do not overwrite an existing binding (PaTiGroup checks first — keep it that way).
+- Keybindings and macros are the player's: never bind keys, call SaveBindings or create/edit macros automatically.
+  Offer bindings through `Bindings.xml` (PaTiGroup is the pattern).
 - Addon messages (none exist yet): versioned prefix, validate every field, never trust remote data, no periodic full-state broadcasts. Document in `docs/PROTOCOL.md` before shipping.
 
 ## 9. SavedVariables
@@ -112,7 +113,7 @@ No premature optimisation elsewhere.
 English (enUS) is the source and fallback. Locales: **enUS, deDE, zhCN, zhTW, koKR** (enGB → enUS).
 No visible text hard-coded in feature code — use `L.KEY` from `Locales/<code>.lua`.
 Unsure translations: leave the key out (English fallback) rather than guess. Details: [`docs/LOCALIZATION.md`](docs/LOCALIZATION.md).
-Existing addons still hard-code German text (follow-up); new or touched UI text must use keys.
+PaTiTank, PaTiQuest and PaTiDungeon still hard-code German text (follow-up F5); new or touched UI text must use keys.
 
 ## 12. Refactoring rule
 
