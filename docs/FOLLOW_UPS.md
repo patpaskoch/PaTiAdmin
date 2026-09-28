@@ -58,3 +58,9 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
 - Smallest solution: add them the way PaTiTank does (Logic.SCALES + dropdown, COMMANDS entries). Scale on the secure
   PaTiHeal window only out of combat (like PaTiGroup's pending layout).
 - Risk: low (SetScale on a protected window in combat must be avoided) · Tests: settings smoke path, `/reload` in combat.
+
+### F15 · TOC check only warns about Lua files the TOC does not load — medium
+- Problem: `tools/check.sh` reports an addon `.lua` file missing from the TOC as a warning, so CI stays green. Found when
+  `Profiles/Priest.lua` was briefly not listed (2026-09-28): the addon would silently lack the profile in game.
+- Smallest solution: make "not loaded by <Addon>.toc" an error for files outside `tests/` and `Shared/`.
+- Alternative without change: read the check output on every commit. · Risk: low · Tests: `tests/toc_spec.lua` case.

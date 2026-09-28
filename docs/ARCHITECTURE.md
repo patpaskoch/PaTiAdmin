@@ -53,12 +53,13 @@ one `<Addon>.lua` with a clearly separated adapter function, window, settings, c
 
 ### PaTiAuras 0.1.0 — aura and buff watch, standalone and optional
 - Files: `Shared/` → `Locales/` → `Config.lua` (DB defaults, pure) → `SpellBook.lua` (copy of PaTiHeal's) → `Auras.lua`
-  (states, pure) → `AuraScan.lua` (C_UnitAuras/UnitAura adapter + test data) → `Profiles/Shaman.lua` → `Watch.lua` → `AuraWindow.lua` → `PaTiAuras.lua`.
+  (states, pure) → `AuraScan.lua` (C_UnitAuras/UnitAura adapter + test data) → `Profiles/Shaman.lua`, `Profiles/Priest.lua`
+  (data; `variants` join spells that give the same buff) → `Watch.lua` → `AuraWindow.lua` → `PaTiAuras.lua`.
 - `PaTiAurasDB` (per character), schema 1 (`Config.DEFAULTS`, `watch`, position, scale, `lastChangelog`).
 - Events: UNIT_AURA/UNIT_CONNECTION/UNIT_FLAGS (player, party1-4, one unit re-read), GROUP_ROSTER_UPDATE,
   PLAYER_ENTERING_WORLD, SPELLS_CHANGED + talent/spec events (pcall-registered). Timer redraw every 0.5 s only while a timer is visible.
 - Unreadable aura data (secret values, API errors) → `AuraScan.UNREADABLE` → state UNKNOWN, never MISSING.
-- No secure frames. Planned: Priest profile, click-to-buff, optional `PaTiAurasAPI` for PaTiHeal.
+- No secure frames. Planned: click-to-buff, optional `PaTiAurasAPI` for PaTiHeal. Test mode uses the class profile.
 - Slash `/pa`, `/patiauras`.
 
 ### PaTiGroup 0.4.0 (+ [Unreleased]) — markers, ready check, pull timer

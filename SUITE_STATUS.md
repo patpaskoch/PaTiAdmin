@@ -17,8 +17,9 @@ Unit-Tests und CI geprüft.
 
 ## PaTiAuras (TOC 0.1.0, neu)
 - Eigenes Addon: eigene Buffs, Procs, Gruppenbuff-Übersicht, Heil-Auren; Zustände aktiv/fehlt/läuft aus/unbekannt
-- Schamanen-Profil; Spell-IDs noch nicht im Client bestätigt (`/pa auras`)
-- Offen: alles im Spiel; Priester-Profil, Click-to-Buff und PaTiHeal-Anbindung noch nicht gebaut
+- Schamanen-Profil (IDs unbestätigt) und Priester-Profil (IDs im Client bestätigt, Gebet = gleicher Buff)
+- Im Spiel bestätigt: `C_UnitAuras` und `issecretvalue` vorhanden (`/pa debug`)
+- Offen: Anzeige im Spiel; Click-to-Buff und PaTiHeal-Anbindung noch nicht gebaut
 
 ## PaTiGroup (TOC 0.4.0, Änderungen unter [Unreleased])
 - PaTiShared-Oberfläche, alle acht Marker + Entfernen, Reihenfolge einstellbar, Ziel/Leitung/Rollen, Notiz,
