@@ -4,7 +4,10 @@ Dieses private Repository enthält die Arbeitsregeln, den Entwicklungsstand und 
 
 | Addon | Repository | Stand |
 | --- | --- | --- |
-| PaTiGroup | https://github.com/patpaskoch/PaTiGroup | manuelle Zielmarker, Ready Check und Pull-Countdown |`r`n| PaTiQuest | https://github.com/patpaskoch/PaTiQuest | ausgewählte Quest und Ziele |`r`n| PaTiDungeon | https://github.com/patpaskoch/PaTiDungeon | Instanz- und Gruppenstatus |
+| PaTiGroup | https://github.com/patpaskoch/PaTiGroup | manuelle Zielmarker, Ready Check und Pull-Countdown |
+| PaTiQuest | https://github.com/patpaskoch/PaTiQuest | ausgewählte Quest und Ziele |
+| PaTiDungeon | https://github.com/patpaskoch/PaTiDungeon | Instanz- und Gruppenstatus |
+| PaTiShared | lokal: `C:\Users\patpa\code\PaTiShared` (kein WoW-Addon) | gemeinsame UI-Quelle, 0.1.0 |
 | PaTiHeal | https://github.com/patpaskoch/PaTiHeal | Gruppenanzeige und manuelle Klickzauber |
 | PaTiTank | https://github.com/patpaskoch/PaTiTank | Gesundheits- und Bedrohungsanzeige |
 
