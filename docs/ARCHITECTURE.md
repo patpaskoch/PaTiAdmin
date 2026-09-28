@@ -59,7 +59,10 @@ one `<Addon>.lua` with a clearly separated adapter function, window, settings, c
 - Events: UNIT_AURA/UNIT_CONNECTION/UNIT_FLAGS (player, party1-4, one unit re-read), GROUP_ROSTER_UPDATE,
   PLAYER_ENTERING_WORLD, SPELLS_CHANGED + talent/spec events (pcall-registered). Timer redraw every 0.5 s only while a timer is visible.
 - Unreadable aura data (secret values, API errors) → `AuraScan.UNREADABLE` → state UNKNOWN, never MISSING.
-- No secure frames. Planned: click-to-buff, optional `PaTiAurasAPI` for PaTiHeal. Test mode uses the class profile.
+- Secure: `PaTiAurasBuff1..4` (SecureActionButtonTemplate, `type1=spell`, `unit`, `spell1` = single-target buff) over the
+  group lines; target = `Auras.NextTarget` (missing, alive, online, visible), set out of combat only. In combat the
+  target stays; window size/visibility/scale wait for PLAYER_REGEN_ENABLED. Group section first (fixed rows).
+- Group buffs also solo. Planned: optional `PaTiAurasAPI` for PaTiHeal. Test mode uses the class profile.
 - Slash `/pa`, `/patiauras`.
 
 ### PaTiGroup 0.4.0 (+ [Unreleased]) — markers, ready check, pull timer

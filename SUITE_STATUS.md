@@ -19,7 +19,9 @@ Unit-Tests und CI geprüft.
 - Eigenes Addon: eigene Buffs, Procs, Gruppenbuff-Übersicht, Heil-Auren; Zustände aktiv/fehlt/läuft aus/unbekannt
 - Schamanen-Profil (IDs unbestätigt) und Priester-Profil (IDs im Client bestätigt, Gebet = gleicher Buff)
 - Im Spiel bestätigt: `C_UnitAuras` und `issecretvalue` vorhanden (`/pa debug`)
-- Offen: Anzeige im Spiel; Click-to-Buff und PaTiHeal-Anbindung noch nicht gebaut
+- Click-to-Buff: Gruppenbuff-Zeile wirkt den Einzelbuff auf das nächste fehlende Mitglied (im Kampf festes Ziel)
+- Gruppenbuffs auch solo
+- Offen: alles davon im Spiel testen; PaTiHeal-Anbindung noch nicht gebaut
 
 ## PaTiGroup (TOC 0.4.0, Änderungen unter [Unreleased])
 - PaTiShared-Oberfläche, alle acht Marker + Entfernen, Reihenfolge einstellbar, Ziel/Leitung/Rollen, Notiz,

@@ -89,6 +89,8 @@ Split a file when it mixes responsibilities, not before. PaTiShared decides *how
   `SecureActionButtonTemplate` / `SecureUnitButtonTemplate` attributes or secure macros — never from addon Lua.
 - **Secret values** (restricted unit data): pass straight to widgets (`SetValue`, `SetText`); no arithmetic, comparisons or string ops.
 - No gameplay automation: no automatic target, spell, marker or decision. The player clicks, the addon executes exactly that one click.
+  Owner-approved exception (2026-09-28): PaTiAuras may pre-select *which* member a buff button casts on (the next one
+  missing the buff, set out of combat and shown in the tooltip). Still one click = one cast; no target change, no loops.
 - Never work around Blizzard protection (taint tricks, hidden click forwarding, OnUpdate spamming protected calls).
 - Keybindings and macros are the player's: never bind keys, call SaveBindings or create/edit macros automatically.
   Offer bindings through `Bindings.xml` (PaTiGroup is the pattern).
