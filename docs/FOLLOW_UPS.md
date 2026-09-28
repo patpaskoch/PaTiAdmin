@@ -64,3 +64,8 @@ Take one item per task; move finished items to the addon's CHANGELOG and delete 
 ### F12 · Seven repositories — decision needed
 - Problem: shared tooling, docs and CI templates live in PaTiAdmin and must be checked out next to each addon; cross-repo changes need several commits.
 - Options: keep multi-repo (current, works) or move to one monorepo with per-addon packaging. Owner decision; do not start without it.
+
+### F13 · PaTiHeal.lua above 400 lines — low
+- Problem: 413 lines after ranks and dispels (rows, settings, menu, events in one file).
+- Approach: move the settings modal (`spellItems`, `rankItems`, `bindingControls`, `buildSettings`) into `Settings.lua` next time it is touched.
+- Risk: low · Tests: existing smoke paths (settings open, rank change).

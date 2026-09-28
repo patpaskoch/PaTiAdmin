@@ -42,10 +42,10 @@ New code uses the PaTiShared rows instead of `PaTiSharedPanel` and hard-coded te
 ## Addons
 
 ### PaTiHeal 0.6.0 (+ unreleased PaTiShared migration) — reference for the target structure
-- Files: `Shared/` (PaTiShared 0.1.0) → `Locales/` → `Logic.lua` (pure, tested) → `PaTiHeal.lua`
-  (adapters `unitData`/`isKnownSpell`, rows, settings modal, menu, slash, events).
-- SavedVariablesPerCharacter `PaTiHealDB`, schema 1: `point, relativePoint, x, y, locked, collapsed, language,
-  bindings{LEFT..ALT_RIGHT = spellID}`; `Logic.Migrate` converts 0.6.0 (`clickSpellID/clickButton/clickModifier`).
+- Files: `Shared/` (PaTiShared 0.2.0) → `Locales/` → `Logic.lua` (pure, tested) → `SpellBook.lua` (spells, ranks)
+  → `Dispels.lua` (dispellable debuffs) → `PaTiHeal.lua` (rows, settings modal, menu, slash, events).
+- SavedVariablesPerCharacter `PaTiHealDB`, schema 2: `point, relativePoint, x, y, locked, collapsed, language,
+  showDispels, bindings{LEFT..ALT_RIGHT = spellID}, bindingRanks{key = rank}`; `Logic.Migrate` converts 0.6.0 (`clickSpellID/clickButton/clickModifier`).
 - Secure: `PaTiHealUnit1..5` (`SecureUnitButtonTemplate`, units player, party1–4). `applyBindings()` writes every
   owned attribute (`[modifier-]type<n>`, `[modifier-]spell<n>`, 0.6.0 leftovers) out of combat; visibility via `RegisterUnitWatch`.
 - Events: PLAYER_LOGIN, PLAYER_ENTERING_WORLD, GROUP_ROSTER_UPDATE, UNIT_HEALTH, UNIT_POWER_UPDATE,
