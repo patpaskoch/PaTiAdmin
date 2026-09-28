@@ -6,7 +6,7 @@ Unit-Tests und CI geprüft.
 ## PaTiShared 0.3.0 (Entwicklungsquelle, kein WoW-Addon)
 - Fenster mit `•••`-Menü, Modal, Button (auch für Secure-Buttons), Dropdown, Checkbox, Popup, Tooltip, Badge, Aura-Icon
 - Sprachen enUS/deDE (zhCN/koKR ungeprüft, zhTW → Englisch)
-- Eingebettet in PaTiHeal, PaTiAuras, PaTiGroup
+- Eingebettet in alle sechs Addons
 
 ## PaTiHeal (TOC 0.6.0, Änderungen unter [Unreleased])
 - PaTiShared-Oberfläche, Einstellungsfenster, Sprachen, SavedVariables Schema 2 mit Migration
@@ -25,9 +25,11 @@ Unit-Tests und CI geprüft.
   Ready Check, Pull, Tastenbelegung im WoW-Menü; keine automatische Belegung, kein Makro mehr
 - Offen im Spiel: alles seit der Umstellung
 
-## PaTiTank, PaTiQuest, PaTiDungeon (TOC 0.1.0)
-- TOC-Fehler behoben (Addons laden laut Code wieder); noch alte Oberfläche mit `PaTiSharedPanel`
-- Nächster Schritt: Umstellung auf PaTiShared (Auftrag vom 2026-09-28)
+## PaTiTank, PaTiQuest, PaTiDungeon (TOC 0.1.0, Änderungen unter [Unreleased])
+- Auf PaTiShared umgestellt: `•••`-Menü, Einstellungen (Sprache, Größe, Sperre), Einklappen, Testmodus, Sprachen,
+  gespeicherte Position (alte Position bleibt), `reset`/`settings`/`debug`/`version`; `PaTiSharedPanel.lua` entfernt
+- Funktionen unverändert (Tank: Leben/Ziel/Bedrohung, Quest: ausgewählte Quest, Dungeon: Instanz/Gruppe/Kampf)
+- Offen im Spiel: alles seit der Umstellung
 
 ## Nächster Schritt
 - Manuelle Tests im Spiel nach `PaTiAdmin/docs/TESTING.md`, besonders `/pa auras`, Kampf-Tests und Secure-Aktionen.

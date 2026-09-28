@@ -25,8 +25,8 @@ C:\Users\patpa\code\                     (not a repo; macOS: same layout under ~
     ├── PaTiDungeon/  instance, group and combat status                     /pd
     └── PaTiAuras/    aura/buff watch (optional, standalone)                  /pa /patiauras
 ```
-Each addon repo: `<Addon>.toc`, `<Addon>.lua` (+ split files per responsibility, `Locales/`, embedded `Shared/`, `tests/`;
-Tank/Quest/Dungeon still use the legacy `PaTiSharedPanel.lua`), `README.md`, `CHANGELOG.md`, `AGENTS.md`, `.github/workflows/ci.yml`.
+Each addon repo: `<Addon>.toc`, `<Addon>.lua` (+ `Logic.lua` and further files per responsibility), `Locales/`,
+embedded `Shared/`, `tests/`, `README.md`, `CHANGELOG.md`, `AGENTS.md`, `.github/workflows/ci.yml`.
 Installed copies in `...\_classic_beta_\Interface\AddOns\` are **test targets only, never a source**.
 Architecture and data flow: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 
@@ -113,7 +113,7 @@ No premature optimisation elsewhere.
 English (enUS) is the source and fallback. Locales: **enUS, deDE, zhCN, zhTW, koKR** (enGB → enUS).
 No visible text hard-coded in feature code — use `L.KEY` from `Locales/<code>.lua`.
 Unsure translations: leave the key out (English fallback) rather than guess. Details: [`docs/LOCALIZATION.md`](docs/LOCALIZATION.md).
-PaTiTank, PaTiQuest and PaTiDungeon still hard-code German text (follow-up F5); new or touched UI text must use keys.
+All addons use `Locales/` (enUS + deDE); new or touched UI text must use keys.
 
 ## 12. Refactoring rule
 

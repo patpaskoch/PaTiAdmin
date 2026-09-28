@@ -32,7 +32,8 @@ Results: PASS / FAIL / SKIP (tool missing locally) / NONE (nothing to check yet)
   state transformations, pure helpers.
 - Current coverage: PaTiAdmin tools (TOC parser incl. the `` `r`n `` regression, locale validator), PaTiShared locale
   handling, PaTiHeal (bindings → attributes, migration, ranks, health percent), PaTiAuras (states, config, spellbook,
-  unreadable auras → UNKNOWN), PaTiGroup (settings, marker slots, secret-value helpers). Tank/Quest/Dungeon: none yet.
+  unreadable auras → UNKNOWN), PaTiGroup (settings, marker slots, secret-value helpers, 1/true flags), PaTiTank (migration, threat value),
+  PaTiQuest (migration, quest lines), PaTiDungeon (migration, status incl. 1/nil flags).
 
 ## Regression rule
 

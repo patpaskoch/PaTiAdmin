@@ -18,23 +18,12 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
 - Risk: medium · Tests: manual — join/leave party members during combat.
 
 ### F4 · Position saved with the wrong anchor — medium
-- Status: fixed in code for PaTiHeal, PaTiAuras, PaTiGroup (PaTiShared Window; awaiting in-game drag → reload test); Tank/Quest/Dungeon open.
+- Status: fixed in code for all six addons (PaTiShared Window); awaiting in-game drag → reload test.
 - Problem: Heal/Tank/Quest/Dungeon save `x, y` from `GetPoint()` after dragging but restore them as `CENTER` offsets; the window can jump after `/reload`.
 - Approach: PaTiShared `Window:SavePosition` stores point + relativePoint; old saves keep working.
 - Risk: low · Tests: manual drag → reload.
 
-### F5 · Hard-coded German UI text in all addons — medium
-- Status: done for PaTiHeal, PaTiAuras, PaTiGroup (enUS + deDE); Tank, Quest, Dungeon open.
-- Problem: every label, tooltip and chat line is German in code.
-- Approach: per addon, when its UI is touched: `Locales/enUS.lua` (source) + `deDE.lua` with the current German text; other locales fall back to English.
-- Risk: low · Tests: locale validation (automatic) + visual check.
-
-### F6 · Legacy global `PaTiSharedPanel` redefined by three addons — medium
-- Problem: Tank/Quest/Dungeon each define the same global; the last loaded wins. The title is created twice (hidden own title + panel title).
-- Approach: replace with embedded PaTiShared Window when each addon is migrated; then remove it from `.luacheckrc`.
-- Risk: low · Tests: load each addon alone and all together.
-
-### F7 · Full refresh on every unit event — low · FIXED IN CODE for PaTiHeal (per-unit repaint); PaTiTank open
+### F7 · Full refresh on every unit event — low · FIXED IN CODE for PaTiHeal and PaTiTank; awaiting an in-game busy-fight check
 - Problem: PaTiHeal redraws all rows on each `UNIT_HEALTH`/`UNIT_POWER_UPDATE` for any unit (incl. nameplates/target); PaTiTank updates on every `UNIT_HEALTH`.
 - Approach: `RegisterUnitEvent` for the watched units, update only the matching row.
 - Risk: low · Tests: manual in a busy fight; no functional change.
@@ -48,14 +37,9 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
 - Problem: "Große Heilung" uses 2061 (Flash Heal's ID); the real Greater Heal is never offered.
 - Approach: correct ID after verifying in this client (docs/WOW_API_COMPAT.md). Product data change → owner decision.
 
-### F10 · No separable logic, therefore no addon unit tests — low · done for PaTiHeal, PaTiAuras, PaTiGroup; Tank/Quest/Dungeon open
-- Problem: one file per addon mixes events, API and UI; nothing can be loaded without frames.
-- Approach: when touching logic, extract pure functions (e.g. `unitData` normalisation, click-binding table, quest objective formatting) into a small file without frame creation, then test it.
-- Risk: low if done per touched function.
-
 ### F11 · Inconsistent slash command sets — low
-- Problem: `/phq` for PaTiQuest (looks like "PaTiHeal quest"), PaTiGroup keeps German `an/aus` aliases, Tank/Quest/Dungeon allow
-  `test`/`lock` in combat without guard and have no `debug`/`settings`. Heal, Auras, Group already share settings/test/lock/unlock/debug.
+- Status: all six addons share show/hide/test/lock/unlock/settings/debug (+ reset/version in most). Remaining: `/phq`
+  (looks like "PaTiHeal quest") is kept for compatibility, PaTiGroup keeps German `an/aus` aliases, PaTiHeal has no `reset`/`version`.
 - Approach: agree one set (`show, hide, toggle, lock, unlock, test, debug, version`) and align when each addon is touched; keep old aliases.
 
 ### F12 · Seven repositories — decision needed
@@ -66,3 +50,11 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
 - Problem: 441 lines after ranks, dispels and the frame UX pass (rows, settings, menu, events in one file).
 - Approach: move the settings modal (`spellItems`, `rankItems`, `bindingControls`, `buildSettings`) into `Settings.lua` next time it is touched.
 - Risk: low · Tests: existing smoke paths (settings open, rank change).
+
+### F14 · PaTiHeal lacks the suite-standard scale/reset/version — low
+- Problem: after the Tank/Quest/Dungeon migration, PaTiHeal is the only addon without a Scale setting, `/ph reset`,
+  `/ph version` and `/ph` alone toggling the window (found in the cross-suite review 2026-09-28).
+- Why: suite consistency; nothing is broken.
+- Smallest solution: add them the way PaTiTank does (Logic.SCALES + dropdown, COMMANDS entries). Scale on the secure
+  PaTiHeal window only out of combat (like PaTiGroup's pending layout).
+- Risk: low (SetScale on a protected window in combat must be avoided) · Tests: settings smoke path, `/reload` in combat.

@@ -29,7 +29,9 @@ explicit test recorded) · **assumed** (not yet used/tested).
 | `RegisterUnitWatch` / `UnregisterUnitWatch` on `SecureUnitButtonTemplate` rows | assumed (PaTiHeal) | fallback: Show/Hide out of combat only |
 | Unassigned modifier click (e.g. Shift+Left with only Left bound) falls back to the plain `type1` binding or does nothing | **unknown** (PaTiHeal, same in 0.6.0) | test: bind only Left, Shift+Left-click a row |
 | `C_AddOns.GetAddOnMetadata` | assumed (PaTiHeal debug) | fallback `GetAddOnMetadata` |
-| `UnitDetailedThreatSituation` | in use (PaTiTank) | 3rd return = threat percent |
+| `UnitDetailedThreatSituation` | in use (PaTiTank) | 3rd return = threat percent; secret values only reach the bar |
+| `UNIT_MAXHEALTH` event | assumed (PaTiTank) | added to keep the health bar maximum current |
+| Yes/no API flags (`IsInInstance`, `UnitAffectingCombat`, `UnitIsGroupLeader` …) return true/false or 1/nil | **unknown which** | PaTiDungeon/PaTiGroup accept both |
 | `C_QuestLog.GetSelectedQuest`, `GetTitleForQuestID`, `GetQuestObjectives` | in use (PaTiQuest) | all `pcall`-guarded |
 | `GetInstanceInfo`, `IsInInstance`, `GetNumGroupMembers`, `UnitIsGroupLeader` | in use (PaTiDungeon) | |
 | `UnitGroupRolesAssigned` | in use (PaTiHeal, PaTiGroup) | may return NONE without LFG roles; checked for secret values first |
