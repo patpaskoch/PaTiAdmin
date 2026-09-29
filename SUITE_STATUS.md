@@ -15,21 +15,24 @@ Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md).
 | PaTiQuest | 0.1.0 + [Unreleased] | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
 | PaTiDungeon | 0.1.0 + [Unreleased] | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
 
-✅ = erledigt und geprüft · ⏳ = offen. Suiteweit offen vor jeder Veröffentlichung: Lizenz (FOLLOW_UPS F18).
+✅ = erledigt und geprüft · ⏳ = offen. Lizenz: MIT in allen acht Repos. Icons: PaTiSuite-Set in allen sechs Addons
+(`Media/icon.tga` im Spiel, `assets/` für Plattformen) — im Spiel noch nicht gesehen.
 
 ## Alle sechs Addons
 - Eigenständig: keine Abhängigkeit untereinander (TOC-Prüfung erzwingt das), eigene SavedVariables, eigene Slash-Befehle
 - PaTiShared-Oberfläche 0.3.0 eingebettet; `•••`-Menü mit Einstellungen, Sperren, Ein-/Ausklappen (gespeichert),
   Testmodus, Ausblenden; Position gespeichert; Sprachen enUS/deDE (zhCN/zhTW/koKR → Englisch außer Menütexten)
 - Befehle: allein = ein-/ausblenden, `show hide test lock unlock reset settings debug version`
-- Release: ZIP mit genau einem Ordner, Entwurfs-Release per Tag `vX.Y.Z`, Bug-Report-Vorlage
+- Release: ZIP mit genau einem Ordner (inkl. Icon, ohne `assets/`/LICENSE), Entwurfs-Release per Tag `vX.Y.Z`,
+  Bug-Report-Vorlage; Release-Workflow noch nie gelaufen (erst mit dem ersten Tag)
 
 ## PaTiHeal
 - Funktion: Gruppenrahmen (Leben, Mana, Tank-Streifen), Klickzauber für neun Kombinationen mit Rangwahl, eigene HoTs und
   Schilde (Schamane, Priester) mit Aufladungen/Timer rechts oder unten, bannbare Debuffs, Klick-Reinigen über die
   normale Klickbelegung
-- Architektur: Logic (rein) · SpellBook · Dispels · Profiles · HoTs · Settings · PaTiHeal.lua (486 Zeilen, F13)
-- Tests: 30 Unit-Tests, Smoke-Tests mit Mocks
+- Neu: Größe (Skalierung, im Kampf erst nach dem Kampf), kein Debuff-Scan mehr bei Leben/Mana-Events (F20)
+- Architektur: Logic (rein) · SpellBook · Dispels · Profiles · HoTs · Settings · PaTiHeal.lua (500 Zeilen, F13)
+- Tests: 31 Unit-Tests, Smoke-Tests mit Mocks
 - Im Spiel bestätigt: Laden ohne Lua-Fehler, alte Belegung übernommen, Links- und Shift+Rechts-Klickzauber,
   Einstellungen, Sprachwahl nach `/reload`
 - Offen im Spiel: Ränge, bannbare Debuffs, HoTs/Schilde, Klick-Reinigen, Kampfverhalten, Spell-IDs (`/ph auras`)
@@ -44,8 +47,10 @@ Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md).
 ## PaTiTank
 - Funktion: eigene Gesundheit, Ziel, Bedrohung; Aggro-Kontrolle („x / y unter Kontrolle“, Warnzeilen verlorener Gegner
   mit Rolle des Halters, „knapp“, „unklar“), Testmodus mit 6 Gegnern
-- Tests: 18 Unit-Tests (Aggro-Regeln, Threat-Adapter mit Mocks), Smoke-Test
-- Offen im Spiel: alles, besonders die Aggro-Kontrolle im echten Kampf und die Threat-APIs
+- Neu: rotes/gelbes „!“ über dem Namensschild eines verlorenen/knapp gehaltenen Gegners; Klick aufs Namensschild
+  wählt ihn als Ziel. Anklickbare Panel-Zeilen: technisch blockiert (F17, WOW_API_COMPAT)
+- Tests: 22 Unit-Tests (Aggro-Regeln, Threat-Adapter, Namensschild-Marker mit Mocks), Smoke-Tests
+- Offen im Spiel: alles, besonders Aggro-Kontrolle und Marker im echten Kampf, Threat-APIs, Taint-Log
 
 ## PaTiGroup
 - Funktion: acht Marker + Entfernen, Reset All, Ready Check, Pull, Ziel/Leitung/Rollen, Notiz; Tastenbelegung im
@@ -63,4 +68,4 @@ Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md).
 
 ## Nächster Schritt
 - Fresh-Install- und Kurztests im Spiel nach [`docs/TESTING.md`](docs/TESTING.md#short-in-game-list-per-release-candidate)
-- Lizenz entscheiden (F18)
+- Icons in der AddOn-Liste prüfen, Namensschild-Marker im echten Pull testen

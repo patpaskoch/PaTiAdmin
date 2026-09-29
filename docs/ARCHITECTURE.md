@@ -51,7 +51,8 @@ one `<Addon>.lua` with a clearly separated adapter function, window, settings, c
   menu, slash, events).
 - `PaTiHealDB` (per character), schema 2: point, relativePoint, x, y, locked, collapsed, language, showDispels,
   bindings{LEFT..ALT_RIGHT = spellID}, bindingRanks{key = rank}, hots{key = false}, hotPosition RIGHT|BELOW,
-  showHotTimers, showHotCharges (new keys get defaults, no schema step); `Logic.Migrate` converts 0.6.0.
+  showHotTimers, showHotCharges, scale (new keys get defaults, no schema step); `Logic.Migrate` converts 0.6.0.
+  Scale: `SetScale` only out of combat, else pending until PLAYER_REGEN_ENABLED (secure rows).
 - HoTs & shields: up to 3 plain icons per row (charges first, else timer; 0.5 s redraw only while a timer shows),
   right of the health bar or in the bottom line. Click dispel = the profile's dispel spells in the click-casting list;
   no combination preset. Independent of PaTiAuras by design (duplicated spell data accepted).
@@ -94,7 +95,8 @@ one `<Addon>.lua` with a clearly separated adapter function, window, settings, c
 ### PaTiTank 0.1.0 (+ [Unreleased]) — own health, target, threat, aggro control
 - Files: `Shared/` → `Locales/` → `Logic.lua` (settings, `ThreatValue`; pure, tested) → `Aggro.lua` (states CONTROLLED /
   DANGER / LOST / UNKNOWN, summary, holder label; pure, tested) → `Threat.lua` (adapter: the only threat/nameplate API
-  calls; tested with mocks) → `PaTiTank.lua` (window, aggro block, scan scheduler, settings, commands, events).
+  calls; tested with mocks) → `Plates.lua` (nameplate markers; tested with mocks) → `PaTiTank.lua` (window, aggro
+  block, scan scheduler, settings, commands, events).
 - `PaTiTankDB`, schema 1: x, y (+ point/relativePoint), locked, collapsed, scale, language (0.1.0 values kept).
 - Events: UNIT_HEALTH/UNIT_MAXHEALTH (only `player` repaints), PLAYER_TARGET_CHANGED, UNIT_THREAT_LIST_UPDATE,
   UNIT_THREAT_SITUATION_UPDATE, PLAYER_ENTERING_WORLD; pcall-registered NAME_PLATE_UNIT_ADDED/REMOVED, UNIT_TARGET
@@ -104,8 +106,10 @@ one `<Addon>.lua` with a clearly separated adapter function, window, settings, c
   `UnitThreatSituation("player", enemy)`: 3 CONTROLLED, 2 DANGER; otherwise the group (party1-4, pet) is searched for
   the holder → LOST. Secret/erroring values → `Aggro.UNREADABLE` → UNKNOWN (never CONTROLLED). Scans are coalesced
   (0.1 s after the last event), skipped while collapsed/test mode, plus a 1 s fallback rescan while in combat.
-  Display only: no targeting, no taunt, no nameplate changes (F16, F17).
-- Slash `/pt`, `/patitank`.
+  Display only: no targeting, no taunt. `Plates.lua` puts a red/yellow "!" (our own child frame) on the nameplate of a
+  lost/barely held enemy, cleared synchronously on NAME_PLATE_UNIT_ADDED/REMOVED; forbidden plates are skipped.
+  Clickable panel rows are TECHNICALLY BLOCKED (F17, WOW_API_COMPAT): the player clicks the marked nameplate.
+- Settings add `markPlates` (default on). Slash `/pt`, `/patitank`.
 
 ### PaTiQuest 0.1.0 (+ [Unreleased]) — selected quest + objectives
 - Files: `Shared/` → `Locales/` → `Logic.lua` (settings, `QuestLines`; pure, tested) → `PaTiQuest.lua`

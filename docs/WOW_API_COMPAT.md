@@ -59,6 +59,32 @@ explicit test recorded) · **assumed** (not yet used/tested).
 | XML `<Script file>` inside an addon passes `(addonName, ns)` | **verified 2026-09-28** (PaTiHeal with embedded PaTiShared loaded without Lua errors) | |
 | CJK glyphs via Blizzard font objects on a deDE client | assumed | manual font test |
 
+## Clickable targeting from the PaTiTank aggro panel (F17) — investigation 2026-09-29
+
+Owner wish: click a "lost enemy" row → that enemy becomes the target. Investigated from the secure-system rules
+(below); **nothing of this was tried in the Forever client** — each point is ASSUMPTION / NOT YET VERIFIED there.
+
+| Question | Finding |
+|---|---|
+| `SecureActionButtonTemplate` with `type1=target`, `unit=nameplate3` | Targets on a hardware click, also in combat, if the attributes were set out of combat. The token is read at click time: the click hits whatever unit is `nameplate3` *then*. |
+| Can nameplate tokens change their unit during combat? | Yes — a plate is released (NAME_PLATE_UNIT_REMOVED) and reused for another unit (…_ADDED). A button bound to a token follows the token, not the enemy. |
+| Change `unit`/`type` of a secure button in combat | Not allowed from addon code (protected attributes; `ADDON_ACTION_BLOCKED`). |
+| Move, show/hide, resize a secure button in combat | Not allowed from addon code (protected frame). |
+| Tell secure code in combat which enemy is "lost" | No channel: threat is known only to addon (insecure) code; macro conditions and SecureHandler snippets have no threat or "target of" condition, and insecure code cannot write attributes of protected frames in combat. |
+| Variant A — one fixed secure button per nameplate token | Possible, but its position is fixed at combat start while the aggro rows are sorted and change in combat → a row would sit over the button of a different token → **wrong enemy**. Showing all enemy plates as fixed rows avoids that, but is the "six bars" threat list the owner rejected, and still needs secure layout via state drivers (≈0.2 s lag). Rejected. |
+| Variant B — stable tokens `target`, `party1target`…`party4target` | The same mapping problem: which row shows which token is decided in combat. Rejected. |
+| Variant C — other official secure way | None found: every secure target path needs the unit decided out of combat or by the player (click on the unit itself). |
+| `IsForbidden()` on nameplates | Blizzard can mark plates forbidden (e.g. friendly plates in instances on Retail). Addon code must not touch them; PaTiTank skips them. |
+
+**Result: TECHNICALLY BLOCKED** for "click a row of the compact, sorted aggro list in combat". Implemented instead
+(the safe fallback): a red/yellow "!" above the nameplate of a lost/barely held enemy (`PaTiTank/Plates.lua`, our
+own child frame of the plate). The player clicks that nameplate; Blizzard's own click targets exactly that enemy.
+
+| API / behaviour | Status | Notes |
+|---|---|---|
+| `C_NamePlate.GetNamePlateForUnit(unit)` returns the plate frame | assumed (PaTiTank markers) | pcall-guarded; missing API → no markers |
+| A child frame of a nameplate moves and hides with it and does not taint | assumed (PaTiTank markers) | taint log test required |
+
 ## Rules that hold regardless of client
 
 - Protected functions and secure attributes: never during `InCombatLockdown()`.

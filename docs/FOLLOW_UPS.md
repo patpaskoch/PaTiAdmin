@@ -40,51 +40,29 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
 ### F11 · Slash command sets — low (not release-critical)
 - Status 2026-09-29: all six addons answer `show, hide, test, lock, unlock, reset, settings, debug, version`, and the
   command alone shows/hides the window. Extras on purpose: PaTiHeal `spells, auras`; PaTiAuras `auras, about, changelog`;
-  PaTiGroup `about, changelog`. `/phq` (PaTiQuest) and `/ptg` (PaTiGroup) stay as compatibility aliases.
-- Open: no addon has an explicit `toggle` word (the bare command toggles). Add `toggle` only if players ask for it.
+  PaTiGroup `toggle, about, changelog`. `/phq` (PaTiQuest) and `/ptg` (PaTiGroup) stay as compatibility aliases.
+- Open: `toggle` exists only in PaTiGroup. Add it elsewhere only if players ask for it.
 
 ### F12 · Seven repositories — decision needed
 - Problem: shared tooling, docs and CI templates live in PaTiAdmin and must be checked out next to each addon; cross-repo changes need several commits.
 - Options: keep multi-repo (current, works) or move to one monorepo with per-addon packaging. Owner decision; do not start without it.
 
 ### F13 · PaTiHeal.lua above 400 lines — low
-- Status: the settings modal moved to `Settings.lua` (2026-09-29); the HoT row code brought `PaTiHeal.lua` back to ~490 lines.
+- Status: the settings modal moved to `Settings.lua` (2026-09-29); HoT row code and the scale setting brought
+  `PaTiHeal.lua` back to 500 lines.
 - Smallest solution: move the HoT row UI (`layoutHoTs`, `paintHoTs`, the timer ticker) next to `HoTs.lua` in its own
   file when PaTiHeal is next touched (not during the beta freeze unless a fix needs it).
 - Risk: low · Tests: `smoke` test mode path (HoT icons with 5 / 8s), hots_spec.
 
-### F14 · PaTiHeal lacks a Scale setting — low
-- Status: `/ph` alone, `/ph reset` and `/ph version` exist since 2026-09-29. Only the Scale setting is missing.
-- Smallest solution: like PaTiTank (Logic.SCALES + dropdown); SetScale on the secure PaTiHeal window only out of combat.
-- Risk: low · Tests: settings smoke path, `/reload` in combat.
 
+### F16 · PaTiTank: mark lost enemies on their nameplates — low · FIXED IN CODE (PaTiTank [Unreleased]), awaiting in-game test
+- `Plates.lua`: red/yellow "!" as our own child frame of the nameplate; forbidden plates skipped; setting on by default.
+- Tests needed: marker on the right plate, disappears when the enemy is held again or dies, reused plates start
+  without a marker, `/console taintLog 1` shows no PaTiTank entry.
 
-### F16 · PaTiTank: highlight lost enemies on their nameplates — low
-- Problem: the aggro monitor lists lost enemies, but their nameplates are not marked.
-- Why not done: nameplate frames belong to Blizzard (possibly forbidden frames in this client); drawing on them risks
-  taint or errors. Needs `C_NamePlate.GetNamePlateForUnit` behaviour verified in this client first.
-- Smallest solution: own overlay frame anchored to the plate, only if the plate is not forbidden (`IsForbidden`), pcall-guarded.
-- Risk: medium (taint) · Tests: taint log in combat with 5+ enemies.
-
-### F17 · PaTiTank: click an aggro row to target that enemy — decision needed
-- Problem: the rows cannot be clicked to target the enemy.
-- Limitation: targeting needs a secure button with `unit` = the enemy's token; nameplate tokens change as plates
-  appear and vanish, and secure attributes cannot change in combat, so rows would target the wrong enemy mid-fight.
-- Possible: only rows backed by a stable token (e.g. `party1target`) — a partial feature; owner decides whether that is worth it.
-- Never: automatic targeting or taunting.
-
-### F18 · No LICENSE in any repo — high for distribution · decision needed
-- Problem: the public repos have no license, so nobody may legally reuse or redistribute the code; CurseForge and Wago
-  ask for a license when a project is created.
-- Owner decision: which license (common for WoW addons: MIT, GPL-3.0, or "All Rights Reserved"). Then add the same
-  `LICENSE` to every repo (not into the release zip) and name it in the READMEs.
-- Risk: none technically · Blocks: public distribution (RELEASE.md distribution checklist).
-
-### F19 · Addon icons / logos — low
-- Problem: only PaTiAuras has `Media/icon.tga` (`## IconTexture`); platforms want a logo per project.
-- Smallest solution: one icon per addon in `Media/` + `## IconTexture`; the package already ships `Media/`.
-
-### F20 · PaTiHeal reads dispellable debuffs on every UNIT_HEALTH — low
-- Problem: the unit-event handler repaints the dispel icons (an aura scan) also on UNIT_HEALTH/UNIT_POWER_UPDATE of
-  party units, though debuffs only change with UNIT_AURA/UNIT_CONNECTION/UNIT_FLAGS. HoT icons already skip those events.
-- Smallest solution: the same event filter for `paintDispels`. · Risk: low · Tests: busy fight, dispel icons still appear.
+### F17 · PaTiTank: click an aggro row to target that enemy — TECHNICALLY BLOCKED – documented
+- Owner decision 2026-09-29: wanted, if WoW allows it safely. Investigation: `docs/WOW_API_COMPAT.md` ("Clickable
+  targeting…"). In combat addon code cannot point, move or show a secure target button for an enemy it chose, and there
+  is no secure condition for threat — so a row of the sorted list cannot be made to target its enemy reliably.
+- Delivered instead: the nameplate marker (F16). The player clicks the marked nameplate; no automatic targeting or taunt.
+- Reopen only if the Forever client offers a secure API for this (would be recorded in WOW_API_COMPAT first).

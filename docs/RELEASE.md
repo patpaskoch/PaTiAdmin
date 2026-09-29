@@ -23,9 +23,10 @@ that section is the release notes. History before the changelog existed: `git lo
 `tools/package.sh ../PaTiAddons/<Addon>` → `PaTiAdmin/dist/<Addon>-<version>.zip` (git-ignored).
 
 - Contains only what the client loads: the TOC, every file it references, XML includes, `Bindings.xml`, `Media/`.
-  Never: tests, `.github`, `.git`, `*.md`, scripts, `Shared/.manifest`, IDE or temp files — the package list fails if a
+  Never: tests, `.github`, `.git`, `assets/`, `LICENSE`, `*.md`, scripts, `Shared/.manifest`, IDE or temp files — the package list fails if a
   TOC references such a file. README/CHANGELOG are shown on the GitHub release page, not shipped in the zip.
-- Fails on a missing referenced file, a TOC error or a Lua file the TOC does not load.
+- Fails on a missing referenced file, a TOC error, a Lua file the TOC does not load or an `## IconTexture` that does not
+  point to a texture inside the addon.
 - Reproducible: sorted file order, file times = time of the last commit.
 - `--dry-run` lists the files; `--verify` builds the zip in a temp folder and checks it (one folder `<Addon>/`, TOC
   present, content = package list). `tools/check.sh` runs `--verify` for every addon, locally and in CI.
@@ -77,11 +78,11 @@ Prepared, not done — no accounts, no uploads without an explicit task.
 | Title | TOC `## Title` | ready |
 | Short description | TOC `## Notes` (+ `Notes-deDE`) | ready |
 | Long description | README (Features, Installation, Commands, Known limitations) | ready |
-| Logo / icon | `Media/` (only PaTiAuras has `Media/icon.tga`) | missing for five addons |
+| Logo / icon | PaTiSuite icon set: `assets/icon-{1024,512,256,128,64,32}.png` per addon (not packaged); in game `Media/icon.tga` + `## IconTexture`. Cut from the approved sheet at ~244 px, so 512/1024 are upscaled (no new detail) — use the original artwork if a sharper large image is needed | ready |
 | Screenshots | shot list below | not taken |
 | Game version | WoW Forever 1.60.1 (build 70009), Interface 16001 — platforms may not list this client | to check per platform |
 | Release zip | `tools/package.sh` / release workflow | ready |
-| License | **none yet — owner decision** (see FOLLOW_UPS) | missing, blocks public distribution |
+| License | MIT, `LICENSE` in every repo (not in the release zip) | ready |
 | Repository URL | `https://github.com/patpaskoch/<Addon>` | ready |
 | Changelog | CHANGELOG section of the version | ready |
 | Support / issues | GitHub Issues with the bug report template | ready |
