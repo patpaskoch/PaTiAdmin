@@ -88,6 +88,7 @@ Priority: 1 loads · 2 UI · 3 main feature · 4 combat · 5 `/reload` · 6 Save
 | all | fresh install alone loads, icon in the AddOns list, no Lua error · ••• menu entries · settings open/save · Collapse survives `/reload` · test mode |
 | PaTiHeal | each bound click casts on the clicked frame · own HoT/shield icons · dispel icon + click dispel · member joins/leaves in combat · Collapse/Hide greyed out in combat · Scale changed in combat applies after combat |
 | PaTiAuras | own class profile shows; toggling an aura hides it · group buff click buffs the named member, one cast per click · in combat target stays · UNKNOWN never shows as Missing |
+| PaTiAuras weapon imbues (Shaman) | `/pa debug`: which enchant API exists · no imbue: Main Hand "Missing" · imbue main hand: Active + timer · off hand separately · expiring < 30 s · renew: updates within ~2 s · swap weapon / take off off hand / equip shield: no old state, no Lua error · in combat an imbue expires or is renewed · `/pa auras` with Flametongue and Windfury on (report the enchant IDs) |
 | PaTiTank | pull 3+ mobs: `x / y` matches, a mob on the healer shows "Healer" within ~1 s and its row number in red on its nameplate, clicking that nameplate targets it, dead mobs vanish · `/pt debug` aggro line |
 | PaTiGroup | each marker + Clear on a target, Reset All · key bindings at the path shown in the settings · no key/macro created · bar not changeable in combat |
 | PaTiQuest | selecting another quest updates the window |

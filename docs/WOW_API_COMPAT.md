@@ -42,6 +42,11 @@ explicit test recorded) · **assumed** (not yet used/tested).
 | `## Notes-deDE` in the TOC shown on a German client | assumed (all addons) | fallback is the English `## Notes` |
 | `UnitDetailedThreatSituation` | in use (PaTiTank) | 3rd return = threat percent; secret values only reach the bar |
 | `UNIT_MAXHEALTH` event | assumed (PaTiTank) | added to keep the health bar maximum current |
+| Weapon enchant API: `C_Item.GetWeaponEnchantInfo()` or `GetWeaponEnchantInfo()` returning hasMainHand, mainHand ms left, charges, enchantID, then the same for the off hand | **unknown** (PaTiAuras weapon imbues) | pcall; missing/error/empty/secret → UNKNOWN; `/pa debug` shows which exists, `/pa auras` the raw values per slot |
+| How the client identifies *which* imbue is on a weapon (enchant ID, name) | **unknown** | V1 only watches "imbue present"; needs `/pa auras` output with Flametongue/Windfury on |
+| `UNIT_INVENTORY_CHANGED` / `PLAYER_EQUIPMENT_CHANGED` fire when an imbue is applied, expires or the weapon changes | assumed (PaTiAuras) | 2 s change check as fallback |
+| `C_PaperDollInfo.GetTemporaryEnchantmentInfo` | **unknown**, not used | only reported by `/pa debug` |
+| `GetInventoryItemID` + `GetItemInfoInstant` classID 2 = weapon (shield/held item → no imbue) | assumed (PaTiAuras) | unreadable → UNKNOWN instead of "missing" |
 | `UnitThreatSituation(unit, enemy)` returns 0-3/nil per enemy | assumed (PaTiTank aggro) | pcall + secret check; missing/secret → UNKNOWN; `/pt debug` shows presence |
 | Nameplate unit tokens `nameplateN` + `NAME_PLATE_UNIT_ADDED/REMOVED` | assumed (PaTiTank aggro) | pcall-registered; without them only target and party targets count |
 | `partyNtarget` tokens and `UNIT_TARGET` | assumed (PaTiTank aggro) | enemies nobody targets and without a nameplate stay invisible |

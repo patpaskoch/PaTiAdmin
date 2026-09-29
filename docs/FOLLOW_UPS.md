@@ -67,3 +67,13 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
   is no secure condition for threat — so a row of the sorted list cannot be made to target its enemy reliably.
 - Delivered instead: numbered nameplates (F16). The player clicks the marked nameplate; no automatic targeting or taunt.
 - Reopen only if the Forever client offers a secure API for this (would be recorded in WOW_API_COMPAT first).
+
+### F21 · PaTiAuras: name the weapon imbue (Flametongue, Windfury …) — low
+- Status: V1 (2026-09-29) shows per slot only whether an imbue is on. How the Forever client identifies the imbue
+  (enchant ID from the weapon enchant API, a tooltip line, a spell) is unknown.
+- Next step: owner runs `/pa auras` with each imbue on and reports `enchantID`; then a small `enchantID → spell` table
+  in the Shaman profile and an optional "wanted imbue per slot" setting. No guessing IDs before that.
+
+### F22 · PaTiAuras → PaTiAlerts (weapon imbue missing) — decision needed
+- PaTiAlerts does not exist. If it is ever built, PaTiAuras could report `WEAPON_IMBUE_MISSING` (WARNING) through an
+  optional `if PaTiAlertsAPI then … end` — no dependency, no OptionalDeps, UNKNOWN never as missing.

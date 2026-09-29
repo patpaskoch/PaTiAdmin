@@ -40,9 +40,12 @@ Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md).
 ## PaTiAuras
 - Funktion: eigene Buffs, Procs, Gruppenbuffs (auch solo, Click-to-Buff auf das nächste fehlende Mitglied),
   Heil-Auren pro Mitglied; jede Aura einzeln abschaltbar; Profile Schamane, Priester
-- Tests: 45 Unit-Tests
+- Neu: Schamanen-Waffenbuffs (Waffenhand/Schildhand: aktiv mit Timer, fehlt, läuft aus, unklar) als eigene
+  Datenquelle; V1 ohne Imbue-Art
+- Tests: 57 Unit-Tests
 - Im Spiel bestätigt: `C_UnitAuras` und `issecretvalue` vorhanden (`/pa debug`), Priester-IDs für Selbst- und Gruppenbuffs
-- Offen im Spiel: alles Übrige, besonders Click-to-Buff, Kampf, Schamanen-IDs, Priester-Heilauren
+- Offen im Spiel: alles Übrige, besonders Click-to-Buff, Kampf, Schamanen-IDs, Priester-Heilauren,
+  Waffen-Enchant-API und Waffenbuffs
 
 ## PaTiTank
 - Funktion: eigene Gesundheit, Ziel, Bedrohung; Aggro-Kontrolle („x / y unter Kontrolle“, Warnzeilen verlorener Gegner

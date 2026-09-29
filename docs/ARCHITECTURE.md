@@ -65,7 +65,8 @@ one `<Addon>.lua` with a clearly separated adapter function, window, settings, c
 
 ### PaTiAuras 0.1.0 — aura and buff watch, standalone and optional
 - Files: `Shared/` → `Locales/` → `Config.lua` (DB defaults, pure) → `SpellBook.lua` (copy of PaTiHeal's) → `Auras.lua`
-  (states, pure) → `AuraScan.lua` (C_UnitAuras/UnitAura adapter + test data) → `Profiles/Shaman.lua`, `Profiles/Priest.lua`
+  (states, pure) → `AuraScan.lua` (C_UnitAuras/UnitAura adapter + test data) → `WeaponImbues.lua` (weapon enchant
+  adapter: `C_Item.GetWeaponEnchantInfo` or `GetWeaponEnchantInfo`, pure `Evaluate`) → `Profiles/Shaman.lua`, `Profiles/Priest.lua`
   (data; `variants` join spells that give the same buff) → `Watch.lua` → `AuraWindow.lua` → `PaTiAuras.lua`.
 - `PaTiAurasDB` (per character), schema 1 (`Config.DEFAULTS` incl. `collapsed`, `watch`, `seen`, position, scale, `lastChangelog`).
   Collapsed = header only; the buff buttons are hidden out of combat, so collapsing is blocked in combat.
@@ -76,6 +77,9 @@ one `<Addon>.lua` with a clearly separated adapter function, window, settings, c
 - Secure: `PaTiAurasBuff1..4` (SecureActionButtonTemplate, `type1=spell`, `unit`, `spell1` = single-target buff) over the
   group lines; target = `Auras.NextTarget` (missing, alive, online, visible), set out of combat only. In combat the
   target stays; window size/visibility/scale wait for PLAYER_REGEN_ENABLED. Group section first (fixed rows).
+- Weapon imbues (Shaman profile `weapon`, one entry per slot, no spell ID): not UNIT_AURA; re-read on
+  UNIT_INVENTORY_CHANGED/PLAYER_EQUIPMENT_CHANGED and by a 2 s check (only while slots are watched, repaint only when
+  `WeaponImbues.Signature` changes). Unreadable → UNKNOWN, never MISSING. `showWeapon` in `PaTiAurasDB` (default on).
 - Group buffs also solo. Priest healing auras: Renew, Power Word: Shield, Prayer of Mending. No runtime API to PaTiHeal
   (owner decision 2026-09-28). Test mode uses the class profile.
 - Slash `/pa`, `/patiauras`.
