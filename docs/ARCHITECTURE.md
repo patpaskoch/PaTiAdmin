@@ -106,8 +106,11 @@ one `<Addon>.lua` with a clearly separated adapter function, window, settings, c
   `UnitThreatSituation("player", enemy)`: 3 CONTROLLED, 2 DANGER; otherwise the group (party1-4, pet) is searched for
   the holder → LOST. Secret/erroring values → `Aggro.UNREADABLE` → UNKNOWN (never CONTROLLED). Scans are coalesced
   (0.1 s after the last event), skipped while collapsed/test mode, plus a 1 s fallback rescan while in combat.
-  Display only: no targeting, no taunt. `Plates.lua` puts a red/yellow "!" (our own child frame) on the nameplate of a
-  lost/barely held enemy, cleared synchronously on NAME_PLATE_UNIT_ADDED/REMOVED; forbidden plates are skipped.
+  Display only: no targeting, no taunt. Numbering (`Aggro.Number`, pure): the visible problem rows (≤ MAX_ROWS) with
+  their own `nameplateN` token get 1–4; a readable GUID keeps its number while visible; a token used by two rows gets
+  none. The panel and `Plates.lua` (our own child frame of the plate, coloured by state) are painted from the same
+  list in the same call. NAME_PLATE_UNIT_ADDED/REMOVED clears that plate's number and the panel row's number
+  synchronously (`forgetPlate`); forbidden plates are skipped.
   Clickable panel rows are TECHNICALLY BLOCKED (F17, WOW_API_COMPAT): the player clicks the marked nameplate.
 - Settings add `markPlates` (default on). Slash `/pt`, `/patitank`.
 

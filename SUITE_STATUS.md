@@ -47,8 +47,8 @@ Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md).
 ## PaTiTank
 - Funktion: eigene Gesundheit, Ziel, Bedrohung; Aggro-Kontrolle („x / y unter Kontrolle“, Warnzeilen verlorener Gegner
   mit Rolle des Halters, „knapp“, „unklar“), Testmodus mit 6 Gegnern
-- Neu: rotes/gelbes „!“ über dem Namensschild eines verlorenen/knapp gehaltenen Gegners; Klick aufs Namensschild
-  wählt ihn als Ziel. Anklickbare Panel-Zeilen: technisch blockiert (F17, WOW_API_COMPAT)
+- Neu: nummerierte Problem-Gegner — dieselbe Nummer (1–4) im Panel und über dem Namensschild, Farbe = Zustand;
+  unterscheidet auch gleichnamige Gegner. Klick aufs Namensschild wählt ihn als Ziel. Anklickbare Panel-Zeilen: technisch blockiert (F17, WOW_API_COMPAT)
 - Tests: 22 Unit-Tests (Aggro-Regeln, Threat-Adapter, Namensschild-Marker mit Mocks), Smoke-Tests
 - Offen im Spiel: alles, besonders Aggro-Kontrolle und Marker im echten Kampf, Threat-APIs, Taint-Log
 

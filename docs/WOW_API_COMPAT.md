@@ -77,7 +77,7 @@ Owner wish: click a "lost enemy" row → that enemy becomes the target. Investig
 | `IsForbidden()` on nameplates | Blizzard can mark plates forbidden (e.g. friendly plates in instances on Retail). Addon code must not touch them; PaTiTank skips them. |
 
 **Result: TECHNICALLY BLOCKED** for "click a row of the compact, sorted aggro list in combat". Implemented instead
-(the safe fallback): a red/yellow "!" above the nameplate of a lost/barely held enemy (`PaTiTank/Plates.lua`, our
+(the safe fallback): the problem row's number above the nameplate of that enemy, coloured by state (`PaTiTank/Plates.lua`, our
 own child frame of the plate). The player clicks that nameplate; Blizzard's own click targets exactly that enemy.
 
 | API / behaviour | Status | Notes |

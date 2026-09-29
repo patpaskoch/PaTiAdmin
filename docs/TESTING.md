@@ -57,7 +57,7 @@ Owner runs them in the client after `/reload`; agents list which are needed, nev
 | Fonts | zhCN, zhTW, koKR texts render (not boxes) on the deDE client |
 | Group/dungeon | real party: roster changes, offline/dead members, ready check, pull timer, instance change |
 | Aggro monitor (PaTiTank) | `/pt test` shows 5 / 6, Ghoul → Healer, Zombie barely held; real pull with 3+ enemies: counts match, a mob on the healer shows "→ Healer" within ~1 s, dead enemies disappear, no Lua errors in combat; `/pt debug` aggro line |
-| Nameplate markers (PaTiTank) | red "!" appears on exactly the enemy that is on the healer (yellow: barely held); clicking that nameplate targets that enemy; no taunt, no target change by itself; marker gone when held again / dead; reused plates start clean; taint log has no PaTiTank entry |
+| Numbered nameplates (PaTiTank) | pull 3+ enemies, one on the healer, one on a DPS: panel `1 A → Healer`, `2 B → DD`; exactly A carries a red "1", B a "2"; with two same-named enemies the numbers still match; clicking the "1" plate targets A (no taunt, no target change by itself); number gone when aggro is back / the enemy dies / its plate disappears; a new enemy on a reused `nameplateN` never shows an old number; `/pt test` shows `1 Ghoul`, `2 Zombie` without plate overlays; no Lua errors, taint log has no PaTiTank entry |
 | Icons (all six) | icon shows in the AddOns list (no white/missing texture, no path error), readable at small size |
 | Collapse (all six) | ••• → Collapse/Expand; state survives `/reload`; Heal/Group/Auras: entry disabled in combat |
 | SavedVariables | settings survive `/reload` and relog; old saved files load after an update |
@@ -88,7 +88,7 @@ Priority: 1 loads · 2 UI · 3 main feature · 4 combat · 5 `/reload` · 6 Save
 | all | fresh install alone loads, icon in the AddOns list, no Lua error · ••• menu entries · settings open/save · Collapse survives `/reload` · test mode |
 | PaTiHeal | each bound click casts on the clicked frame · own HoT/shield icons · dispel icon + click dispel · member joins/leaves in combat · Collapse/Hide greyed out in combat · Scale changed in combat applies after combat |
 | PaTiAuras | own class profile shows; toggling an aura hides it · group buff click buffs the named member, one cast per click · in combat target stays · UNKNOWN never shows as Missing |
-| PaTiTank | pull 3+ mobs: `x / y` matches, a mob on the healer shows "Healer" within ~1 s and a red "!" on its nameplate, clicking that nameplate targets it, dead mobs vanish · `/pt debug` aggro line |
+| PaTiTank | pull 3+ mobs: `x / y` matches, a mob on the healer shows "Healer" within ~1 s and its row number in red on its nameplate, clicking that nameplate targets it, dead mobs vanish · `/pt debug` aggro line |
 | PaTiGroup | each marker + Clear on a target, Reset All · key bindings at the path shown in the settings · no key/macro created · bar not changeable in combat |
 | PaTiQuest | selecting another quest updates the window |
 | PaTiDungeon | entering a dungeon / joining a group / combat updates the window |

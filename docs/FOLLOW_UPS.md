@@ -56,13 +56,14 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
 
 
 ### F16 · PaTiTank: mark lost enemies on their nameplates — low · FIXED IN CODE (PaTiTank [Unreleased]), awaiting in-game test
-- `Plates.lua`: red/yellow "!" as our own child frame of the nameplate; forbidden plates skipped; setting on by default.
-- Tests needed: marker on the right plate, disappears when the enemy is held again or dies, reused plates start
-  without a marker, `/console taintLog 1` shows no PaTiTank entry.
+- `Plates.lua`: the row number (1–4, coloured by state) as our own child frame of the nameplate; forbidden plates
+  skipped; setting on by default.
+- Tests needed: panel number = plate number for the same enemy (also same-named enemies), number gone when held
+  again / dead / plate gone, a reused `nameplateN` never shows an old number, `/console taintLog 1` has no PaTiTank entry.
 
 ### F17 · PaTiTank: click an aggro row to target that enemy — TECHNICALLY BLOCKED – documented
 - Owner decision 2026-09-29: wanted, if WoW allows it safely. Investigation: `docs/WOW_API_COMPAT.md` ("Clickable
   targeting…"). In combat addon code cannot point, move or show a secure target button for an enemy it chose, and there
   is no secure condition for threat — so a row of the sorted list cannot be made to target its enemy reliably.
-- Delivered instead: the nameplate marker (F16). The player clicks the marked nameplate; no automatic targeting or taunt.
+- Delivered instead: numbered nameplates (F16). The player clicks the marked nameplate; no automatic targeting or taunt.
 - Reopen only if the Forever client offers a secure API for this (would be recorded in WOW_API_COMPAT first).
