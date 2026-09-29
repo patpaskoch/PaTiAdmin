@@ -15,13 +15,14 @@ exclude_files = { "**/.git/**", "**/dist/**" }
 -- WoW API used by the suite. Before adding a name, confirm it exists in the Interface 16001
 -- client (docs/WOW_API_COMPAT.md). Keep alphabetical.
 read_globals = {
-    "C_AddOns", "C_NamePlate", "C_PartyInfo", "C_QuestLog", "C_Spell", "C_SpellBook", "C_UnitAuras",
+    "C_AddOns", "C_Item", "C_NamePlate", "C_PaperDollInfo", "C_PartyInfo", "C_QuestLog", "C_Spell", "C_SpellBook", "C_UnitAuras",
     "CreateFrame", "CreateMacro", "DoReadyCheck", "EditMacro",
     "GameTooltip", "GetAddOnMetadata", "GetBindingAction", "GetBuildInfo", "GetCurrentBindingSet", "GetInstanceInfo",
     "GetLocale", "GetMacroIndexByName", "GetMacroInfo", "GetNumGroupMembers", "GetSpellInfo", "GetSpellTexture",
     "InCombatLockdown", "IsAltKeyDown", "IsControlKeyDown", "IsInGroup", "IsInInstance", "IsShiftKeyDown",
     "LOCALIZED_CLASS_NAMES_MALE", "RegisterUnitWatch", "UnregisterUnitWatch",
     "DebuffTypeColor", "Enum", "GetNumSpellTabs", "GetSpellBookItemInfo", "GetSpellBookItemName", "GetSpellTabInfo",
+    "GetInventoryItemID", "GetInventoryItemTexture", "GetItemInfoInstant", "GetWeaponEnchantInfo",
     "GetTime", "UnitAura", "issecretvalue", "IsInRaid", "GetSpecialization", "GetSpecializationInfo", "GetRaidTargetIndex", "GetBindingKey", "RAID_CLASS_COLORS", "UnitIsVisible",
     "SaveBindings", "SetBinding", "SetBindingClick",
     "UIParent", "UISpecialFrames",
