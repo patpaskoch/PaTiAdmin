@@ -4,8 +4,8 @@
 #   tools/check.sh                      check PaTiAdmin, PaTiShared and every addon next to it
 #   tools/check.sh ../PaTiAddons/PaTiHeal [more repo folders]
 #
-# Steps per repo: syntax, luacheck, unit tests, locales, CI file = template, TOC + referenced files,
-# Shared/ integrity, package dry run. Needs Lua 5.1 or LuaJIT (LUA=... to override) and luacheck (LUACHECK=...).
+# Steps per repo: syntax, luacheck, unit tests, locales, CI/release workflow = template, TOC + referenced files,
+# Shared/ integrity, package (a real zip built in a temp folder and checked, see tools/package.sh --verify). Needs Lua 5.1 or LuaJIT (LUA=... to override) and luacheck (LUACHECK=...).
 # Missing luacheck is a SKIP locally and a FAIL in CI (CI=true).
 set -uo pipefail
 
@@ -76,6 +76,13 @@ for target in "${targets[@]}"; do
             record PASS ci-file "$name"
         else echo "  ERROR: .github/workflows/ci.yml differs from PaTiAdmin/templates/ci.yml"; record FAIL ci-file "$name"; fi
     fi
+    # Addons also carry the tag-triggered release workflow (draft releases only).
+    if [ -f "$name.toc" ]; then
+        if [ ! -f .github/workflows/release.yml ]; then record FAIL release "$name (.github/workflows/release.yml missing)"
+        elif diff -q <(tr -d '\r' < .github/workflows/release.yml) <(tr -d '\r' < "$ADMIN/templates/release.yml") >/dev/null; then
+            record PASS release "$name"
+        else echo "  ERROR: .github/workflows/release.yml differs from PaTiAdmin/templates/release.yml"; record FAIL release "$name"; fi
+    fi
 
     if [ -f "$name.toc" ]; then
         if echo "$files" | "$LUA" "$RUN" toc "$name" "$SUITE_INTERFACE"; then record PASS toc "$name"; else record FAIL toc "$name"; fi
@@ -91,8 +98,8 @@ for target in "${targets[@]}"; do
             else echo "  ERROR: Shared/ changed by hand:$drift"; record FAIL shared "$name"; fi
         fi
 
-        if bash "$ADMIN/tools/package.sh" --dry-run "$target" >/dev/null 2>&1; then record PASS package "$name (dry run)"
-        else record FAIL package "$name (details: tools/package.sh --dry-run)"; fi
+        if out="$(LUA="$LUA" bash "$ADMIN/tools/package.sh" --verify "$target" 2>&1)"; then record PASS package "$name (zip built and checked)"
+        else echo "$out" | sed 's/^/  /'; record FAIL package "$name"; fi
     fi
 done
 

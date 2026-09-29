@@ -71,6 +71,19 @@ function M.validate(addonName, readFile, expectedInterface)
         warnings[#warnings + 1] = ("%s: Interface %s differs from the suite's %s"):format(tocName, meta.Interface, expectedInterface)
     end
     if not meta.Title then errors[#errors + 1] = tocName .. ": ## Title missing" end
+    for _, key in ipairs({ "Notes", "Author" }) do
+        if not meta[key] then warnings[#warnings + 1] = ("%s: ## %s missing (shown in the AddOns list)"):format(tocName, key) end
+    end
+    -- Independence (AGENTS.md §3): no addon may require or optionally load another PaTi addon.
+    for key, value in pairs(meta) do
+        if key:match("Deps$") or key == "Dependencies" then
+            for dep in value:gmatch("[^,%s]+") do
+                if dep:match("^PaTi") then
+                    errors[#errors + 1] = ("%s: ## %s names %s — PaTi addons must stay independent"):format(tocName, key, dep)
+                end
+            end
+        end
+    end
     if not (meta.Version and meta.Version:match(M.SEMVER)) then
         errors[#errors + 1] = tocName .. ": ## Version missing or not MAJOR.MINOR.PATCH (" .. tostring(meta.Version) .. ")"
     end
@@ -100,6 +113,34 @@ function M.validate(addonName, readFile, expectedInterface)
     -- Loaded by WoW by name, without a TOC entry.
     if readFile("Bindings.xml") then referenced["Bindings.xml"] = true end
     return errors, warnings, referenced
+end
+
+-- Files that must never reach a player's AddOns folder, even if a TOC referenced them by mistake.
+local FORBIDDEN = { "^tests/", "^%.github/", "^%.git/", "^tools/", "^scripts/", "%.md$", "%.sh$", "%.zip$", "^Shared/%.manifest$" }
+
+-- Release problems of a file list (paths relative to the addon folder): forbidden development files.
+function M.forbiddenFiles(paths)
+    local problems = {}
+    for _, path in ipairs(paths) do
+        for _, pattern in ipairs(FORBIDDEN) do
+            if path:match(pattern) then
+                problems[#problems + 1] = path .. " is a development file and must not be packaged"
+                break
+            end
+        end
+    end
+    return problems
+end
+
+-- Lua files the client never loads (a forgotten TOC entry ships an addon without that code). tests/ is exempt.
+function M.unloadedLua(paths, referenced, addonName)
+    local problems = {}
+    for _, path in ipairs(paths) do
+        if path:match("%.lua$") and not referenced[path] and not path:match("^tests/") then
+            problems[#problems + 1] = path .. " is not loaded by " .. addonName .. ".toc"
+        end
+    end
+    return problems
 end
 
 return M

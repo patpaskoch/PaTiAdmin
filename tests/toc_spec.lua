@@ -7,6 +7,8 @@ end
 local VALID = table.concat({
     "## Interface: 16001",
     "## Title: PaTiDemo",
+    "## Notes: Demo addon",
+    "## Author: PaTi",
     "## Version: 0.1.0",
     "## SavedVariablesPerCharacter: PaTiDemoDB",
     "",
@@ -72,5 +74,37 @@ describe("toc.validate", function()
         files["Bindings.xml"] = "<Bindings/>"
         local _, _, referenced = toc.validate("PaTiDemo", reader(files))
         assert.is_true(referenced["Bindings.xml"])
+    end)
+end)
+
+describe("release rules", function()
+    local function validate(tocText)
+        return toc.validate("PaTiDemo", reader({ ["PaTiDemo.toc"] = tocText, ["PaTiDemo.lua"] = "-- code" }), "16001")
+    end
+
+    it("rejects dependencies on other PaTi addons (independence)", function()
+        local errors = validate("## Interface: 16001\n## Title: D\n## Version: 0.1.0\n## OptionalDeps: PaTiAuras, Details\nPaTiDemo.lua\n")
+        assert.equal(1, #errors)
+        assert.matches("PaTiAuras", errors[1])
+        errors = validate("## Interface: 16001\n## Title: D\n## Version: 0.1.0\n## Dependencies: PaTiShared\nPaTiDemo.lua\n")
+        assert.equal(1, #errors)
+    end)
+
+    it("warns when Notes or Author are missing", function()
+        local errors, warnings = validate("## Interface: 16001\n## Title: D\n## Version: 0.1.0\nPaTiDemo.lua\n")
+        assert.equal(0, #errors)
+        assert.equal(2, #warnings)
+    end)
+
+    it("reports Lua files the TOC never loads, but not tests", function()
+        local problems = toc.unloadedLua({ "PaTiDemo.lua", "Profiles/Priest.lua", "tests/demo_spec.lua" },
+            { ["PaTiDemo.lua"] = true }, "PaTiDemo")
+        assert.same({ "Profiles/Priest.lua is not loaded by PaTiDemo.toc" }, problems)
+    end)
+
+    it("never packages development files", function()
+        local problems = toc.forbiddenFiles({ "PaTiDemo.lua", "tests/x_spec.lua", "AGENTS.md", ".github/workflows/ci.yml",
+            "Shared/.manifest", "Shared/Theme.lua", "Media/icon.tga" })
+        assert.equal(4, #problems)
     end)
 end)
