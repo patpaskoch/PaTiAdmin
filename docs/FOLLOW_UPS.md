@@ -37,33 +37,27 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
 - Problem: "Große Heilung" uses 2061 (Flash Heal's ID); the real Greater Heal is never offered.
 - Approach: correct ID after verifying in this client (docs/WOW_API_COMPAT.md). Product data change → owner decision.
 
-### F11 · Inconsistent slash command sets — low
-- Status: all six addons share show/hide/test/lock/unlock/settings/debug (+ reset/version in most). Remaining: `/phq`
-  (looks like "PaTiHeal quest") is kept for compatibility, PaTiGroup keeps German `an/aus` aliases, PaTiHeal has no `reset`/`version`.
-- Approach: agree one set (`show, hide, toggle, lock, unlock, test, debug, version`) and align when each addon is touched; keep old aliases.
+### F11 · Slash command sets — low (not release-critical)
+- Status 2026-09-29: all six addons answer `show, hide, test, lock, unlock, reset, settings, debug, version`, and the
+  command alone shows/hides the window. Extras on purpose: PaTiHeal `spells, auras`; PaTiAuras `auras, about, changelog`;
+  PaTiGroup `about, changelog`. `/phq` (PaTiQuest) and `/ptg` (PaTiGroup) stay as compatibility aliases.
+- Open: no addon has an explicit `toggle` word (the bare command toggles). Add `toggle` only if players ask for it.
 
 ### F12 · Seven repositories — decision needed
 - Problem: shared tooling, docs and CI templates live in PaTiAdmin and must be checked out next to each addon; cross-repo changes need several commits.
 - Options: keep multi-repo (current, works) or move to one monorepo with per-addon packaging. Owner decision; do not start without it.
 
 ### F13 · PaTiHeal.lua above 400 lines — low
-- Problem: 441 lines after ranks, dispels and the frame UX pass (rows, settings, menu, events in one file).
-- Approach: move the settings modal (`spellItems`, `rankItems`, `bindingControls`, `buildSettings`) into `Settings.lua` next time it is touched.
-- Risk: low · Tests: existing smoke paths (settings open, rank change).
+- Status: the settings modal moved to `Settings.lua` (2026-09-29); the HoT row code brought `PaTiHeal.lua` back to ~490 lines.
+- Smallest solution: move the HoT row UI (`layoutHoTs`, `paintHoTs`, the timer ticker) next to `HoTs.lua` in its own
+  file when PaTiHeal is next touched (not during the beta freeze unless a fix needs it).
+- Risk: low · Tests: `smoke` test mode path (HoT icons with 5 / 8s), hots_spec.
 
-### F14 · PaTiHeal lacks the suite-standard scale/reset/version — low
-- Problem: after the Tank/Quest/Dungeon migration, PaTiHeal is the only addon without a Scale setting, `/ph reset`,
-  `/ph version` and `/ph` alone toggling the window (found in the cross-suite review 2026-09-28).
-- Why: suite consistency; nothing is broken.
-- Smallest solution: add them the way PaTiTank does (Logic.SCALES + dropdown, COMMANDS entries). Scale on the secure
-  PaTiHeal window only out of combat (like PaTiGroup's pending layout).
-- Risk: low (SetScale on a protected window in combat must be avoided) · Tests: settings smoke path, `/reload` in combat.
+### F14 · PaTiHeal lacks a Scale setting — low
+- Status: `/ph` alone, `/ph reset` and `/ph version` exist since 2026-09-29. Only the Scale setting is missing.
+- Smallest solution: like PaTiTank (Logic.SCALES + dropdown); SetScale on the secure PaTiHeal window only out of combat.
+- Risk: low · Tests: settings smoke path, `/reload` in combat.
 
-### F15 · TOC check only warns about Lua files the TOC does not load — medium
-- Problem: `tools/check.sh` reports an addon `.lua` file missing from the TOC as a warning, so CI stays green. Found when
-  `Profiles/Priest.lua` was briefly not listed (2026-09-28): the addon would silently lack the profile in game.
-- Smallest solution: make "not loaded by <Addon>.toc" an error for files outside `tests/` and `Shared/`.
-- Alternative without change: read the check output on every commit. · Risk: low · Tests: `tests/toc_spec.lua` case.
 
 ### F16 · PaTiTank: highlight lost enemies on their nameplates — low
 - Problem: the aggro monitor lists lost enemies, but their nameplates are not marked.
@@ -78,3 +72,19 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
   appear and vanish, and secure attributes cannot change in combat, so rows would target the wrong enemy mid-fight.
 - Possible: only rows backed by a stable token (e.g. `party1target`) — a partial feature; owner decides whether that is worth it.
 - Never: automatic targeting or taunting.
+
+### F18 · No LICENSE in any repo — high for distribution · decision needed
+- Problem: the public repos have no license, so nobody may legally reuse or redistribute the code; CurseForge and Wago
+  ask for a license when a project is created.
+- Owner decision: which license (common for WoW addons: MIT, GPL-3.0, or "All Rights Reserved"). Then add the same
+  `LICENSE` to every repo (not into the release zip) and name it in the READMEs.
+- Risk: none technically · Blocks: public distribution (RELEASE.md distribution checklist).
+
+### F19 · Addon icons / logos — low
+- Problem: only PaTiAuras has `Media/icon.tga` (`## IconTexture`); platforms want a logo per project.
+- Smallest solution: one icon per addon in `Media/` + `## IconTexture`; the package already ships `Media/`.
+
+### F20 · PaTiHeal reads dispellable debuffs on every UNIT_HEALTH — low
+- Problem: the unit-event handler repaints the dispel icons (an aura scan) also on UNIT_HEALTH/UNIT_POWER_UPDATE of
+  party units, though debuffs only change with UNIT_AURA/UNIT_CONNECTION/UNIT_FLAGS. HoT icons already skip those events.
+- Smallest solution: the same event filter for `paintDispels`. · Risk: low · Tests: busy fight, dispel icons still appear.

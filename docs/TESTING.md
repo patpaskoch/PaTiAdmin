@@ -8,9 +8,10 @@
 | luacheck | undefined/unused variables, forbidden globals (per-addon allow list) | `luacheck` + `.luacheckrc` |
 | tests | `tests/*_spec.lua` of the repo | `tools/lua/test.lua` (busted-compatible subset) |
 | locales | enUS present, no unknown/duplicate keys, files load, values are strings; untranslated = warning | `tools/lua/locales.lua` |
-| toc | Interface/Title/Version (SemVer), SavedVariables names, every referenced file exists (incl. XML includes), no stray characters, unloaded `.lua` files (warning) | `tools/lua/toc.lua` |
+| toc | Interface/Title/Version (SemVer), SavedVariables names, every referenced file exists (incl. XML includes), no stray characters, no `Dependencies`/`OptionalDeps` on PaTi addons, every `.lua` outside `tests/` is loaded (error); missing Notes/Author (warning) | `tools/lua/toc.lua` |
 | shared | `Shared/` matches its `.manifest` (no hand edits) | bash |
-| package | release file list can be built | `tools/package.sh --dry-run` |
+| ci-file / release | `.github/workflows/ci.yml` and (addons) `release.yml` equal the templates | bash |
+| package | a real zip is built in a temp folder: one folder `<Addon>/`, TOC inside, content = package list, no development files | `tools/package.sh --verify` |
 
 ```
 PaTiAdmin/tools/check.sh                       # everything next to PaTiAdmin
@@ -30,10 +31,12 @@ Results: PASS / FAIL / SKIP (tool missing locally) / NONE (nothing to check yet)
 - What to test: defaults/config, SavedVariables migrations (old table in → new table out, no data lost),
   version parsing, locale lookup/fallback, protocol encode/decode/validation, quest comparison,
   state transformations, pure helpers.
-- Current coverage: PaTiAdmin tools (TOC parser incl. the `` `r`n `` regression, locale validator), PaTiShared locale
-  handling, PaTiHeal (bindings → attributes, migration, ranks, health percent), PaTiAuras (states, config, spellbook,
-  unreadable auras → UNKNOWN), PaTiGroup (settings, marker slots, secret-value helpers, 1/true flags), PaTiTank (migration, threat value),
-  PaTiQuest (migration, quest lines), PaTiDungeon (migration, status incl. 1/nil flags).
+- Current coverage: PaTiAdmin tools (TOC parser incl. the `` `r`n `` regression, release rules, changelog sections,
+  locale validator), PaTiShared locale handling, PaTiHeal (bindings → attributes, migration incl. HoT settings, ranks,
+  health percent, secret-value helpers, profiles, HoT matching/texts), PaTiAuras (states, config, spellbook, profiles,
+  unreadable auras → UNKNOWN, secret names/flags, Priest healing auras), PaTiGroup (settings, marker slots, secret-value
+  helpers, 1/true flags), PaTiTank (migration, collapse, threat value, aggro states, threat adapter with mocks),
+  PaTiQuest (migration, collapse, quest lines), PaTiDungeon (migration, collapse, status incl. 1/nil flags).
 
 ## Regression rule
 
@@ -56,3 +59,34 @@ Owner runs them in the client after `/reload`; agents list which are needed, nev
 | Aggro monitor (PaTiTank) | `/pt test` shows 5 / 6, Ghoul → Healer, Zombie barely held; real pull with 3+ enemies: counts match, a mob on the healer shows "→ Healer" within ~1 s, dead enemies disappear, no Lua errors in combat; `/pt debug` aggro line |
 | Collapse (all six) | ••• → Collapse/Expand; state survives `/reload`; Heal/Group/Auras: entry disabled in combat |
 | SavedVariables | settings survive `/reload` and relog; old saved files load after an update |
+| HoTs & shields (PaTiHeal) | Shaman/Priest: `/ph auras` lists IDs; own HoT/shield icon on the frame with charges/timer; another healer's does not show; right/below setting; click dispel on a chosen combination |
+| Key binding note (PaTiGroup) | the path shown in the settings is the real one in this client (report the real path) |
+
+## Fresh install test
+
+"Does the downloaded zip work like for a stranger?" Per addon, once per release candidate:
+
+1. Build the zip: `PaTiAdmin/tools/package.sh ../PaTiAddons/<Addon>` (or take it from the draft release).
+2. Unpack it: exactly one folder `<Addon>/` must appear, with `<Addon>.toc` directly inside.
+3. Move every PaTi folder out of `Interface/AddOns/` (keep `WTF/` — or also test once with its SavedVariables removed).
+4. Copy only `<Addon>/` into `Interface/AddOns/`, start WoW, enable only this addon.
+5. Login: the addon is listed with its description and loads; no Lua error.
+6. `/reload`; open the main window and the settings (`/<cmd> settings`); `/<cmd> test`; no Lua error.
+
+**Independence test:** the fresh install test once for each addon alone (PaTiHeal, PaTiAuras, PaTiTank, PaTiGroup,
+PaTiQuest, PaTiDungeon). **Combined test:** all six together: every window opens, every slash command answers the right
+addon (`/ph /pa /pt /pg /ptg /phq /pd`), each settings window saves its own values, no Lua or taint error.
+
+## Short in-game list (per release candidate)
+
+Priority: 1 loads · 2 UI · 3 main feature · 4 combat · 5 `/reload` · 6 SavedVariables · 7 all addons together · 8 Lua/taint.
+
+| Addon | Checks |
+|---|---|
+| all | fresh install alone loads, no Lua error · ••• menu entries · settings open/save · Collapse survives `/reload` · test mode |
+| PaTiHeal | each bound click casts on the clicked frame · own HoT/shield icons · dispel icon + click dispel · member joins/leaves in combat · Collapse/Hide greyed out in combat |
+| PaTiAuras | own class profile shows; toggling an aura hides it · group buff click buffs the named member, one cast per click · in combat target stays · UNKNOWN never shows as Missing |
+| PaTiTank | pull 3+ mobs: `x / y` matches, a mob on the healer shows "Healer" within ~1 s, dead mobs vanish · `/pt debug` aggro line |
+| PaTiGroup | each marker + Clear on a target, Reset All · key bindings at the path shown in the settings · no key/macro created · bar not changeable in combat |
+| PaTiQuest | selecting another quest updates the window |
+| PaTiDungeon | entering a dungeon / joining a group / combat updates the window |

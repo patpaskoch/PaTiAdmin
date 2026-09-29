@@ -14,19 +14,20 @@ abstraction · existing patterns before new patterns · no bloat.**
 ## 2. Repository layout (seven Git repos side by side)
 
 ```
-C:\Users\patpa\code\                     (not a repo; macOS: same layout under ~/code)
+<code>/                                  (any folder, not a repo; e.g. ~/code)
 ├── PaTiAdmin/     THIS repo: rules, docs, tools, CI templates, suite status (public)
 ├── PaTiShared/    design system + UI components, embedded into addons (not a WoW addon)
 └── PaTiAddons/
-    ├── PaTiHeal/     healer party frames + manual click casting (secure)   /ph
-    ├── PaTiTank/     own health, target, threat bar                        /pt
+    ├── PaTiHeal/     healer party frames, click casting (secure), HoTs, dispels /ph
+    ├── PaTiTank/     own health, target threat, aggro control monitor      /pt
     ├── PaTiGroup/    raid markers (secure), ready check, pull timer        /pg /ptg /patigroup
     ├── PaTiQuest/    selected quest + objectives                           /phq
     ├── PaTiDungeon/  instance, group and combat status                     /pd
     └── PaTiAuras/    aura/buff watch (optional, standalone)                  /pa /patiauras
 ```
 Each addon repo: `<Addon>.toc`, `<Addon>.lua` (+ `Logic.lua` and further files per responsibility), `Locales/`,
-embedded `Shared/`, `tests/`, `README.md`, `CHANGELOG.md`, `AGENTS.md`, `.github/workflows/ci.yml`.
+embedded `Shared/`, `tests/`, `README.md`, `CHANGELOG.md`, `AGENTS.md`, `.github/workflows/ci.yml` + `release.yml`,
+`.github/ISSUE_TEMPLATE/`. Releases (zip, tags, beta rules): [`docs/RELEASE.md`](docs/RELEASE.md).
 Installed copies in `...\_classic_beta_\Interface\AddOns\` are **test targets only, never a source**.
 Architecture and data flow: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 
@@ -126,7 +127,8 @@ Alternative without refactor · Risk · Tests needed · Priority, and ask the ow
 
 ## 13. Testing
 
-- `tools/check.sh` = syntax, luacheck, unit tests, locales, TOC/file references, Shared/ integrity, package dry run.
+- `tools/check.sh` = syntax, luacheck, unit tests, locales, TOC/file references, workflow templates, Shared/ integrity,
+  release zip (built and checked).
   Same script in CI. Run it before every commit. See [`docs/TESTING.md`](docs/TESTING.md).
 - Unit-test pure logic: config/defaults, SavedVariables migrations, version parsing, localization,
   protocol encode/decode, quest comparison, state transformations. Specs: `tests/*_spec.lua` (busted-style).

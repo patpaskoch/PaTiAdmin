@@ -1,13 +1,15 @@
 # Architecture
 
-State of 2026-09-28 (code on `main`). Update this file when an addon's structure, SavedVariables, events or secure frames change.
+State of 2026-09-29 (code on `main`). Update this file when an addon's structure, SavedVariables, events or secure frames change.
 
 ## Suite shape
 
 - Eight repos (see `AGENTS.md` §2). No monorepo, no submodules, no runtime dependency between addons.
 - **PaTiShared 0.3.0** (UI design system) is embedded per addon under `Shared/` via `sync-shared.sh`
   (`PaTiShared/README.md`) in all six addons. The legacy `PaTiSharedPanel.lua` is gone.
-- **PaTiAdmin** holds rules, docs, the check/package tools and CI templates. It ships nothing to players.
+- **PaTiAdmin** holds rules, docs, the check/package tools and CI/release templates. It ships nothing to players.
+- **Releases:** one zip per addon with one folder `<Addon>/` (`tools/package.sh`, `docs/RELEASE.md`). PaTiShared and
+  PaTiAdmin are never installed by players.
 
 ## Data flow (target for new and changed code)
 
@@ -32,6 +34,7 @@ one `<Addon>.lua` with a clearly separated adapter function, window, settings, c
 | Window/move/lock | PaTiShared `UI.CreateWindow` + `window:Attach(DB)`: point + relativePoint + x/y, `DB.locked`, header drag | all |
 | Settings | lazily built `UI.CreateModal` (needs DB); sections, rows, `AddControls`, `Finish(restoreDefaults)` | all |
 | Collapse/Expand | `DB.collapsed` (default false, migration keeps a saved value), ••• menu entry, header-only window; restore defaults expands (PaTiHeal keeps it). With secure children the entry is disabled/blocked in combat | all |
+| Help note in settings | `modal:AddNote(title, highlight, text)` (PaTiShared): accent line, highlighted path, wrapped text — help, never a warning | Group (key bindings), Heal (click dispel) |
 | Combat guard | `if InCombatLockdown() then say("COMBAT_LOCKED") return end`; layout/attributes re-applied on `PLAYER_REGEN_ENABLED` | Heal, Group |
 | Secret values | `isSecret(v)` (issecretvalue) checked **before** any compare/test; widgets get raw values | all |
 | Missing APIs | `if C_X and C_X.Fn then` + `pcall(...)` | all |
@@ -40,17 +43,24 @@ one `<Addon>.lua` with a clearly separated adapter function, window, settings, c
 
 ## Addons
 
-### PaTiHeal 0.6.0 (+ [Unreleased]) — party frames + click casting
-- Files: `Shared/` → `Locales/` → `Logic.lua` (bindings → attributes, migration, health percent; pure, tested) →
-  `SpellBook.lua` (spells, ranks) → `Dispels.lua` (dispellable debuffs) → `PaTiHeal.lua` (rows, settings, menu, slash, events).
+### PaTiHeal 0.6.0 (+ [Unreleased]) — party frames, click casting, HoTs & shields, dispels
+- Files: `Shared/` → `Locales/` → `Logic.lua` (bindings → attributes, migration, health percent, secret-value helpers;
+  pure, tested) → `SpellBook.lua` (spells, ranks) → `Dispels.lua` (dispellable debuffs, filter HARMFUL|RAID) →
+  `Profiles/Shaman.lua`, `Profiles/Priest.lua` (data: healer auras + dispel spells) → `HoTs.lua` (own auras via
+  HELPFUL|PLAYER + pure matching/texts, tested) → `Settings.lua` (settings modal) → `PaTiHeal.lua` (rows, HoT icons,
+  menu, slash, events).
 - `PaTiHealDB` (per character), schema 2: point, relativePoint, x, y, locked, collapsed, language, showDispels,
-  bindings{LEFT..ALT_RIGHT = spellID}, bindingRanks{key = rank}; `Logic.Migrate` converts 0.6.0.
+  bindings{LEFT..ALT_RIGHT = spellID}, bindingRanks{key = rank}, hots{key = false}, hotPosition RIGHT|BELOW,
+  showHotTimers, showHotCharges (new keys get defaults, no schema step); `Logic.Migrate` converts 0.6.0.
+- HoTs & shields: up to 3 plain icons per row (charges first, else timer; 0.5 s redraw only while a timer shows),
+  right of the health bar or in the bottom line. Click dispel = the profile's dispel spells in the click-casting list;
+  no combination preset. Independent of PaTiAuras by design (duplicated spell data accepted).
 - Secure: `PaTiHealUnit1..5` (`SecureUnitButtonTemplate`, player + party1–4). `applyBindings()` writes every owned
   attribute out of combat; visibility via `RegisterUnitWatch`; collapse/hide/test mode blocked in combat.
 - Rows: name in class colour, health in percent (raw value when secret), tank = accent stripe, up to two dispel icons.
 - Events: UNIT_HEALTH/UNIT_POWER_UPDATE/UNIT_CONNECTION/UNIT_FLAGS/UNIT_AURA repaint one row; GROUP_ROSTER_UPDATE,
   PLAYER_REGEN_ENABLED, SPELLS_CHANGED (rescan ranks), PLAYER_ENTERING_WORLD.
-- Slash `/ph`, `/patiheal`: settings, test, show, hide, lock, unlock, spells, debug.
+- Slash `/ph`, `/patiheal`: alone = show/hide, settings, test, show, hide, lock, unlock, reset, spells, auras, debug, version.
 
 ### PaTiAuras 0.1.0 — aura and buff watch, standalone and optional
 - Files: `Shared/` → `Locales/` → `Config.lua` (DB defaults, pure) → `SpellBook.lua` (copy of PaTiHeal's) → `Auras.lua`
@@ -65,7 +75,8 @@ one `<Addon>.lua` with a clearly separated adapter function, window, settings, c
 - Secure: `PaTiAurasBuff1..4` (SecureActionButtonTemplate, `type1=spell`, `unit`, `spell1` = single-target buff) over the
   group lines; target = `Auras.NextTarget` (missing, alive, online, visible), set out of combat only. In combat the
   target stays; window size/visibility/scale wait for PLAYER_REGEN_ENABLED. Group section first (fixed rows).
-- Group buffs also solo. Planned: optional `PaTiAurasAPI` for PaTiHeal. Test mode uses the class profile.
+- Group buffs also solo. Priest healing auras: Renew, Power Word: Shield, Prayer of Mending. No runtime API to PaTiHeal
+  (owner decision 2026-09-28). Test mode uses the class profile.
 - Slash `/pa`, `/patiauras`.
 
 ### PaTiGroup 0.4.0 (+ [Unreleased]) — markers, ready check, pull timer
@@ -77,6 +88,7 @@ one `<Addon>.lua` with a clearly separated adapter function, window, settings, c
   (`type=macro`, `macrotext` /tm), invisible binding buttons on UIParent (`PaTiGroupQuickSkull`, `PaTiGroupBindMarker1..7`,
   `PaTiGroupBindClear`). Layout only out of combat (`Bar.Layout` → pending until PLAYER_REGEN_ENABLED).
 - No macro creation, no automatic key binding, no SaveBindings. `DoReadyCheck`, `C_PartyInfo.DoCountdown` (leader/assist).
+- Settings: own "Key bindings" section with a help note (`AddNote`) naming the WoW key binding menu path.
 - Slash `/pg`, `/ptg`, `/patigroup`.
 
 ### PaTiTank 0.1.0 (+ [Unreleased]) — own health, target, threat, aggro control

@@ -18,9 +18,9 @@
 ## Daily loop
 
 ```
-edit in C:\Users\patpa\code\...           (never in the WoW AddOns folder)
+edit in <code>/...                        (your clone folder; never in the WoW AddOns folder)
 PaTiAdmin/tools/check.sh <repo folder>    (or no argument = everything)
-copy the changed addon files to  D:\Users\patpa\Apps\wow\World of Warcraft\_classic_beta_\Interface\AddOns\<Addon>\
+copy the addon's package files (tools/package.sh --dry-run lists them) to <WoW>/_classic_beta_/Interface/AddOns/<Addon>/
 /reload in game, test, note what you tested
 commit (one topic), CHANGELOG under [Unreleased] if user-visible
 ```
