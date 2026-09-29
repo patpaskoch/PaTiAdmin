@@ -16,7 +16,7 @@ jobs:
 
       - name: Check out the public addon repos next to PaTiAdmin
         run: |
-          for addon in PaTiHeal PaTiTank PaTiGroup PaTiQuest PaTiDungeon PaTiAuras; do
+          for addon in PaTiHeal PaTiTank PaTiGroup PaTiQuest PaTiDungeon PaTiAuras PaTiAlerts; do
             git clone --depth 1 "https://github.com/patpaskoch/$addon.git" "PaTiAddons/$addon"
           done
 
