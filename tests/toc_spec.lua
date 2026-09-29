@@ -108,3 +108,27 @@ describe("release rules", function()
         assert.equal(4, #problems)
     end)
 end)
+
+describe("IconTexture", function()
+    local function validate(icon, files)
+        files["PaTiDemo.toc"] = "## Interface: 16001\n## Title: D\n## Notes: n\n## Author: a\n## Version: 0.1.0\n## IconTexture: "
+            .. icon .. "\nPaTiDemo.lua\n"
+        files["PaTiDemo.lua"] = "-- code"
+        return toc.validate("PaTiDemo", reader(files), "16001")
+    end
+
+    it("accepts a texture inside the addon (extension optional) and ships it", function()
+        local errors, _, referenced = validate([[Interface\AddOns\PaTiDemo\Media\icon]], { ["Media/icon.tga"] = "tga" })
+        assert.same({}, errors)
+        assert.is_true(referenced["Media/icon.tga"])
+    end)
+
+    it("rejects a missing texture and a texture of another addon", function()
+        assert.equal(1, #validate([[Interface\AddOns\PaTiDemo\Media\icon]], {}))
+        assert.equal(1, #validate([[Interface\AddOns\PaTiAuras\Media\icon]], { ["Media/icon.tga"] = "tga" }))
+    end)
+
+    it("never packages assets/ or the LICENSE", function()
+        assert.equal(2, #toc.forbiddenFiles({ "assets/icon-1024.png", "LICENSE", "Media/icon.tga" }))
+    end)
+end)

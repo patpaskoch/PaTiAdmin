@@ -110,13 +110,30 @@ function M.validate(addonName, readFile, expectedInterface)
         end
     end
     for _, entry in ipairs(toc.files) do visit(entry.path, tocName .. " line " .. entry.line) end
+    -- AddOns list icon: must be a texture inside this addon (Interface\AddOns\<Addon>\path, extension optional).
+    if meta.IconTexture then
+        local prefix = "interface/addons/" .. addonName:lower() .. "/"
+        local path = normalize(meta.IconTexture)
+        if path:lower():sub(1, #prefix) ~= prefix then
+            errors[#errors + 1] = ("%s: ## IconTexture %s is not inside %s"):format(tocName, meta.IconTexture, addonName)
+        else
+            local file, found = path:sub(#prefix + 1), nil
+            for _, candidate in ipairs({ file, file .. ".tga", file .. ".blp", file .. ".png" }) do
+                if readFile(candidate) then found = candidate break end
+            end
+            if found then referenced[found] = true
+            else errors[#errors + 1] = ("%s: ## IconTexture %s: texture file not found"):format(tocName, meta.IconTexture) end
+        end
+    end
     -- Loaded by WoW by name, without a TOC entry.
     if readFile("Bindings.xml") then referenced["Bindings.xml"] = true end
     return errors, warnings, referenced
 end
 
 -- Files that must never reach a player's AddOns folder, even if a TOC referenced them by mistake.
-local FORBIDDEN = { "^tests/", "^%.github/", "^%.git/", "^tools/", "^scripts/", "%.md$", "%.sh$", "%.zip$", "^Shared/%.manifest$" }
+-- assets/ = platform/marketing images (GitHub, CurseForge, Wago); the client only needs Media/.
+local FORBIDDEN = { "^tests/", "^%.github/", "^%.git/", "^tools/", "^scripts/", "^assets/", "%.md$", "%.sh$", "%.zip$",
+    "^LICENSE", "^Shared/%.manifest$" }
 
 -- Release problems of a file list (paths relative to the addon folder): forbidden development files.
 function M.forbiddenFiles(paths)

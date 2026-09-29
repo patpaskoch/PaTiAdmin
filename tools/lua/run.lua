@@ -61,7 +61,7 @@ elseif command == "toc" or command == "package-list" then
             for path in pairs(referenced) do list[#list + 1] = path end
             -- Assets are not listed in the TOC; ship Media/ as a whole.
             for _, path in ipairs(stdinFiles()) do
-                if path:match("^Media/") then list[#list + 1] = path end
+                if path:match("^Media/") and not referenced[path] then list[#list + 1] = path end
             end
             table.sort(list)
             local forbidden = toc.forbiddenFiles(list)
