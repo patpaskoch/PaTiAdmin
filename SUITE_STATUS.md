@@ -14,11 +14,12 @@ Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md).
 | PaTiGroup | 0.4.0 + [Unreleased] | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
 | PaTiQuest | 0.1.0 + [Unreleased] | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
 | PaTiDungeon | 0.1.0 + [Unreleased] | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
+| PaTiAlerts | 0.1.0 (neu) | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
 
-✅ = erledigt und geprüft · ⏳ = offen. Lizenz: MIT in allen acht Repos. Icons: PaTiSuite-Set in allen sechs Addons
+✅ = erledigt und geprüft · ⏳ = offen. Lizenz: MIT in allen neun Repos. Icons: PaTiSuite-Set in sechs Addons (PaTiAlerts: Design-Aufgabe F23)
 (`Media/icon.tga` im Spiel, `assets/` für Plattformen) — im Spiel noch nicht gesehen.
 
-## Alle sechs Addons
+## Alle sieben Addons
 - Eigenständig: keine Abhängigkeit untereinander (TOC-Prüfung erzwingt das), eigene SavedVariables, eigene Slash-Befehle
 - PaTiShared-Oberfläche 0.3.0 eingebettet; `•••`-Menü mit Einstellungen, Sperren, Ein-/Ausklappen (gespeichert),
   Testmodus, Ausblenden; Position gespeichert; Sprachen enUS/deDE (zhCN/zhTW/koKR → Englisch außer Menütexten)
@@ -65,6 +66,14 @@ Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md).
 - Funktion: ausgewählte Quest mit Zielen · Instanz, Gruppe, Kampfstatus
 - Tests: 7 bzw. 8 Unit-Tests
 - Offen im Spiel: alles seit der Umstellung
+
+## PaTiAlerts (TOC 0.1.0, neu)
+- Funktion: „Was braucht gerade meine Aufmerksamkeit?“ — offene Probleme aus PaTiTank (Aggro, gleiche Nummer wie
+  Panel und Namensschild), PaTiAuras (fehlende/auslaufende eigene Buffs und Waffenbuffs), PaTiHeal (bannbare Debuffs);
+  rot/gelb/blau, kurzes einmaliges Hervorheben, automatisch ausblenden, Filter nach Quelle und Priorität
+- Optionaler Empfänger: kein Addon braucht PaTiAlerts; Producer melden nur, wenn `PaTiAlertsAPI` existiert
+- Tests: 17 Unit-Tests, Smoke-Tests mit PaTiTank und PaTiHeal (Mocks)
+- Offen im Spiel: alles
 
 ## PaTiShared 0.3.0 (Entwicklungsquelle, kein WoW-Addon, wird nicht veröffentlicht)
 - Fenster, Menü, Modal (mit `AddNote`), Button, Dropdown, Checkbox, Popup, Tooltip, Badge, Aura-Icon; 7 Unit-Tests

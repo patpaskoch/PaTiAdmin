@@ -58,8 +58,8 @@ Owner runs them in the client after `/reload`; agents list which are needed, nev
 | Group/dungeon | real party: roster changes, offline/dead members, ready check, pull timer, instance change |
 | Aggro monitor (PaTiTank) | `/pt test` shows 5 / 6, Ghoul → Healer, Zombie barely held; real pull with 3+ enemies: counts match, a mob on the healer shows "→ Healer" within ~1 s, dead enemies disappear, no Lua errors in combat; `/pt debug` aggro line |
 | Numbered nameplates (PaTiTank) | pull 3+ enemies, one on the healer, one on a DPS: panel `1 A → Healer`, `2 B → DD`; exactly A carries a red "1", B a "2"; with two same-named enemies the numbers still match; clicking the "1" plate targets A (no taunt, no target change by itself); number gone when aggro is back / the enemy dies / its plate disappears; a new enemy on a reused `nameplateN` never shows an old number; `/pt test` shows `1 Ghoul`, `2 Zombie` without plate overlays; no Lua errors, taint log has no PaTiTank entry |
-| Icons (all six) | icon shows in the AddOns list (no white/missing texture, no path error), readable at small size |
-| Collapse (all six) | ••• → Collapse/Expand; state survives `/reload`; Heal/Group/Auras: entry disabled in combat |
+| Icons (all six; PaTiAlerts has none yet) | icon shows in the AddOns list (no white/missing texture, no path error), readable at small size |
+| Collapse (all seven) | ••• → Collapse/Expand; state survives `/reload`; Heal/Group/Auras: entry disabled in combat |
 | SavedVariables | settings survive `/reload` and relog; old saved files load after an update |
 | HoTs & shields (PaTiHeal) | Shaman/Priest: `/ph auras` lists IDs; own HoT/shield icon on the frame with charges/timer; another healer's does not show; right/below setting; click dispel on a chosen combination |
 | Key binding note (PaTiGroup) | the path shown in the settings is the real one in this client (report the real path) |
@@ -76,8 +76,8 @@ Owner runs them in the client after `/reload`; agents list which are needed, nev
 6. `/reload`; open the main window and the settings (`/<cmd> settings`); `/<cmd> test`; no Lua error.
 
 **Independence test:** the fresh install test once for each addon alone (PaTiHeal, PaTiAuras, PaTiTank, PaTiGroup,
-PaTiQuest, PaTiDungeon). **Combined test:** all six together: every window opens, every slash command answers the right
-addon (`/ph /pa /pt /pg /ptg /phq /pd`), each settings window saves its own values, no Lua or taint error.
+PaTiQuest, PaTiDungeon, PaTiAlerts). **Combined test:** all seven together: every window opens, every slash command answers the right
+addon (`/ph /pa /pt /pg /ptg /phq /pd /pal`), each settings window saves its own values, no Lua or taint error.
 
 ## Short in-game list (per release candidate)
 
@@ -93,3 +93,8 @@ Priority: 1 loads · 2 UI · 3 main feature · 4 combat · 5 `/reload` · 6 Save
 | PaTiGroup | each marker + Clear on a target, Reset All · key bindings at the path shown in the settings · no key/macro created · bar not changeable in combat |
 | PaTiQuest | selecting another quest updates the window |
 | PaTiDungeon | entering a dungeon / joining a group / combat updates the window |
+| PaTiAlerts alone | loads, `/pal test` shows red/yellow/blue lines, move/lock/scale/collapse, settings saved after `/reload`, auto-hide when empty and locked |
+| PaTiAlerts + PaTiTank | pull 3+ mobs: `1 A → Healer` appears in PaTiTank and PaTiAlerts, "1" on A's nameplate; same-named enemies; aggro back / enemy dies → line gone |
+| PaTiAlerts + PaTiAuras | missing watched buff / weapon imbue → line; active → gone; unclear never as missing |
+| PaTiAlerts + PaTiHeal | member with a dispellable debuff → blue line; dispelled → gone |
+| Without PaTiAlerts | PaTiTank, PaTiAuras, PaTiHeal each without PaTiAlerts: unchanged, no Lua error |

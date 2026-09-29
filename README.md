@@ -11,6 +11,7 @@ Dieses öffentliche Repository enthält die Arbeitsregeln, den Entwicklungsstand
 | PaTiHeal | https://github.com/patpaskoch/PaTiHeal | Gruppenanzeige und manuelle Klickzauber |
 | PaTiTank | https://github.com/patpaskoch/PaTiTank | Gesundheits- und Bedrohungsanzeige |
 | PaTiAuras | https://github.com/patpaskoch/PaTiAuras | Auren-/Buff-Anzeige (optional, eigenständig), 0.1.0 |
+| PaTiAlerts | https://github.com/patpaskoch/PaTiAlerts | offene Probleme der anderen Addons (optionaler Empfänger), 0.1.0 |
 
 Die Addons werden in einem gemeinsamen Code-Ordner entwickelt und zum Testen in den WoW-AddOns-Ordner kopiert.
 Stand und Release-Reife: [`SUITE_STATUS.md`](SUITE_STATUS.md) · Release, Beta, Veröffentlichung: [`docs/RELEASE.md`](docs/RELEASE.md).

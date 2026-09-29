@@ -6,7 +6,7 @@ State of 2026-09-29 (code on `main`). Update this file when an addon's structure
 
 - Eight repos (see `AGENTS.md` §2). No monorepo, no submodules, no runtime dependency between addons.
 - **PaTiShared 0.3.0** (UI design system) is embedded per addon under `Shared/` via `sync-shared.sh`
-  (`PaTiShared/README.md`) in all six addons. The legacy `PaTiSharedPanel.lua` is gone.
+  (`PaTiShared/README.md`) in all seven addons. The legacy `PaTiSharedPanel.lua` is gone.
 - **PaTiAdmin** holds rules, docs, the check/package tools and CI/release templates. It ships nothing to players.
 - **Releases:** one zip per addon with one folder `<Addon>/` (`tools/package.sh`, `docs/RELEASE.md`). PaTiShared and
   PaTiAdmin are never installed by players.
@@ -129,6 +129,21 @@ one `<Addon>.lua` with a clearly separated adapter function, window, settings, c
 - `PaTiDungeonDB`, schema 1 (as Tank). Events: PLAYER_LOGIN, PLAYER_ENTERING_WORLD, GROUP_ROSTER_UPDATE,
   ZONE_CHANGED_NEW_AREA, PLAYER_REGEN_DISABLED/ENABLED (rare → full repaint). API `GetInstanceInfo`, `IsInInstance`.
 - Slash `/pd`, `/patidungeon`.
+
+### PaTiAlerts 0.1.0 — open problems reported by the other addons (optional receiver)
+- Files: `Shared/` → `Locales/` → `Logic.lua` (settings, auto-hide rule; pure, tested) → `State.lua` (alert store;
+  pure, tested) → `PaTiAlerts.lua` (window, `PaTiAlertsAPI`, settings, commands).
+- `PaTiAlertsDB`, schema 1: position, locked, collapsed, scale, language, autoHide, pulseNew, sourceFilters,
+  priorityFilters. Alerts are never saved. No secure frames; rows are not clickable.
+- API v1 (`_G.PaTiAlertsAPI`, the one cross-addon global, AGENTS.md §3): `Sync(source, list)` (preferred: the
+  producer's complete current list), `Upsert(alert)`, `Remove(source, id)`, `ClearSource(source)`; all pcall-guarded.
+  Key = source + id. Alert = { id, priority CRITICAL|WARNING|INFO (unknown → INFO), kind, text | name, detail?, number? };
+  plain strings checked for secrecy first, `name` may be secret (SetText only). Order: priority, then first seen.
+- Producers (V1): PaTiTank (`Aggro.Alerts`: LOST → CRITICAL AGGRO_LOST, DANGER → WARNING AGGRO_DANGER, same number as
+  panel + nameplate), PaTiAuras (`Auras.Alerts`: personal buffs + weapon imbues MISSING/EXPIRING → WARNING; UNKNOWN
+  never), PaTiHeal (`Logic.DispelAlerts`: dispellable debuff → INFO DISPELLABLE). Each sends after its normal refresh,
+  so load order does not matter; while PaTiAlerts exists, a collapsed Tank/Heal keeps scanning.
+- Slash `/pal`, `/palerts`.
 
 ## Decisions
 

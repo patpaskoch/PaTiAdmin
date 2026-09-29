@@ -38,7 +38,7 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
 - Approach: correct ID after verifying in this client (docs/WOW_API_COMPAT.md). Product data change → owner decision.
 
 ### F11 · Slash command sets — low (not release-critical)
-- Status 2026-09-29: all six addons answer `show, hide, test, lock, unlock, reset, settings, debug, version`, and the
+- Status 2026-09-29: all seven addons answer `show, hide, test, lock, unlock, reset, settings, debug, version`, and the
   command alone shows/hides the window. Extras on purpose: PaTiHeal `spells, auras`; PaTiAuras `auras, about, changelog`;
   PaTiGroup `toggle, about, changelog`. `/phq` (PaTiQuest) and `/ptg` (PaTiGroup) stay as compatibility aliases.
 - Open: `toggle` exists only in PaTiGroup. Add it elsewhere only if players ask for it.
@@ -74,6 +74,11 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
 - Next step: owner runs `/pa auras` with each imbue on and reports `enchantID`; then a small `enchantID → spell` table
   in the Shaman profile and an optional "wanted imbue per slot" setting. No guessing IDs before that.
 
-### F22 · PaTiAuras → PaTiAlerts (weapon imbue missing) — decision needed
-- PaTiAlerts does not exist. If it is ever built, PaTiAuras could report `WEAPON_IMBUE_MISSING` (WARNING) through an
-  optional `if PaTiAlertsAPI then … end` — no dependency, no OptionalDeps, UNKNOWN never as missing.
+### F22 · More PaTiAlerts producers — low
+- V1 (2026-09-29): PaTiTank (aggro), PaTiAuras (personal buffs, weapon imbues), PaTiHeal (dispellable debuffs).
+- Candidates when a concrete need appears: PaTiAuras group buffs (risk: noise after deaths), PaTiGroup/PaTiQuest/
+  PaTiDungeon — none invented yet. Clickable alert rows only for a safe action (e.g. open settings), never Lua casts.
+
+### F23 · PaTiAlerts icon — OWNER / DESIGN TASK
+- The approved PaTiSuite icon sheet has no PaTiAlerts icon. Needed: a matching icon (same frame and style); then
+  `Media/icon.tga` + `## IconTexture` + `assets/` like the other six. PaTiAlerts is developed without one until then.

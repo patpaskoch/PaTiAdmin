@@ -11,7 +11,7 @@ PaTiSuite = small, independent World of Warcraft addons for one player/developer
 Principles, in this order: **small · focused · reliable · readable before clever · maintainability before
 abstraction · existing patterns before new patterns · no bloat.**
 
-## 2. Repository layout (seven Git repos side by side)
+## 2. Repository layout (nine Git repos side by side: PaTiAdmin, PaTiShared, seven gameplay addons)
 
 ```
 <code>/                                  (any folder, not a repo; e.g. ~/code)
@@ -23,7 +23,8 @@ abstraction · existing patterns before new patterns · no bloat.**
     ├── PaTiGroup/    raid markers (secure), ready check, pull timer        /pg /ptg /patigroup
     ├── PaTiQuest/    selected quest + objectives                           /phq
     ├── PaTiDungeon/  instance, group and combat status                     /pd
-    └── PaTiAuras/    aura/buff watch (optional, standalone)                  /pa /patiauras
+    ├── PaTiAuras/    aura/buff watch (optional, standalone)                  /pa /patiauras
+    └── PaTiAlerts/   open problems reported by the others (optional receiver) /pal /palerts
 ```
 Each addon repo: `<Addon>.toc`, `<Addon>.lua` (+ `Logic.lua` and further files per responsibility), `Locales/`,
 embedded `Shared/`, `tests/`, `README.md`, `CHANGELOG.md`, `AGENTS.md`, `.github/workflows/ci.yml` + `release.yml`,
@@ -40,6 +41,10 @@ Architecture and data flow: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
   `PaTiShared/scripts/sync-shared.sh`. Never edit `<Addon>/Shared/` by hand (CI detects it).
 - Small duplication between addons is acceptable when it keeps them independent.
   Shared pattern ≠ shared runtime dependency.
+- Owner-approved exception (2026-09-29): **`PaTiAlertsAPI`**, the versioned global of PaTiAlerts, may be *read* by
+  producers (PaTiTank, PaTiAuras, PaTiHeal) — only as `local api = _G.PaTiAlertsAPI; if api and api.version == 1 …`,
+  calls wrapped in `pcall`, alerts re-sent on every normal refresh (no load-order assumptions). Without PaTiAlerts
+  nothing changes; PaTiAlerts never reads the producers. No other cross-addon global.
 
 ## 4. Before editing — every time
 

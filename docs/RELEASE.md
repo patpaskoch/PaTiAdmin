@@ -78,7 +78,7 @@ Prepared, not done — no accounts, no uploads without an explicit task.
 | Title | TOC `## Title` | ready |
 | Short description | TOC `## Notes` (+ `Notes-deDE`) | ready |
 | Long description | README (Features, Installation, Commands, Known limitations) | ready |
-| Logo / icon | PaTiSuite icon set: `assets/icon-{1024,512,256,128,64,32}.png` per addon (not packaged); in game `Media/icon.tga` + `## IconTexture`. Cut from the approved sheet at ~244 px, so 512/1024 are upscaled (no new detail) — use the original artwork if a sharper large image is needed | ready |
+| Logo / icon | PaTiAlerts: **none yet — OWNER / DESIGN TASK** (FOLLOW_UPS F23). Others: PaTiSuite icon set: `assets/icon-{1024,512,256,128,64,32}.png` per addon (not packaged); in game `Media/icon.tga` + `## IconTexture`. Cut from the approved sheet at ~244 px, so 512/1024 are upscaled (no new detail) — use the original artwork if a sharper large image is needed | ready |
 | Screenshots | shot list below | not taken |
 | Game version | WoW Forever 1.60.1 (build 70009), Interface 16001 — platforms may not list this client | to check per platform |
 | Release zip | `tools/package.sh` / release workflow | ready |
@@ -97,3 +97,4 @@ Prepared, not done — no accounts, no uploads without an explicit task.
 | PaTiGroup | marker bar with target · settings with the highlighted key binding note · WoW key binding menu with PaTiGroup |
 | PaTiQuest | selected quest with objectives |
 | PaTiDungeon | window inside a dungeon in a group |
+| PaTiAlerts | window with a red, a yellow and a blue alert during a pull · settings |
