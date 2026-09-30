@@ -79,6 +79,3 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
 - Candidates when a concrete need appears: PaTiAuras group buffs (risk: noise after deaths), PaTiGroup/PaTiQuest/
   PaTiDungeon — none invented yet. Clickable alert rows only for a safe action (e.g. open settings), never Lua casts.
 
-### F23 · PaTiAlerts icon — OWNER / DESIGN TASK
-- The approved PaTiSuite icon sheet has no PaTiAlerts icon. Needed: a matching icon (same frame and style); then
-  `Media/icon.tga` + `## IconTexture` + `assets/` like the other six. PaTiAlerts is developed without one until then.

@@ -16,7 +16,7 @@ Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md).
 | PaTiDungeon | 0.1.0 + [Unreleased] | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
 | PaTiAlerts | 0.1.0 (neu) | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
 
-✅ = erledigt und geprüft · ⏳ = offen. Lizenz: MIT in allen neun Repos. Icons: PaTiSuite-Set in sechs Addons (PaTiAlerts: Design-Aufgabe F23)
+✅ = erledigt und geprüft · ⏳ = offen. Lizenz: MIT in allen neun Repos. Icons: PaTiSuite-Set in allen sieben Addons
 (`Media/icon.tga` im Spiel, `assets/` für Plattformen) — im Spiel noch nicht gesehen.
 
 ## Alle sieben Addons

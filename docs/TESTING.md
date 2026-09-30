@@ -58,7 +58,7 @@ Owner runs them in the client after `/reload`; agents list which are needed, nev
 | Group/dungeon | real party: roster changes, offline/dead members, ready check, pull timer, instance change |
 | Aggro monitor (PaTiTank) | `/pt test` shows 5 / 6, Ghoul → Healer, Zombie barely held; real pull with 3+ enemies: counts match, a mob on the healer shows "→ Healer" within ~1 s, dead enemies disappear, no Lua errors in combat; `/pt debug` aggro line |
 | Numbered nameplates (PaTiTank) | pull 3+ enemies, one on the healer, one on a DPS: panel `1 A → Healer`, `2 B → DD`; exactly A carries a red "1", B a "2"; with two same-named enemies the numbers still match; clicking the "1" plate targets A (no taunt, no target change by itself); number gone when aggro is back / the enemy dies / its plate disappears; a new enemy on a reused `nameplateN` never shows an old number; `/pt test` shows `1 Ghoul`, `2 Zombie` without plate overlays; no Lua errors, taint log has no PaTiTank entry |
-| Icons (all six; PaTiAlerts has none yet) | icon shows in the AddOns list (no white/missing texture, no path error), readable at small size |
+| Icons (all seven) | icon shows in the AddOns list (no white/missing texture, no path error), readable at small size |
 | Collapse (all seven) | ••• → Collapse/Expand; state survives `/reload`; Heal/Group/Auras: entry disabled in combat |
 | SavedVariables | settings survive `/reload` and relog; old saved files load after an update |
 | HoTs & shields (PaTiHeal) | Shaman/Priest: `/ph auras` lists IDs; own HoT/shield icon on the frame with charges/timer; another healer's does not show; right/below setting; click dispel on a chosen combination |
