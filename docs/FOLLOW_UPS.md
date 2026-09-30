@@ -79,8 +79,6 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
 - Candidates when a concrete need appears: PaTiAuras group buffs (risk: noise after deaths), PaTiGroup/PaTiQuest/
   PaTiDungeon — none invented yet. Clickable alert rows only for a safe action (e.g. open settings), never Lua casts.
 
-### F24 · PaTiSuite icon — OWNER / DESIGN TASK
-- The control panel has no icon yet. Needed: one in the PaTiSuite style; then `Media/icon.tga` + `## IconTexture` + `assets/`.
 
 ### F25 · PaTiSuite presets (Healer, Tank, Questing) — low
 - Checked 2026-09-30: small on its own (a table name → windows to show, applied with the existing `Logic.SetAll`), but it
