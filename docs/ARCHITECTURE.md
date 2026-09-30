@@ -32,6 +32,8 @@ one `<Addon>.lua` with a clearly separated adapter function, window, settings, c
 | Chat output | `say(key, ...)` → `print("|cff68caff<Addon>:|r " .. L[key]:format(...))` | all |
 | Test mode | `testMode` local (not saved), fake data in the adapter, TEST badge via `window:SetTestMode`, secure buttons disabled | all |
 | Window/move/lock | PaTiShared `UI.CreateWindow` + `window:Attach(DB)`: point + relativePoint + x/y, `DB.locked`, header drag | all |
+| Opacity / snapping | `DB.opacity` (default 0.75, clamped 0.3–1; body only, header opaque) and `DB.snapWindows` (default true) in each addon's defaults; applied by `Attach`; settings via `UI.AddWindowSettings`; snap = `UI.SnapDelta` at drag end (12 px), never in combat, then the normal save | all |
+| Window registry | `_G.PaTiSuiteWindows[addonName] = window` (every `UI.CreateWindow`); `window.suiteSetShown(shown, → false if blocked)` = the addon's own `setShown(shown, quiet)` | all, read by PaTiSuite |
 | Settings | lazily built `UI.CreateModal` (needs DB); sections, rows, `AddControls`, `Finish(restoreDefaults)` | all |
 | Collapse/Expand | `DB.collapsed` (default false, migration keeps a saved value), ••• menu entry, header-only window; restore defaults expands (PaTiHeal keeps it). With secure children the entry is disabled/blocked in combat | all |
 | Help note in settings | `modal:AddNote(title, highlight, text)` (PaTiShared): accent line, highlighted path, wrapped text — help, never a warning | Group (key bindings), Heal (click dispel) |
@@ -144,6 +146,16 @@ one `<Addon>.lua` with a clearly separated adapter function, window, settings, c
   never), PaTiHeal (`Logic.DispelAlerts`: dispellable debuff → INFO DISPELLABLE). Each sends after its normal refresh,
   so load order does not matter; while PaTiAlerts exists, a collapsed Tank/Heal keeps scanning.
 - Slash `/pal`, `/palerts`.
+
+### PaTiSuite 0.1.0 — optional control panel
+- Files: `Shared/` → `Locales/` → `Logic.lua` (settings, window list, show/hide rules; pure, tested) → `PaTiSuite.lua`.
+- Reads `PaTiSuiteWindows` at PLAYER_LOGIN (all addons loaded, any load order) and follows state by post-hooks
+  (OnShow/OnHide). Show/hide via `frame:SetSuiteShown` → the addon's own rules: Heal, Auras, Group refuse in combat
+  (secure children) and PaTiSuite names them in one message; Tank, Quest, Dungeon, Alerts are fine in combat.
+  PaTiAlerts counts as shown unless hidden by the player (auto-hide aside). A protected frame without suite rules is
+  never touched in combat.
+- `PaTiSuiteDB`, schema 1: position, locked, scale, language, opacity, snapWindows. No test mode, no collapse.
+- Slash `/psuite`, `/patisuite`.
 
 ## Decisions
 

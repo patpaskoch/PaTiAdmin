@@ -90,6 +90,14 @@ own child frame of the plate). The player clicks that nameplate; Blizzard's own 
 | `C_NamePlate.GetNamePlateForUnit(unit)` returns the plate frame | assumed (PaTiTank markers) | pcall-guarded; missing API → no markers |
 | A child frame of a nameplate moves and hides with it and does not taint | assumed (PaTiTank markers) | taint log test required |
 
+## Window opacity, snapping, PaTiSuite (2026-09-30)
+
+| API / behaviour | Status | Notes |
+|---|---|---|
+| `SetBackdropColor` alpha on a frame with secure children, also in combat | assumed (all windows) | not a protected property; only changed from settings |
+| `GetLeft/GetTop/GetEffectiveScale` of another addon's frame; `SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", …)` after `StopMovingOrSizing` | assumed (snapping) | only out of combat |
+| `HookScript("OnShow"/"OnHide")` on another addon's window (also windows with secure children) | assumed (PaTiSuite) | post-hooks only, nothing secure is called |
+
 ## Rules that hold regardless of client
 
 - Protected functions and secure attributes: never during `InCombatLockdown()`.

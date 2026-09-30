@@ -15,14 +15,17 @@ Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md).
 | PaTiQuest | 0.1.0 + [Unreleased] | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
 | PaTiDungeon | 0.1.0 + [Unreleased] | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
 | PaTiAlerts | 0.1.0 (neu) | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
+| PaTiSuite | 0.1.0 (neu, Steuerung) | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
 
-✅ = erledigt und geprüft · ⏳ = offen. Lizenz: MIT in allen neun Repos. Icons: PaTiSuite-Set in allen sieben Addons
+✅ = erledigt und geprüft · ⏳ = offen. Lizenz: MIT in allen zehn Repos. Icons: PaTiSuite-Set in allen sieben Addons
 (`Media/icon.tga` im Spiel, `assets/` für Plattformen) — im Spiel noch nicht gesehen.
 
 ## Alle sieben Addons
 - Eigenständig: keine Abhängigkeit untereinander (TOC-Prüfung erzwingt das), eigene SavedVariables, eigene Slash-Befehle
 - PaTiShared-Oberfläche 0.3.0 eingebettet; `•••`-Menü mit Einstellungen, Sperren, Ein-/Ausklappen (gespeichert),
   Testmodus, Ausblenden; Position gespeichert; Sprachen enUS/deDE (zhCN/zhTW/koKR → Englisch außer Menütexten)
+- Fenster: einstellbare Deckkraft (30–100 %, Standard 75 %), Einrasten an anderen PaTi-Fenstern beim Verschieben
+  (abschaltbar, nie im Kampf), Registrierung für das optionale PaTiSuite-Steuerfenster
 - Befehle: allein = ein-/ausblenden, `show hide test lock unlock reset settings debug version`
 - Release: ZIP mit genau einem Ordner (inkl. Icon, ohne `assets/`/LICENSE), Entwurfs-Release per Tag `vX.Y.Z`,
   Bug-Report-Vorlage; Release-Workflow noch nie gelaufen (erst mit dem ersten Tag)
@@ -74,6 +77,12 @@ Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md).
 - Optionaler Empfänger: kein Addon braucht PaTiAlerts; Producer melden nur, wenn `PaTiAlertsAPI` existiert
 - Tests: 17 Unit-Tests, Smoke-Tests mit PaTiTank und PaTiHeal (Mocks)
 - Offen im Spiel: alles
+
+## PaTiSuite (TOC 0.1.0, neu)
+- Funktion: optionales Steuerfenster — installierte PaTi-Fenster einzeln oder alle anzeigen/ausblenden; im Kampf
+  gesperrte Fenster (Heal, Auras, Group) werden genannt und nicht angefasst. Keine Spiellogik
+- Tests: 7 Unit-Tests, Smoke-Test mit PaTiHeal + PaTiTank (Mocks)
+- Offen im Spiel: alles; Icon fehlt (F24)
 
 ## PaTiShared 0.3.0 (Entwicklungsquelle, kein WoW-Addon, wird nicht veröffentlicht)
 - Fenster, Menü, Modal (mit `AddNote`), Button, Dropdown, Checkbox, Popup, Tooltip, Badge, Aura-Icon; 7 Unit-Tests

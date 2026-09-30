@@ -77,7 +77,7 @@ Owner runs them in the client after `/reload`; agents list which are needed, nev
 
 **Independence test:** the fresh install test once for each addon alone (PaTiHeal, PaTiAuras, PaTiTank, PaTiGroup,
 PaTiQuest, PaTiDungeon, PaTiAlerts). **Combined test:** all seven together: every window opens, every slash command answers the right
-addon (`/ph /pa /pt /pg /ptg /phq /pd /pal`), each settings window saves its own values, no Lua or taint error.
+addon (`/ph /pa /pt /pg /ptg /phq /pd /pal /psuite`), each settings window saves its own values, no Lua or taint error.
 
 ## Short in-game list (per release candidate)
 
@@ -97,4 +97,7 @@ Priority: 1 loads · 2 UI · 3 main feature · 4 combat · 5 `/reload` · 6 Save
 | PaTiAlerts + PaTiTank | pull 3+ mobs: `1 A → Healer` appears in PaTiTank and PaTiAlerts, "1" on A's nameplate; same-named enemies; aggro back / enemy dies → line gone |
 | PaTiAlerts + PaTiAuras | missing watched buff / weapon imbue → line; active → gone; unclear never as missing |
 | PaTiAlerts + PaTiHeal | member with a dispellable debuff → blue line; dispelled → gone |
+| Panel opacity (all seven) | change it in the settings → body lighter/darker, header, texts, icons, bars unchanged; `/reload` keeps it |
+| Snapping | drag Heal next to Auras and Auras below Tank: edges meet (horizontal and vertical), `/reload` keeps the positions; snapping off → no snap; dragging a Heal/Auras/Group window is impossible in combat |
+| PaTiSuite | with one, two and all seven PaTi addons: only installed ones listed; click a line → window hides/shows; Show all / Hide all (panel stays); in combat Hide all → "Heal: not possible in combat", Tank still hides; `/reload`; without PaTiSuite everything as before |
 | Without PaTiAlerts | PaTiTank, PaTiAuras, PaTiHeal each without PaTiAlerts: unchanged, no Lua error |

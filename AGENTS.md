@@ -11,7 +11,7 @@ PaTiSuite = small, independent World of Warcraft addons for one player/developer
 Principles, in this order: **small · focused · reliable · readable before clever · maintainability before
 abstraction · existing patterns before new patterns · no bloat.**
 
-## 2. Repository layout (nine Git repos side by side: PaTiAdmin, PaTiShared, seven gameplay addons)
+## 2. Repository layout (ten Git repos side by side: PaTiAdmin, PaTiShared, seven gameplay addons, PaTiSuite)
 
 ```
 <code>/                                  (any folder, not a repo; e.g. ~/code)
@@ -24,7 +24,8 @@ abstraction · existing patterns before new patterns · no bloat.**
     ├── PaTiQuest/    selected quest + objectives                           /phq
     ├── PaTiDungeon/  instance, group and combat status                     /pd
     ├── PaTiAuras/    aura/buff watch (optional, standalone)                  /pa /patiauras
-    └── PaTiAlerts/   open problems reported by the others (optional receiver) /pal /palerts
+    ├── PaTiAlerts/   open problems reported by the others (optional receiver) /pal /palerts
+    └── PaTiSuite/    optional control panel: show/hide the others' windows   /psuite /patisuite
 ```
 Each addon repo: `<Addon>.toc`, `<Addon>.lua` (+ `Logic.lua` and further files per responsibility), `Locales/`,
 embedded `Shared/`, `tests/`, `README.md`, `CHANGELOG.md`, `AGENTS.md`, `.github/workflows/ci.yml` + `release.yml`,
@@ -36,7 +37,7 @@ Architecture and data flow: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 
 - Every addon must load and work with no other PaTi addon installed. No `## Dependencies`, no
   `## OptionalDeps` on PaTi addons, no reading another addon's globals or SavedVariables.
-- No runtime core/library addon. PaTiSuite (launcher) may come later and stays optional.
+- No runtime core/library addon. PaTiSuite is only an optional remote control (show/hide windows); nothing needs it.
 - Shared UI is **embedded**: PaTiShared is copied into `<Addon>/Shared/` by
   `PaTiShared/scripts/sync-shared.sh`. Never edit `<Addon>/Shared/` by hand (CI detects it).
 - Small duplication between addons is acceptable when it keeps them independent.
@@ -44,7 +45,11 @@ Architecture and data flow: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 - Owner-approved exception (2026-09-29): **`PaTiAlertsAPI`**, the versioned global of PaTiAlerts, may be *read* by
   producers (PaTiTank, PaTiAuras, PaTiHeal) — only as `local api = _G.PaTiAlertsAPI; if api and api.version == 1 …`,
   calls wrapped in `pcall`, alerts re-sent on every normal refresh (no load-order assumptions). Without PaTiAlerts
-  nothing changes; PaTiAlerts never reads the producers. No other cross-addon global.
+  nothing changes; PaTiAlerts never reads the producers.
+- Owner-approved (2026-09-30): **`PaTiSuiteWindows`** — `[addonName] = main window frame`, written by every embedded
+  PaTiShared (`UI.CreateWindow`), read for snapping and by PaTiSuite. Frames only: no settings, data or APIs.
+  Other addons' frames are only read (position, visibility) or shown/hidden through their own `SetSuiteShown`.
+  No other cross-addon global.
 
 ## 4. Before editing — every time
 
