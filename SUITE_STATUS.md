@@ -11,13 +11,13 @@ Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md).
 | Addon | Version (TOC) | Code | CI | Paket (ZIP geprüft) | Doku | Fresh Install | WoW-Test | Beta |
 |---|---|---|---|---|---|---|---|---|
 | PaTiHeal | 0.6.0 + [Unreleased] | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ teilweise (Klickzauber, Migration, Sprache) | Nein |
-| PaTiAuras | 0.1.0 | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ nur `/pa debug`, Priester-IDs | Nein |
+| PaTiAuras | 0.1.0 | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ teilweise; ❌ Waffenbuff aktiv wird nicht erkannt | Nein |
 | PaTiTank | 0.1.0 + [Unreleased] | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
 | PaTiGroup | 0.4.0 + [Unreleased] | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
 | PaTiQuest | 0.1.0 + [Unreleased] | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
 | PaTiDungeon | 0.1.0 + [Unreleased] | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
-| PaTiAlerts | 0.1.0 (neu) | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
-| PaTiSuite | 0.1.0 (neu, Steuerung) | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
+| PaTiAlerts | 0.1.0 (neu) | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ nur `/pal test` | Nein |
+| PaTiSuite | 0.1.0 (neu, Steuerung) | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ teilweise (Ein-/Ausblenden, Farben, Hover) | Nein |
 
 ✅ = erledigt und geprüft · ⏳ = offen. Lizenz: MIT in allen zehn Repos. Icons: PaTiSuite-Set in allen acht Addons (inkl. PaTiSuite)
 (`Media/icon.tga` im Spiel, `assets/` für Plattformen) — im Spiel noch nicht gesehen.
@@ -40,20 +40,22 @@ Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md).
 - Architektur: Logic (rein) · SpellBook · Dispels · Profiles · HoTs · Settings · PaTiHeal.lua (500 Zeilen, F13)
 - Tests: 34 Unit-Tests, Smoke-Tests mit Mocks
 - Im Spiel bestätigt: Laden ohne Lua-Fehler, alte Belegung übernommen, Links- und Shift+Rechts-Klickzauber,
-  Einstellungen, Sprachwahl nach `/reload`
+  Einstellungen, Sprachwahl nach `/reload`; 2026-09-30 Linksklick auf den eigenen Frame
 - Offen im Spiel: Ränge, bannbare Debuffs, HoTs/Schilde, Klick-Reinigen, Kampfverhalten, Spell-IDs (`/ph auras`)
 
 ## PaTiAuras
 - Funktion: eigene Buffs, Procs, Gruppenbuffs (auch solo, Click-to-Buff auf das nächste fehlende Mitglied),
   Heil-Auren pro Mitglied; jede Aura einzeln abschaltbar; Profile Schamane, Priester
 - Schamanen-Waffenbuffs (Waffenhand/Schildhand) als eigene Datenquelle; V1 ohne Imbue-Art. Im Spiel (2026-09-30):
-  Waffe an/aus wird erkannt, der Buff selbst zeigte „Unbekannt“ → Adapter korrigiert (klassisches Tupel zuerst),
-  noch nicht im Spiel geprüft
+  Waffe an/ab/an wird erkannt; ohne Imbue „Fehlt“ (kein „Unbekannt“ mehr), **aber aktiver Felsbeißer zeigt auch
+  „Fehlt“** (❌ PT-AURAS-053–055, 057). Ursache offen: `/pa debug` / `/pa auras` zeigen jetzt alle Rohwerte beider APIs,
+  eigene Buffs und die Tooltip-Zeilen — Ausgabe ohne und mit Felsbeißer nötig
 - Einstellungen: eine „Beobachten“-Auswahl statt Kategorie-Schaltern und doppelter Liste (Schema 2 mit Migration)
-- Tests: 71 Unit-Tests
-- Im Spiel bestätigt: `C_UnitAuras` und `issecretvalue` vorhanden (`/pa debug`), Priester-IDs für Selbst- und Gruppenbuffs
-- Offen im Spiel: alles Übrige, besonders Click-to-Buff, Kampf, Schamanen-IDs, Priester-Heilauren,
-  Waffen-Enchant-API und Waffenbuffs
+- PaTiAlerts: fehlende beobachtete Gruppenbuffs als eine Warnung pro Buff („Fehlt bei N“), neu, nicht im Spiel geprüft
+- Tests: 77 Unit-Tests
+- Im Spiel bestätigt: `C_UnitAuras` und `issecretvalue` vorhanden (`/pa debug`), Priester-IDs für Selbst- und
+  Gruppenbuffs; 2026-09-30 Beobachten-Menü (ein Priester-Effekt an/ab), ein aktiver Priester-Gruppenbuff erkannt
+- Offen im Spiel: alles Übrige, besonders Waffenbuffs, Click-to-Buff, Kampf, Schamanen-IDs, Priester-Heilauren
 
 ## PaTiTank
 - Funktion: eigene Gesundheit, Ziel, Bedrohung; Aggro-Kontrolle („x / y unter Kontrolle“, Warnzeilen verlorener Gegner
@@ -76,24 +78,28 @@ Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md).
 
 ## PaTiAlerts (TOC 0.1.0, neu)
 - Funktion: „Was braucht gerade meine Aufmerksamkeit?“ — offene Probleme aus PaTiTank (Aggro, gleiche Nummer wie
-  Panel und Namensschild), PaTiAuras (fehlende/auslaufende eigene Buffs und Waffenbuffs), PaTiHeal (bannbare Debuffs);
+  Panel und Namensschild), PaTiAuras (fehlende/auslaufende eigene Buffs und Waffenbuffs, fehlende beobachtete
+  Gruppenbuffs), PaTiHeal (bannbare Debuffs);
   rot/gelb/blau, kurzes einmaliges Hervorheben, automatisch ausblenden, Filter nach Quelle und Priorität
 - Optionaler Empfänger: kein Addon braucht PaTiAlerts; Producer melden nur, wenn `PaTiAlertsAPI` existiert
 - Tests: 18 Unit-Tests, Smoke-Tests mit PaTiTank und PaTiHeal (Mocks)
 - Im Spiel bestätigt (2026-09-30): `/pal test`
-- Offen im Spiel: echte Alerts der anderen Addons
+- Offen im Spiel: echte Alerts der anderen Addons; Waffenbuff-Warnung bleibt bei aktivem Imbue (Ursache PaTiAuras)
 
 ## PaTiSuite (TOC 0.1.0, neu)
-- Funktion: optionales Steuerfenster — installierte PaTi-Fenster einzeln oder alle anzeigen/ausblenden; im Kampf
+- Funktion: optionales Steuerfenster — installierte PaTi-Fenster einzeln oder mit einem Button alle
+  einblenden/ausblenden (Beschriftung je nach Zustand); im Kampf
   gesperrte Fenster (Heal, Auras, Group) werden genannt und nicht angefasst. Keine Spiellogik
-- Tests: 8 Unit-Tests, Smoke-Test mit PaTiHeal + PaTiTank (Mocks)
-- Im Spiel bestätigt (2026-09-30): Anzeige, einzelnes Ein-/Ausblenden, „Alle anzeigen“, „Alle ausblenden“
-- Behoben, noch nicht im Spiel geprüft: Hover-Lesbarkeit, grüne/graue Statusfarben; offen: Icon in der AddOn-Liste
+- Tests: 10 Unit-Tests, Smoke-Test mit PaTiHeal + PaTiTank (Mocks)
+- Im Spiel bestätigt (2026-09-30): einzelnes Ein-/Ausblenden, die früheren Buttons „Alle anzeigen“/„Alle ausblenden“,
+  grüne/graue Statusfarben, Hover-Lesbarkeit
+- Neu, noch nicht im Spiel geprüft: ein dynamischer Button statt zwei; offen: Icon in der AddOn-Liste
 
 ## PaTiShared 0.3.0 (Entwicklungsquelle, kein WoW-Addon, wird nicht veröffentlicht)
 - Fenster, Menü, Modal (mit `AddNote`), Button, Dropdown, Checkbox, Popup, Tooltip, Badge, Aura-Icon; 7 Unit-Tests
 
 ## Nächster Schritt
-- Retests der Fixes (`tools/ingame-status.sh --list retest`: PT-AURAS-052, PT-AURAS-053, PT-SUITE-050), dann
+- `/pa auras` ohne und mit Felsbeißer (PT-AURAS-053), neuer PaTiSuite-Button (PT-SUITE-048), Gruppenbuff-Alerts
+  (PT-AURAS-112–116); offene Liste: `tools/ingame-status.sh --list open`, dann
   Fresh-Install-Tests nach [`docs/TESTING.md`](docs/TESTING.md#release-testing-per-release-candidate)
 - Icons in der AddOn-Liste prüfen, Namensschild-Marker im echten Pull testen

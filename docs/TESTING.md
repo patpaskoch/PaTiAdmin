@@ -50,7 +50,8 @@ with what the owner saw, later `🔧 FIX IMPLEMENTED <date>` + `MANUAL RETEST RE
 The owner runs them in the real client. Needed for: secure click casting, combat lockdown, protected actions, taint,
 raid markers, visuals/layout (UI scale 0.64–1.0, locked/unlocked, long German/zh/ko strings), fonts (zhCN, zhTW, koKR
 on the deDE client), real group/dungeon situations, addon communication. Helpful: `/console taintLog 1` and afterwards
-`Logs/taint.log` checked for PaTi entries; `/<cmd> debug` output copied into the report.
+`Logs/taint.log` checked for PaTi entries; `/<cmd> debug` output copied into the report (PaTiAuras weapon
+imbues: `/pa auras` once without and once with the imbue).
 
 Every concrete test lives in exactly one place: the addon's `INGAME_TESTING.md` (below). This file only has the rules.
 

@@ -76,11 +76,22 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
 
 ### F22 · More PaTiAlerts producers — low
 - V1 (2026-09-29): PaTiTank (aggro), PaTiAuras (personal buffs, weapon imbues), PaTiHeal (dispellable debuffs).
-- Candidates when a concrete need appears: PaTiAuras group buffs (risk: noise after deaths), PaTiGroup/PaTiQuest/
-  PaTiDungeon — none invented yet. Clickable alert rows only for a safe action (e.g. open settings), never Lua casts.
+- 2026-09-30 (owner request): PaTiAuras watched group buffs — one warning per buff, offline/dead/Unknown never count.
+- Candidates when a concrete need appears: PaTiGroup/PaTiQuest/PaTiDungeon — none invented yet. Clickable alert rows only for a safe action (e.g. open settings), never Lua casts.
 
 
 ### F25 · PaTiSuite presets (Healer, Tank, Questing) — low
 - Checked 2026-09-30: small on its own (a table name → windows to show, applied with the existing `Logic.SetAll`), but it
   needs a place in the UI (menu or buttons) and a decision which windows belong to which preset. Not built; owner
   decides the presets first.
+
+### F26 · PaTiAuras: an active weapon imbue reads "Missing" — **high** · open, waiting for the owner's diagnostics
+- Problem: owner test 2026-09-30 (PT-AURAS-053–055, 057): weapon detected, but with Rockbiter on Main Hand shows
+  "Missing"; removing/re-applying changes nothing; PaTiAlerts keeps "weapon imbue missing".
+- Affected: `PaTiAuras/WeaponImbues.lua` (readLegacy / readModern / ParseModern).
+- Why: wrong information and a permanent false warning for every Shaman.
+- Next step: owner sends `/pa auras` once without and once with Rockbiter (source, every raw field with type, player
+  buffs, main-hand tooltip). Then fix the parser for the field that really changes, with a regression test built
+  from that exact output. No guessed APIs, fields or enchant IDs before that.
+- Workaround for players: untick the weapon slots in Watch. Tests: weaponimbues_spec with the real output; in game
+  PT-AURAS-052–057.

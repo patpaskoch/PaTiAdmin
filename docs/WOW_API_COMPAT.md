@@ -43,7 +43,8 @@ explicit test recorded) · **assumed** (not yet used/tested).
 | `UnitDetailedThreatSituation` | in use (PaTiTank) | 3rd return = threat percent; secret values only reach the bar |
 | `UNIT_MAXHEALTH` event | assumed (PaTiTank) | added to keep the health bar maximum current |
 | `C_Item.GetWeaponEnchantInfo()` **without a slot**, read like the classic tuple | **observed wrong 2026-09-30** (owner: Main Hand "Unknown" with and without Rockbiter) | the function exists in this client but does not answer that way |
-| `GetWeaponEnchantInfo()` classic tuple (hasMainHand, ms left, charges, enchantID, then the off hand) | assumed, now used first (PaTiAuras) | `/pa auras` prints the raw tuple — needed from the owner with and without Rockbiter |
+| `GetWeaponEnchantInfo()` classic tuple (hasMainHand, ms left, charges, enchantID, then the off hand) | assumed, used first (PaTiAuras) | `/pa auras` prints the raw tuple — needed from the owner with and without Rockbiter |
+| Result of the chain above in the Forever client | **observed wrong 2026-09-30** (owner): Main Hand reads "Missing" without **and with** Rockbiter (earlier "Unknown" gone) | the answer is readable but shows no imbue — which API answered and which field changes is unknown; `/pa debug` names the source, `/pa auras` prints every field of both APIs (with type), the player's buffs and the main-hand tooltip. No new guess until that output exists |
 | `C_Item.GetWeaponEnchantInfo(slot)` with `Enum.WeaponSlot`, entry fields hasEnchant / enchantType / timeLeft (ms?) / charges / enchantID | **unknown**, fallback only | no guessed slot numbers; `/pa auras` shows whether `Enum.WeaponSlot` exists |
 | Equipping / removing the main-hand weapon is seen (GetInventoryItemID + PLAYER_EQUIPMENT_CHANGED) | **observed 2026-09-30** (owner) | |
 | `WEAPON_ENCHANT_CHANGED`, `WEAPON_SLOT_CHANGED` events | assumed, pcall-registered | 1 s fallback check |
@@ -100,7 +101,7 @@ own child frame of the plate). The player clicks that nameplate; Blizzard's own 
 |---|---|---|
 | `SetBackdropColor` alpha on a frame with secure children, also in combat | assumed (all windows) | not a protected property; only changed from settings |
 | Window snapping at drag end | **observed not working 2026-09-30** (owner) | removed instead of debugged (not needed) |
-| PaTiSuite show/hide of single windows, Show all, Hide all | **observed working 2026-09-30** (owner) | |
+| PaTiSuite show/hide of single windows, Show all, Hide all | **observed working 2026-09-30** (owner) | the two buttons are now one dynamic button (not yet tested) |
 | A HIGHLIGHT-layer texture on a Button is drawn above its FontStrings | **observed 2026-09-30** (PaTiSuite hover unreadable) | use a BACKGROUND texture on OnEnter |
 | `HookScript("OnShow"/"OnHide")` on another addon's window (also windows with secure children) | assumed (PaTiSuite) | post-hooks only, nothing secure is called |
 

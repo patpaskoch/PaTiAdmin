@@ -9,13 +9,14 @@ Neu erzeugen: `tools/ingame-status.sh --markdown` (Tabelle unten ersetzen). Einz
 Verified = vom Owner im echten Client bestätigt (`[x]`). Failed = im Client fehlgeschlagen und noch nicht erneut bestätigt;
 „davon Fix da, Retest offen“ = Codefix vorhanden, der Owner muss erneut testen. Open = noch nie im Client geprüft.
 
+
 | Addon | Verified | Failed | davon Fix da, Retest offen | Open | Tests |
 |---|---:|---:|---:|---:|---:|
 | [PaTiAlerts](https://github.com/patpaskoch/PaTiAlerts/blob/main/INGAME_TESTING.md) | 1 | 0 | 0 | 41 | 42 |
-| [PaTiAuras](https://github.com/patpaskoch/PaTiAuras/blob/main/INGAME_TESTING.md) | 4 | 2 | 2 | 72 | 78 |
+| [PaTiAuras](https://github.com/patpaskoch/PaTiAuras/blob/main/INGAME_TESTING.md) | 6 | 5 | 1 | 78 | 89 |
 | [PaTiDungeon](https://github.com/patpaskoch/PaTiDungeon/blob/main/INGAME_TESTING.md) | 0 | 0 | 0 | 40 | 40 |
 | [PaTiGroup](https://github.com/patpaskoch/PaTiGroup/blob/main/INGAME_TESTING.md) | 0 | 0 | 0 | 53 | 53 |
-| [PaTiHeal](https://github.com/patpaskoch/PaTiHeal/blob/main/INGAME_TESTING.md) | 6 | 0 | 0 | 59 | 65 |
+| [PaTiHeal](https://github.com/patpaskoch/PaTiHeal/blob/main/INGAME_TESTING.md) | 7 | 0 | 0 | 59 | 66 |
 | [PaTiQuest](https://github.com/patpaskoch/PaTiQuest/blob/main/INGAME_TESTING.md) | 0 | 0 | 0 | 37 | 37 |
-| [PaTiSuite](https://github.com/patpaskoch/PaTiSuite/blob/main/INGAME_TESTING.md) | 4 | 1 | 1 | 39 | 44 |
+| [PaTiSuite](https://github.com/patpaskoch/PaTiSuite/blob/main/INGAME_TESTING.md) | 5 | 0 | 0 | 39 | 44 |
 | [PaTiTank](https://github.com/patpaskoch/PaTiTank/blob/main/INGAME_TESTING.md) | 0 | 0 | 0 | 59 | 59 |
