@@ -39,7 +39,8 @@ Issue → Builder agent → tools/check.sh → CI → Reviewer agent → finding
   > correctness bugs, combat-lockdown/secure/taint risks, SavedVariables compatibility, hard-coded UI text,
   > unrelated changes, missing tests, violated patterns. For each: file:line, problem, failure scenario, fix.
   > Do not restyle code. Say explicitly which claims in the VALIDATION block you could not verify.
-- The owner does the WoW smoke test; agents never mark in-game behaviour as tested.
+- The owner does the WoW smoke test; agents never mark in-game behaviour as tested. Results go into the addon's
+  `INGAME_TESTING.md`: `[x]` only after the owner's explicit confirmation ([`TESTING.md`](TESTING.md#in-game-test-files)).
 
 ## Git
 

@@ -1,6 +1,8 @@
 # Entwicklungsstand
 
-Stand: 2026-09-29. „Im Spiel bestätigt“ heißt: vom Besitzer im Client getestet. Alles andere ist nur per Code,
+Stand: 2026-09-30. „Im Spiel bestätigt“ heißt: vom Besitzer im Client getestet. Die einzelnen Ingame-Tests mit
+Ergebnis stehen in `INGAME_TESTING.md` jedes Addons, Übersicht:
+[`docs/INGAME_TEST_STATUS.md`](docs/INGAME_TEST_STATUS.md). Alles andere ist nur per Code,
 Unit-Tests, Smoke-Tests mit Mocks und CI geprüft — grüne CI heißt nicht, dass es im Spiel funktioniert.
 Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md). Tests: [`docs/TESTING.md`](docs/TESTING.md).
 
@@ -92,5 +94,6 @@ Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md).
 - Fenster, Menü, Modal (mit `AddNote`), Button, Dropdown, Checkbox, Popup, Tooltip, Badge, Aura-Icon; 7 Unit-Tests
 
 ## Nächster Schritt
-- Fresh-Install- und Kurztests im Spiel nach [`docs/TESTING.md`](docs/TESTING.md#short-in-game-list-per-release-candidate)
+- Retests der Fixes (`tools/ingame-status.sh --list retest`: PT-AURAS-052, PT-AURAS-053, PT-SUITE-050), dann
+  Fresh-Install-Tests nach [`docs/TESTING.md`](docs/TESTING.md#release-testing-per-release-candidate)
 - Icons in der AddOn-Liste prüfen, Namensschild-Marker im echten Pull testen

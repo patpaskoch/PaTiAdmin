@@ -38,7 +38,8 @@ code done → check.sh + CI green → manual WoW test → bump TOC version → c
 ```
 
 1. `tools/check.sh <addon>` green, CI green, reviewer findings resolved.
-2. Owner's manual WoW tests for the changed areas plus the fresh install test ([`TESTING.md`](TESTING.md)).
+2. Owner's manual WoW tests for the changed areas plus the fresh install test ([`TESTING.md`](TESTING.md)), results
+   entered in the addon's `INGAME_TESTING.md`; the gate below holds.
 3. Bump `## Version` in the TOC; rename `[Unreleased]` to `[x.y.z] - YYYY-MM-DD` (start a new empty `[Unreleased]`).
 4. Commit "Release <Addon> x.y.z", push, wait for CI.
 5. `git tag vX.Y.Z && git push origin vX.Y.Z`.
@@ -46,7 +47,7 @@ code done → check.sh + CI green → manual WoW test → bump TOC version → c
    fails if the tag is not the TOC version, builds the zip and creates a **draft** GitHub release with the
    CHANGELOG section as notes. It uses only the built-in `GITHUB_TOKEN`.
 7. Owner opens the draft on GitHub, checks zip and notes, presses **Publish release**.
-8. Update `SUITE_STATUS.md`.
+8. Update `SUITE_STATUS.md` and regenerate [`INGAME_TEST_STATUS.md`](INGAME_TEST_STATUS.md).
 
 No CurseForge/Wago upload automation until there is a concrete need and an explicit decision.
 
@@ -57,10 +58,26 @@ An addon may be called **beta** when all of this is true — CI alone is never e
 - [ ] Current CI green (check.sh incl. zip check)
 - [ ] Release zip built and the fresh install test passed ([`TESTING.md`](TESTING.md#fresh-install-test))
 - [ ] Works alone (independence test) and together with all other PaTi addons (combined test)
-- [ ] Required manual WoW tests for its main paths done, no known Lua errors
+- [ ] In-game verification gate below met (main paths VERIFIED in `INGAME_TESTING.md`), no known Lua errors
 - [ ] No known taint/combat problems in the tested main paths
 - [ ] No known critical/high bugs (`FOLLOW_UPS.md`); medium/low limitations are documented in README/CHANGELOG
 - [ ] README, CHANGELOG and TOC match the code
+
+## In-game verification
+
+Source: the addon's `INGAME_TESTING.md` ([`TESTING.md`](TESTING.md#in-game-test-files)); overview
+[`INGAME_TEST_STATUS.md`](INGAME_TEST_STATUS.md). Only the owner's confirmation in the real client counts — CI, unit
+tests and review never do. An addon is not "in-game verified" while relevant tests are open.
+
+Before a beta or release build:
+
+- All critical / main-path tests are `✅ VERIFIED`: installation and loading (`…-001` to `…-005`), the main feature
+  sections, Combat / Sicherheit, Combined.
+- Every known `❌ FAIL` is assessed (`tools/ingame-status.sh --list failed`): fixed and retested, or consciously
+  accepted with a note in the test and the CHANGELOG's Known Issues.
+- No unresolved critical/high FAIL.
+- Open low / edge-case tests may stay open when consciously accepted — not every box has to be ticked for a beta.
+  Main paths decide.
 
 ## Beta freeze
 
@@ -98,4 +115,4 @@ Prepared, not done — no accounts, no uploads without an explicit task.
 | PaTiQuest | selected quest with objectives |
 | PaTiDungeon | window inside a dungeon in a group |
 | PaTiAlerts | window with a red, a yellow and a blue alert during a pull · settings |
-| PaTiSuite | control panel next to snapped Heal/Auras/Tank windows |
+| PaTiSuite | control panel next to Heal/Auras/Tank windows, green and grey states |

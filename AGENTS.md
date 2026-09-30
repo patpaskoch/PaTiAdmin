@@ -28,8 +28,9 @@ abstraction · existing patterns before new patterns · no bloat.**
     └── PaTiSuite/    optional control panel: show/hide the others' windows   /psuite /patisuite
 ```
 Each addon repo: `<Addon>.toc`, `<Addon>.lua` (+ `Logic.lua` and further files per responsibility), `Locales/`,
-embedded `Shared/`, `tests/`, `README.md`, `CHANGELOG.md`, `AGENTS.md`, `.github/workflows/ci.yml` + `release.yml`,
-`.github/ISSUE_TEMPLATE/`. Releases (zip, tags, beta rules): [`docs/RELEASE.md`](docs/RELEASE.md).
+embedded `Shared/`, `tests/`, `README.md`, `CHANGELOG.md`, `AGENTS.md`, `INGAME_TESTING.md`,
+`.github/workflows/ci.yml` + `release.yml`, `.github/ISSUE_TEMPLATE/`.
+Releases (zip, tags, beta rules): [`docs/RELEASE.md`](docs/RELEASE.md).
 Installed copies in `...\_classic_beta_\Interface\AddOns\` are **test targets only, never a source**.
 Architecture and data flow: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 
@@ -148,6 +149,24 @@ Alternative without refactor · Risk · Tests needed · Priority, and ask the ow
   raid markers, visuals/layout, fonts (zhCN/zhTW/koKR), real group/dungeon situations, addon communication.
   **Never claim an in-game test you did not perform.** Write them down as "Manual WoW tests still required".
 
+### Ingame Verification Rule
+
+Every runtime addon has `INGAME_TESTING.md` — the only record of what was tested in the real WoW client
+(format, IDs `PT-<ADDON>-NNN`, states: [`docs/TESTING.md`](docs/TESTING.md#in-game-test-files); overview:
+[`docs/INGAME_TEST_STATUS.md`](docs/INGAME_TEST_STATUS.md)).
+
+- **A test may be marked `[x]` only when the owner performed it in the real World of Warcraft client and explicitly
+  confirmed it as successful.** Not enough: unit tests, smoke tests, CI, code review, mocks, static analysis,
+  packaging, an agent's assumption, "looks right in the code".
+- Agents may: add tests, improve descriptions, record `❌ FAIL`, `🔧 FIX IMPLEMENTED` and `MANUAL RETEST REQUIRED`,
+  and enter results the owner reported ("Rockbiter works now" → that test `[x]` + `✅ VERIFIED <date>`;
+  "does not work" → box stays open + `❌ FAIL <date>`). If it is unclear which test the owner means: ask, do not tick.
+- Agents must not: change `[ ]` → `[x]` on their own, count CI or unit tests as in-game tests, mark a fix VERIFIED.
+- A failed test keeps an open box; a fix never ticks it. History lines stay. IDs are never renumbered or reused;
+  obsolete tests are struck through and marked `RETIRED <date> – reason`.
+- A feature or fix that needs new manual tests adds them to that addon's `INGAME_TESTING.md` in the same task.
+  `tools/check.sh` checks the file (present, unique IDs, `[x]` only with a latest `✅ VERIFIED`).
+
 ## 14. Documentation and changelog
 
 Change code and docs in the same commit. User-visible change → `CHANGELOG.md` of that repo under
@@ -172,7 +191,7 @@ Commits: one topic per commit; never commit untested in-game behaviour as "teste
 - [ ] Performance considered for event hot paths
 - [ ] Independent review performed
 - [ ] CI green
-- [ ] Required manual WoW tests listed
+- [ ] Required manual WoW tests listed and added to the addon's `INGAME_TESTING.md` (open, never ticked by an agent)
 
 ## 17. Validation output (end every task with this; never invent results)
 
@@ -188,6 +207,6 @@ Documentation:               - files updated
 SavedVariables:              - unchanged / migrated how
 WoW API assumptions:         - …
 CI:                          - run link/result, or "not run"
-Manual WoW tests still required: - …
+Manual WoW tests still required: - test IDs from INGAME_TESTING.md (e.g. PT-AURAS-053) …
 Known limitations:           - …
 ```

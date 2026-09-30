@@ -5,7 +5,8 @@
 #   tools/check.sh ../PaTiAddons/PaTiHeal [more repo folders]
 #
 # Steps per repo: syntax, luacheck, unit tests, locales, CI/release workflow = template, TOC + referenced files,
-# Shared/ integrity, package (a real zip built in a temp folder and checked, see tools/package.sh --verify). Needs Lua 5.1 or LuaJIT (LUA=... to override) and luacheck (LUACHECK=...).
+# Shared/ integrity, INGAME_TESTING.md format (tools/ingame-status.sh), package (a real zip built in a temp folder
+# and checked, see tools/package.sh --verify). Needs Lua 5.1 or LuaJIT (LUA=... to override) and luacheck (LUACHECK=...).
 # Missing luacheck is a SKIP locally and a FAIL in CI (CI=true).
 set -uo pipefail
 
@@ -97,6 +98,11 @@ for target in "${targets[@]}"; do
             if [ -z "$drift" ]; then record PASS shared "$name ($(head -1 Shared/.manifest | tr -d '\r'))"
             else echo "  ERROR: Shared/ changed by hand:$drift"; record FAIL shared "$name"; fi
         fi
+
+        # Owner's in-game results (docs/TESTING.md#in-game-test-files): present, unique IDs, [x] only with VERIFIED.
+        if [ ! -f INGAME_TESTING.md ]; then record FAIL ingame "$name (INGAME_TESTING.md missing)"
+        elif bash "$ADMIN/tools/ingame-status.sh" --check "$target"; then record PASS ingame "$name"
+        else record FAIL ingame "$name"; fi
 
         if out="$(LUA="$LUA" bash "$ADMIN/tools/package.sh" --verify "$target" 2>&1)"; then record PASS package "$name (zip built and checked)"
         else echo "$out" | sed 's/^/  /'; record FAIL package "$name"; fi

@@ -15,7 +15,8 @@ Dieses öffentliche Repository enthält die Arbeitsregeln, den Entwicklungsstand
 | PaTiSuite | https://github.com/patpaskoch/PaTiSuite | optionales Steuerfenster: PaTi-Fenster anzeigen/ausblenden, 0.1.0 |
 
 Die Addons werden in einem gemeinsamen Code-Ordner entwickelt und zum Testen in den WoW-AddOns-Ordner kopiert.
-Stand und Release-Reife: [`SUITE_STATUS.md`](SUITE_STATUS.md) · Release, Beta, Veröffentlichung: [`docs/RELEASE.md`](docs/RELEASE.md).
+Stand und Release-Reife: [`SUITE_STATUS.md`](SUITE_STATUS.md) · Ingame-Tests:
+[`docs/INGAME_TEST_STATUS.md`](docs/INGAME_TEST_STATUS.md) · Release, Beta, Veröffentlichung: [`docs/RELEASE.md`](docs/RELEASE.md).
 
 ## Engineering
 
