@@ -42,7 +42,11 @@ explicit test recorded) · **assumed** (not yet used/tested).
 | `## Notes-deDE` in the TOC shown on a German client | assumed (all addons) | fallback is the English `## Notes` |
 | `UnitDetailedThreatSituation` | in use (PaTiTank) | 3rd return = threat percent; secret values only reach the bar |
 | `UNIT_MAXHEALTH` event | assumed (PaTiTank) | added to keep the health bar maximum current |
-| Weapon enchant API: `C_Item.GetWeaponEnchantInfo()` or `GetWeaponEnchantInfo()` returning hasMainHand, mainHand ms left, charges, enchantID, then the same for the off hand | **unknown** (PaTiAuras weapon imbues) | pcall; missing/error/empty/secret → UNKNOWN; `/pa debug` shows which exists, `/pa auras` the raw values per slot |
+| `C_Item.GetWeaponEnchantInfo()` **without a slot**, read like the classic tuple | **observed wrong 2026-09-30** (owner: Main Hand "Unknown" with and without Rockbiter) | the function exists in this client but does not answer that way |
+| `GetWeaponEnchantInfo()` classic tuple (hasMainHand, ms left, charges, enchantID, then the off hand) | assumed, now used first (PaTiAuras) | `/pa auras` prints the raw tuple — needed from the owner with and without Rockbiter |
+| `C_Item.GetWeaponEnchantInfo(slot)` with `Enum.WeaponSlot`, entry fields hasEnchant / enchantType / timeLeft (ms?) / charges / enchantID | **unknown**, fallback only | no guessed slot numbers; `/pa auras` shows whether `Enum.WeaponSlot` exists |
+| Equipping / removing the main-hand weapon is seen (GetInventoryItemID + PLAYER_EQUIPMENT_CHANGED) | **observed 2026-09-30** (owner) | |
+| `WEAPON_ENCHANT_CHANGED`, `WEAPON_SLOT_CHANGED` events | assumed, pcall-registered | 1 s fallback check |
 | How the client identifies *which* imbue is on a weapon (enchant ID, name) | **unknown** | V1 only watches "imbue present"; needs `/pa auras` output with Flametongue/Windfury on |
 | `UNIT_INVENTORY_CHANGED` / `PLAYER_EQUIPMENT_CHANGED` fire when an imbue is applied, expires or the weapon changes | assumed (PaTiAuras) | 2 s change check as fallback |
 | `C_PaperDollInfo.GetTemporaryEnchantmentInfo` | **unknown**, not used | only reported by `/pa debug` |
@@ -95,7 +99,9 @@ own child frame of the plate). The player clicks that nameplate; Blizzard's own 
 | API / behaviour | Status | Notes |
 |---|---|---|
 | `SetBackdropColor` alpha on a frame with secure children, also in combat | assumed (all windows) | not a protected property; only changed from settings |
-| `GetLeft/GetTop/GetEffectiveScale` of another addon's frame; `SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", …)` after `StopMovingOrSizing` | assumed (snapping) | only out of combat |
+| Window snapping at drag end | **observed not working 2026-09-30** (owner) | removed instead of debugged (not needed) |
+| PaTiSuite show/hide of single windows, Show all, Hide all | **observed working 2026-09-30** (owner) | |
+| A HIGHLIGHT-layer texture on a Button is drawn above its FontStrings | **observed 2026-09-30** (PaTiSuite hover unreadable) | use a BACKGROUND texture on OnEnter |
 | `HookScript("OnShow"/"OnHide")` on another addon's window (also windows with secure children) | assumed (PaTiSuite) | post-hooks only, nothing secure is called |
 
 ## Rules that hold regardless of client

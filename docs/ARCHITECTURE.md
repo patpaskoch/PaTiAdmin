@@ -32,7 +32,7 @@ one `<Addon>.lua` with a clearly separated adapter function, window, settings, c
 | Chat output | `say(key, ...)` → `print("|cff68caff<Addon>:|r " .. L[key]:format(...))` | all |
 | Test mode | `testMode` local (not saved), fake data in the adapter, TEST badge via `window:SetTestMode`, secure buttons disabled | all |
 | Window/move/lock | PaTiShared `UI.CreateWindow` + `window:Attach(DB)`: point + relativePoint + x/y, `DB.locked`, header drag | all |
-| Opacity / snapping | `DB.opacity` (default 0.75, clamped 0.3–1; body only, header opaque) and `DB.snapWindows` (default true) in each addon's defaults; applied by `Attach`; settings via `UI.AddWindowSettings`; snap = `UI.SnapDelta` at drag end (12 px), never in combat, then the normal save | all |
+| Opacity | `DB.opacity` (default 0.75, clamped 0.3–1; body only, header opaque) in each addon's defaults; applied by `Attach`; settings via `UI.AddWindowSettings`. (Snapping was removed 2026-09-30; an old `snapWindows` is ignored.) | all |
 | Window registry | `_G.PaTiSuiteWindows[addonName] = window` (every `UI.CreateWindow`); `window.suiteSetShown(shown, → false if blocked)` = the addon's own `setShown(shown, quiet)` | all, read by PaTiSuite |
 | Settings | lazily built `UI.CreateModal` (needs DB); sections, rows, `AddControls`, `Finish(restoreDefaults)` | all |
 | Collapse/Expand | `DB.collapsed` (default false, migration keeps a saved value), ••• menu entry, header-only window; restore defaults expands (PaTiHeal keeps it). With secure children the entry is disabled/blocked in combat | all |
@@ -79,9 +79,13 @@ one `<Addon>.lua` with a clearly separated adapter function, window, settings, c
 - Secure: `PaTiAurasBuff1..4` (SecureActionButtonTemplate, `type1=spell`, `unit`, `spell1` = single-target buff) over the
   group lines; target = `Auras.NextTarget` (missing, alive, online, visible), set out of combat only. In combat the
   target stays; window size/visibility/scale wait for PLAYER_REGEN_ENABLED. Group section first (fixed rows).
-- Weapon imbues (Shaman profile `weapon`, one entry per slot, no spell ID): not UNIT_AURA; re-read on
-  UNIT_INVENTORY_CHANGED/PLAYER_EQUIPMENT_CHANGED and by a 2 s check (only while slots are watched, repaint only when
-  `WeaponImbues.Signature` changes). Unreadable → UNKNOWN, never MISSING. `showWeapon` in `PaTiAurasDB` (default on).
+- Weapon imbues (Shaman profile `weapon`, one entry per slot, no spell ID): not UNIT_AURA. API chain with separate
+  parsers: `GetWeaponEnchantInfo()` (classic tuple) → `C_Item.GetWeaponEnchantInfo(Enum.WeaponSlot.*)` (fallback; the
+  temporary entry, never a permanent enchant). Re-read on UNIT_INVENTORY_CHANGED / PLAYER_EQUIPMENT_CHANGED /
+  WEAPON_ENCHANT_CHANGED / WEAPON_SLOT_CHANGED and by a 1 s check (only while slots are watched, repaint only when
+  `WeaponImbues.Signature` changes). Unreadable → UNKNOWN, never MISSING. Nothing cached between reads.
+- What to watch: only `DB.watch[key]` (settings "Watch", a multi-select popup of `Watch.Choices`); schema 2 removed
+  the category switches (a switched-off category became watch = false per entry).
 - Group buffs also solo. Priest healing auras: Renew, Power Word: Shield, Prayer of Mending. No runtime API to PaTiHeal
   (owner decision 2026-09-28). Test mode uses the class profile.
 - Slash `/pa`, `/patiauras`.
@@ -154,7 +158,8 @@ one `<Addon>.lua` with a clearly separated adapter function, window, settings, c
   (secure children) and PaTiSuite names them in one message; Tank, Quest, Dungeon, Alerts are fine in combat.
   PaTiAlerts counts as shown unless hidden by the player (auto-hide aside). A protected frame without suite rules is
   never touched in combat.
-- `PaTiSuiteDB`, schema 1: position, locked, scale, language, opacity, snapWindows. No test mode, no collapse.
+- `PaTiSuiteDB`, schema 1: position, locked, scale, language, opacity. No test mode, no collapse.
+- Rows: hover = BACKGROUND texture on OnEnter (text stays readable), status colour `Success` (shown) / `TextMuted`.
 - Slash `/psuite`, `/patisuite`.
 
 ## Decisions

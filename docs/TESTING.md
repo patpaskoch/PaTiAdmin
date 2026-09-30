@@ -88,6 +88,8 @@ Priority: 1 loads · 2 UI · 3 main feature · 4 combat · 5 `/reload` · 6 Save
 | all | fresh install alone loads, icon in the AddOns list, no Lua error · ••• menu entries · settings open/save · Collapse survives `/reload` · test mode |
 | PaTiHeal | each bound click casts on the clicked frame · own HoT/shield icons · dispel icon + click dispel · member joins/leaves in combat · Collapse/Hide greyed out in combat · Scale changed in combat applies after combat |
 | PaTiAuras | own class profile shows; toggling an aura hides it · group buff click buffs the named member, one cast per click · in combat target stays · UNKNOWN never shows as Missing |
+| PaTiAuras weapon imbues, owner sequence | A no weapon → no line · B weapon, no Rockbiter → "Missing" (not Unknown) · C Rockbiter → "Active" (+ timer) · D Rockbiter gone → "Missing" · E again → "Active" · F weapon off → line gone · G weapon on → read fresh · H `/pa debug` + `/pa auras` output (API, slot, enchantID, timeLeft, readable) · PaTiAlerts: warning while missing, gone while active, never for Unknown |
+| PaTiAuras settings | General clear; Watch button opens the list of your class's effects (self, procs, healing, weapon, group), ticks toggle one each, list stays open; no second aura list; choices survive `/reload`; an old "healing off" stays off after the update |
 | PaTiAuras weapon imbues (Shaman) | `/pa debug`: which enchant API exists · no imbue: Main Hand "Missing" · imbue main hand: Active + timer · off hand separately · expiring < 30 s · renew: updates within ~2 s · swap weapon / take off off hand / equip shield: no old state, no Lua error · in combat an imbue expires or is renewed · `/pa auras` with Flametongue and Windfury on (report the enchant IDs) |
 | PaTiTank | pull 3+ mobs: `x / y` matches, a mob on the healer shows "Healer" within ~1 s and its row number in red on its nameplate, clicking that nameplate targets it, dead mobs vanish · `/pt debug` aggro line |
 | PaTiGroup | each marker + Clear on a target, Reset All · key bindings at the path shown in the settings · no key/macro created · bar not changeable in combat |
@@ -98,6 +100,7 @@ Priority: 1 loads · 2 UI · 3 main feature · 4 combat · 5 `/reload` · 6 Save
 | PaTiAlerts + PaTiAuras | missing watched buff / weapon imbue → line; active → gone; unclear never as missing |
 | PaTiAlerts + PaTiHeal | member with a dispellable debuff → blue line; dispelled → gone |
 | Panel opacity (all seven) | change it in the settings → body lighter/darker, header, texts, icons, bars unchanged; `/reload` keeps it |
-| Snapping | drag Heal next to Auras and Auras below Tank: edges meet (horizontal and vertical), `/reload` keeps the positions; snapping off → no snap; dragging a Heal/Auras/Group window is impossible in combat |
+| Window moving | no snapping setting any more; windows move freely, positions survive `/reload`; dragging a Heal/Auras/Group window is impossible in combat |
+| PaTiSuite hover/colours | mouse over a line: background darker, text light and readable; shown = green dot + "Shown", hidden = grey |
 | PaTiSuite | with one, two and all seven PaTi addons: only installed ones listed; click a line → window hides/shows; Show all / Hide all (panel stays); in combat Hide all → "Heal: not possible in combat", Tank still hides; `/reload`; without PaTiSuite everything as before |
 | Without PaTiAlerts | PaTiTank, PaTiAuras, PaTiHeal each without PaTiAlerts: unchanged, no Lua error |

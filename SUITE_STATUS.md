@@ -24,8 +24,8 @@ Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md).
 - Eigenständig: keine Abhängigkeit untereinander (TOC-Prüfung erzwingt das), eigene SavedVariables, eigene Slash-Befehle
 - PaTiShared-Oberfläche 0.3.0 eingebettet; `•••`-Menü mit Einstellungen, Sperren, Ein-/Ausklappen (gespeichert),
   Testmodus, Ausblenden; Position gespeichert; Sprachen enUS/deDE (zhCN/zhTW/koKR → Englisch außer Menütexten)
-- Fenster: einstellbare Deckkraft (30–100 %, Standard 75 %), Einrasten an anderen PaTi-Fenstern beim Verschieben
-  (abschaltbar, nie im Kampf), Registrierung für das optionale PaTiSuite-Steuerfenster
+- Fenster: einstellbare Deckkraft (30–100 %, Standard 75 %), Registrierung für das optionale PaTiSuite-Steuerfenster.
+  Einrasten wurde nach dem Spieltest (funktionierte nicht) wieder entfernt
 - Befehle: allein = ein-/ausblenden, `show hide test lock unlock reset settings debug version`
 - Release: ZIP mit genau einem Ordner (inkl. Icon, ohne `assets/`/LICENSE), Entwurfs-Release per Tag `vX.Y.Z`,
   Bug-Report-Vorlage; Release-Workflow noch nie gelaufen (erst mit dem ersten Tag)
@@ -36,7 +36,7 @@ Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md).
   normale Klickbelegung
 - Neu: Größe (Skalierung, im Kampf erst nach dem Kampf), kein Debuff-Scan mehr bei Leben/Mana-Events (F20)
 - Architektur: Logic (rein) · SpellBook · Dispels · Profiles · HoTs · Settings · PaTiHeal.lua (500 Zeilen, F13)
-- Tests: 31 Unit-Tests, Smoke-Tests mit Mocks
+- Tests: 34 Unit-Tests, Smoke-Tests mit Mocks
 - Im Spiel bestätigt: Laden ohne Lua-Fehler, alte Belegung übernommen, Links- und Shift+Rechts-Klickzauber,
   Einstellungen, Sprachwahl nach `/reload`
 - Offen im Spiel: Ränge, bannbare Debuffs, HoTs/Schilde, Klick-Reinigen, Kampfverhalten, Spell-IDs (`/ph auras`)
@@ -44,9 +44,11 @@ Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md).
 ## PaTiAuras
 - Funktion: eigene Buffs, Procs, Gruppenbuffs (auch solo, Click-to-Buff auf das nächste fehlende Mitglied),
   Heil-Auren pro Mitglied; jede Aura einzeln abschaltbar; Profile Schamane, Priester
-- Neu: Schamanen-Waffenbuffs (Waffenhand/Schildhand: aktiv mit Timer, fehlt, läuft aus, unklar) als eigene
-  Datenquelle; V1 ohne Imbue-Art
-- Tests: 57 Unit-Tests
+- Schamanen-Waffenbuffs (Waffenhand/Schildhand) als eigene Datenquelle; V1 ohne Imbue-Art. Im Spiel (2026-09-30):
+  Waffe an/aus wird erkannt, der Buff selbst zeigte „Unbekannt“ → Adapter korrigiert (klassisches Tupel zuerst),
+  noch nicht im Spiel geprüft
+- Einstellungen: eine „Beobachten“-Auswahl statt Kategorie-Schaltern und doppelter Liste (Schema 2 mit Migration)
+- Tests: 71 Unit-Tests
 - Im Spiel bestätigt: `C_UnitAuras` und `issecretvalue` vorhanden (`/pa debug`), Priester-IDs für Selbst- und Gruppenbuffs
 - Offen im Spiel: alles Übrige, besonders Click-to-Buff, Kampf, Schamanen-IDs, Priester-Heilauren,
   Waffen-Enchant-API und Waffenbuffs
@@ -56,13 +58,13 @@ Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md).
   mit Rolle des Halters, „knapp“, „unklar“), Testmodus mit 6 Gegnern
 - Neu: nummerierte Problem-Gegner — dieselbe Nummer (1–4) im Panel und über dem Namensschild, Farbe = Zustand;
   unterscheidet auch gleichnamige Gegner. Klick aufs Namensschild wählt ihn als Ziel. Anklickbare Panel-Zeilen: technisch blockiert (F17, WOW_API_COMPAT)
-- Tests: 22 Unit-Tests (Aggro-Regeln, Threat-Adapter, Namensschild-Marker mit Mocks), Smoke-Tests
+- Tests: 34 Unit-Tests (Aggro-Regeln, Nummern, Threat-Adapter, Namensschild-Marker, Alerts mit Mocks), Smoke-Tests
 - Offen im Spiel: alles, besonders Aggro-Kontrolle und Marker im echten Kampf, Threat-APIs, Taint-Log
 
 ## PaTiGroup
 - Funktion: acht Marker + Entfernen, Reset All, Ready Check, Pull, Ziel/Leitung/Rollen, Notiz; Tastenbelegung im
   WoW-Menü mit hervorgehobenem Hinweis in den Einstellungen; keine automatische Belegung, kein Makro
-- Tests: 14 Unit-Tests
+- Tests: 15 Unit-Tests
 - Offen im Spiel: alles seit der Umstellung, der echte Menüpfad der Tastaturbelegung
 
 ## PaTiQuest, PaTiDungeon
@@ -75,14 +77,16 @@ Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md).
   Panel und Namensschild), PaTiAuras (fehlende/auslaufende eigene Buffs und Waffenbuffs), PaTiHeal (bannbare Debuffs);
   rot/gelb/blau, kurzes einmaliges Hervorheben, automatisch ausblenden, Filter nach Quelle und Priorität
 - Optionaler Empfänger: kein Addon braucht PaTiAlerts; Producer melden nur, wenn `PaTiAlertsAPI` existiert
-- Tests: 17 Unit-Tests, Smoke-Tests mit PaTiTank und PaTiHeal (Mocks)
-- Offen im Spiel: alles
+- Tests: 18 Unit-Tests, Smoke-Tests mit PaTiTank und PaTiHeal (Mocks)
+- Im Spiel bestätigt (2026-09-30): `/pal test`
+- Offen im Spiel: echte Alerts der anderen Addons
 
 ## PaTiSuite (TOC 0.1.0, neu)
 - Funktion: optionales Steuerfenster — installierte PaTi-Fenster einzeln oder alle anzeigen/ausblenden; im Kampf
   gesperrte Fenster (Heal, Auras, Group) werden genannt und nicht angefasst. Keine Spiellogik
-- Tests: 7 Unit-Tests, Smoke-Test mit PaTiHeal + PaTiTank (Mocks)
-- Offen im Spiel: alles (auch das Icon in der AddOn-Liste)
+- Tests: 8 Unit-Tests, Smoke-Test mit PaTiHeal + PaTiTank (Mocks)
+- Im Spiel bestätigt (2026-09-30): Anzeige, einzelnes Ein-/Ausblenden, „Alle anzeigen“, „Alle ausblenden“
+- Behoben, noch nicht im Spiel geprüft: Hover-Lesbarkeit, grüne/graue Statusfarben; offen: Icon in der AddOn-Liste
 
 ## PaTiShared 0.3.0 (Entwicklungsquelle, kein WoW-Addon, wird nicht veröffentlicht)
 - Fenster, Menü, Modal (mit `AddNote`), Button, Dropdown, Checkbox, Popup, Tooltip, Badge, Aura-Icon; 7 Unit-Tests
