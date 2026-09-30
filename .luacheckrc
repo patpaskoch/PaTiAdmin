@@ -44,6 +44,10 @@ files["**/PaTiQuest/**/*.lua"] = { globals = { "PaTiQuestDB", "SLASH_PATIQUEST1"
 files["**/PaTiDungeon/**/*.lua"] = { globals = { "PaTiDungeonDB", "SLASH_PATIDUNGEON1", "SLASH_PATIDUNGEON2" } }
 files["**/PaTiAuras/**/*.lua"] = { globals = { "PaTiAurasDB", "SLASH_PATIAURAS1", "SLASH_PATIAURAS2" }, read_globals = { "PaTiAlertsAPI" } }
 files["**/PaTiAlerts/**/*.lua"] = { globals = { "PaTiAlertsDB", "SLASH_PATIALERTS1", "SLASH_PATIALERTS2", "PaTiAlertsAPI" } }
+files["**/PaTiSuite/**/*.lua"] = { globals = { "PaTiSuiteDB", "SLASH_PATISUITE1", "SLASH_PATISUITE2" } }
+-- PaTiSuiteWindows: the window registry (frames only) of the embedded PaTiShared copies (AGENTS.md §3).
+files["**/Shared/Suite.lua"] = { globals = { "PaTiSuiteWindows" } }
+files["**/PaTiShared/src/Suite.lua"] = { globals = { "PaTiSuiteWindows" } }
 files["**/PaTiGroup/**/*.lua"] = { globals = { "PaTiGroupDB", "SLASH_PATIGROUP1", "SLASH_PATIGROUP2", "SLASH_PATIGROUP3", "PaTiGroup_Toggle" } }
 
 -- Specs run under tools/lua/test.lua (busted-compatible); mocks install WoW functions as globals.
