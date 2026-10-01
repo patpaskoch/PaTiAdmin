@@ -1,18 +1,32 @@
 # PaTi Addons – Verwaltung
 
-Dieses öffentliche Repository enthält die Arbeitsregeln, den Entwicklungsstand und Verweise auf die einzelnen Addon-Repositories.
+Dieses öffentliche Repository ist der zentrale Einstieg der PaTiSuite: Arbeitsregeln, Entwicklungsstand und
+Verweise auf alle Repositories.
 
-| Addon | Repository | Stand |
-| --- | --- | --- |
-| PaTiGroup | https://github.com/patpaskoch/PaTiGroup | manuelle Zielmarker, Ready Check und Pull-Countdown |
-| PaTiQuest | https://github.com/patpaskoch/PaTiQuest | ausgewählte Quest und Ziele |
-| PaTiDungeon | https://github.com/patpaskoch/PaTiDungeon | Instanz- und Gruppenstatus |
-| PaTiShared | privat (kein WoW-Addon, in jedes Addon eingebettet) | gemeinsame UI-Quelle, 0.3.0 |
-| PaTiHeal | https://github.com/patpaskoch/PaTiHeal | Gruppenanzeige und manuelle Klickzauber |
-| PaTiTank | https://github.com/patpaskoch/PaTiTank | Gesundheits- und Bedrohungsanzeige |
-| PaTiAuras | https://github.com/patpaskoch/PaTiAuras | Auren-/Buff-Anzeige (optional, eigenständig), 0.1.0 |
-| PaTiAlerts | https://github.com/patpaskoch/PaTiAlerts | offene Probleme der anderen Addons (optionaler Empfänger), 0.1.0 |
-| PaTiSuite | https://github.com/patpaskoch/PaTiSuite | optionales Steuerfenster: PaTi-Fenster anzeigen/ausblenden, 0.1.0 |
+## Spieler-Addons
+
+Jedes Addon wird einzeln installiert und funktioniert allein; keines braucht ein anderes. PaTiAlerts und PaTiSuite
+sind optionale Ergänzungen.
+
+| Repo | Zweck |
+| --- | --- |
+| [PaTiSuite](https://github.com/patpaskoch/PaTiSuite) | optionales Steuerfenster: PaTi-Fenster anzeigen/ausblenden |
+| [PaTiHeal](https://github.com/patpaskoch/PaTiHeal) | Heiler-Gruppenrahmen und Klickzauber |
+| [PaTiAuras](https://github.com/patpaskoch/PaTiAuras) | Auren-, Buff- und Proc-Überwachung |
+| [PaTiTank](https://github.com/patpaskoch/PaTiTank) | Tank-HUD und Aggro-Monitor |
+| [PaTiGroup](https://github.com/patpaskoch/PaTiGroup) | Zielmarker, Ready Check und Pull-Countdown |
+| [PaTiQuest](https://github.com/patpaskoch/PaTiQuest) | ausgewählte Quest und ihre Ziele |
+| [PaTiDungeon](https://github.com/patpaskoch/PaTiDungeon) | Instanz-, Gruppen- und Kampfstatus |
+| [PaTiAlerts](https://github.com/patpaskoch/PaTiAlerts) | zentrales Fenster für offene Probleme aus PaTiTank, PaTiAuras, PaTiHeal (optional) |
+
+## Entwicklungs-Repositories
+
+Werden von Spielern nicht separat installiert.
+
+| Repo | Zweck |
+| --- | --- |
+| [PaTiAdmin](https://github.com/patpaskoch/PaTiAdmin) | dieses Repo: Regeln, Doku, Prüf-Tools, CI-Vorlagen, Stand — kein WoW-Addon |
+| PaTiShared (privat) | Entwicklungsquelle der gemeinsamen UI-Komponenten, Version 0.3.0; bereits in jedes Addon eingebettet (`Shared/`) |
 
 Die Addons werden in einem gemeinsamen Code-Ordner entwickelt und zum Testen in den WoW-AddOns-Ordner kopiert.
 Stand und Release-Reife: [`SUITE_STATUS.md`](SUITE_STATUS.md) · Ingame-Tests:
