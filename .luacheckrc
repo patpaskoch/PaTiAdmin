@@ -16,7 +16,7 @@ exclude_files = { "**/.git/**", "**/dist/**" }
 -- client (docs/WOW_API_COMPAT.md). Keep alphabetical.
 read_globals = {
     "C_AddOns", "C_Item", "C_NamePlate", "C_PaperDollInfo", "C_PartyInfo", "C_QuestLog", "C_Spell", "C_SpellBook",
-    "C_TooltipInfo", "C_UnitAuras",
+    "C_Minimap", "C_TooltipInfo", "C_UnitAuras", "GetNumTrackingTypes", "GetTrackingInfo", "GetTrackingTexture",
     "CreateFrame", "CreateMacro", "DoReadyCheck", "EditMacro",
     "GameTooltip", "geterrorhandler", "GetAddOnMetadata", "GetBindingAction", "GetBuildInfo", "GetCurrentBindingSet", "GetInstanceInfo",
     "GetLocale", "GetMacroIndexByName", "GetMacroInfo", "GetNumGroupMembers", "GetSpellInfo", "GetSpellTexture",
