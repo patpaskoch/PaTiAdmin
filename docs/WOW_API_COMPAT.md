@@ -137,6 +137,9 @@ in-game test that confirms it.
 | `GetCursorInfo()` while dragging a spell from the spellbook: `"spell", index, bookType, spellID` | **assumed** (PaTiRota settings) | without the 4th value the spellbook index is resolved; `ClearCursor` afterwards (PT-ROTA-022) |
 | `SecureActionButtonTemplate` `type1=spell`, `spell1=<name>` cast on the current target | **assumed** for PaTiRota | same mechanism as PaTiAuras' self casts; PT-ROTA-040–042 |
 | A CLICK key binding on a hidden secure button (empty slot, hidden window) | **unknown** (PaTiRota) | PT-ROTA-045 |
+| `UnitIsUnit("raidN", "player")` | **assumed** (PaTiGroup) | your own unit events arrive as `player` in a raid; secret → not matched |
+| Restricted snippet acting on the PaTiHeal window (plain PaTiShared frame, protected only through its secure rows) | **assumed** — independent review 2026-10-02: if the client does not treat it as protected, the snippet errors in combat (target row shows, player row and height do not follow) | fallback plan: anchor the player row to the target row instead of resizing; PT-HEAL-137 |
+| `RegisterForClicks("AnyUp", "AnyDown")` on SecureActionButtons fires once (filtered by `ActionButtonUseKeyDown`) | **assumed** (PaTiLead, PaTiAuras, PaTiRota) | if it fired twice, a cast would repeat — watch for double casts in PT-ROTA-040, PT-LEAD-050 |
 
 ## Rules that hold regardless of client
 
