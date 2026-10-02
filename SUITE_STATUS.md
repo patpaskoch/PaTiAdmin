@@ -20,7 +20,7 @@ Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md).
 | PaTiSocial | 0.1.0 (neu) | ✅ | ⏳ | ⏳ | ✅ | ⏳ | ⏳ | Nein |
 | PaTiSuite | 0.1.0 (neu, Steuerung) | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ teilweise (Ein-/Ausblenden, Farben, Hover) | Nein |
 
-✅ = erledigt und geprüft · ⏳ = offen. Lizenz: MIT in allen zehn Repos. Icons: PaTiSuite-Set in allen acht Addons (inkl. PaTiSuite)
+✅ = erledigt und geprüft · ⏳ = offen. Lizenz: MIT in allen elf Repos. Icons: PaTiSuite-Set in allen neun Addons (inkl. PaTiSuite)
 (`Media/icon.tga` im Spiel, `assets/` für Plattformen) — im Spiel noch nicht gesehen.
 
 ## Alle sieben Addons
