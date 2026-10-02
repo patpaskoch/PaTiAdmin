@@ -38,9 +38,10 @@ Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md).
   normale Klickbelegung
 - Neu: Größe (Skalierung, im Kampf erst nach dem Kampf), kein Debuff-Scan mehr bei Leben/Mana-Events (F20)
 - Architektur: Logic (rein) · SpellBook · Dispels · Profiles · HoTs · Settings · PaTiHeal.lua (500 Zeilen, F13)
-- Tests: 34 Unit-Tests, Smoke-Tests mit Mocks
+- Tests: 37 Unit-Tests, Smoke-Tests mit Mocks
 - Im Spiel bestätigt: Laden ohne Lua-Fehler, alte Belegung übernommen, Links- und Shift+Rechts-Klickzauber,
   Einstellungen, Sprachwahl nach `/reload`; 2026-09-30 Linksklick auf den eigenen Frame
+- Neu 2026-10-02, nicht im Spiel geprüft: Fensterhöhe folgt den vorhandenen Gruppenmitgliedern (PT-HEAL-057–059)
 - Offen im Spiel: Ränge, bannbare Debuffs, HoTs/Schilde, Klick-Reinigen, Kampfverhalten, Spell-IDs (`/ph auras`)
 
 ## PaTiAuras
