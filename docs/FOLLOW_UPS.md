@@ -95,3 +95,11 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
   from that exact output. No guessed APIs, fields or enchant IDs before that.
 - Workaround for players: untick the weapon slots in Watch. Tests: weaponimbues_spec with the real output; in game
   PT-AURAS-052–057.
+
+### F27 · PaTiAuras: totem tracker (possible later feature) — low · not planned
+- Owner decision 2026-10-02: PaTiAuras never watches totem/ground auras (PaTiAuras AGENTS.md) — a member outside the
+  radius would read as "buff missing" and produce false alerts.
+- If ever built, as its own small feature that tracks the **totem itself**: active / not active, remaining time,
+  expired, perhaps destroyed (only if the Forever client reports that reliably — check the totem APIs and events in
+  WOW_API_COMPAT first). Never the group's aura state, never "recast the totem" advice from members' auras, never a cast.
+- Needs an owner decision and an in-game API check first. Not part of the beta.
