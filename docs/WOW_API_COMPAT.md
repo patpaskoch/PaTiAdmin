@@ -106,6 +106,8 @@ own child frame of the plate). The player clicks that nameplate; Blizzard's own 
 | `SetBackdropColor` alpha on a frame with secure children, also in combat | assumed (all windows) | not a protected property; only changed from settings |
 | Window snapping at drag end | **observed not working 2026-09-30** (owner) | removed instead of debugged (not needed) |
 | PaTiSuite show/hide of single windows, Show all, Hide all | **observed working 2026-09-30** (owner) | the two buttons are now one dynamic button; compact entries, horizontal layout and collapse added 2026-10-02 (not yet tested) |
+| `GameTooltip:SetOwner(frame, "ANCHOR_NONE")` + `SetPoint` beside the frame (PaTiShared `UI.SetTooltip`); GameTooltip stays on screen (clamped) | **assumed** (2026-10-02) | PT-SUITE-140–143, PT-AURAS-161/162 |
+| PaTiSuite: show/hide at the first `PLAYER_ENTERING_WORLD` (after every addon's `PLAYER_LOGIN`) | **assumed** (2026-10-02) | restores the remembered visibility once per login; PT-SUITE-130–136 |
 | A HIGHLIGHT-layer texture on a Button is drawn above its FontStrings | **observed 2026-09-30** (PaTiSuite hover unreadable) | use a BACKGROUND texture on OnEnter |
 | `HookScript("OnShow"/"OnHide")` on another addon's window (also windows with secure children) | assumed (PaTiSuite) | post-hooks only, nothing secure is called |
 

@@ -56,7 +56,8 @@ Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md).
   geprüft**
 - Einstellungen: eine „Beobachten“-Auswahl statt Kategorie-Schaltern und doppelter Liste (Schema 2 mit Migration)
 - PaTiAlerts: fehlende beobachtete Gruppenbuffs als eine Warnung pro Buff („Fehlt bei N“), neu, nicht im Spiel geprüft
-- Tests: 95 Unit-Tests
+- Neu 2026-10-02, ungetestet: Waffenbuff abwählbar (0 oder 1 pro Hand, PT-AURAS-158–160)
+- Tests: 99 Unit-Tests
 - Im Spiel bestätigt: `C_UnitAuras` und `issecretvalue` vorhanden (`/pa debug`), Priester-IDs für Selbst- und
   Gruppenbuffs; 2026-09-30 Beobachten-Menü (ein Priester-Effekt an/ab), ein aktiver Priester-Gruppenbuff erkannt
 - Offen im Spiel: alles Übrige, besonders Waffenbuffs, Click-to-Buff, Kampf, Schamanen-IDs, Priester-Heilauren
@@ -94,14 +95,17 @@ Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md).
 - Funktion: optionales Steuerfenster — installierte PaTi-Fenster einzeln oder mit einem Button alle
   einblenden/ausblenden (Beschriftung je nach Zustand); im Kampf
   gesperrte Fenster (Heal, Auras, Group) werden genannt und nicht angefasst. Keine Spiellogik
-- Tests: 18 Unit-Tests, Smoke-Test mit PaTiHeal + PaTiTank (Mocks, Stand vor dem Umbau 2026-10-02)
+- Tests: 27 Unit-Tests, Smoke-Test mit PaTiHeal + PaTiTank (Mocks, Stand vor dem Umbau 2026-10-02)
 - Im Spiel bestätigt (2026-09-30): einzelnes Ein-/Ausblenden, die früheren Buttons „Alle anzeigen“/„Alle ausblenden“,
   grüne/graue Statusfarben, Hover-Lesbarkeit
-- Neu, noch nicht im Spiel geprüft: ein dynamischer Button statt zwei; kompakte Einträge (nur Punkt + Name),
+- Neu, noch nicht im Spiel geprüft: Sichtbarkeit über `/reload` (Schema 3, PT-SUITE-130–136), horizontal mit Button
+  in der Reihe (117–119), Tooltips daneben (140–143); ein dynamischer Button statt zwei; kompakte Einträge (Punkt + Name),
   Layout vertikal/horizontal, Einklappen (Schema 2); offen: Icon in der AddOn-Liste
 
 ## PaTiShared 0.3.0 (Entwicklungsquelle, kein WoW-Addon, wird nicht veröffentlicht)
-- Fenster, Menü, Modal (mit `AddNote`), Button, Dropdown, Checkbox, Popup, Tooltip, Badge, Aura-Icon; 7 Unit-Tests
+- Fenster, Menü, Modal (mit `AddNote`), Button, Dropdown, Checkbox, Popup, Tooltip, Badge, Aura-Icon; 12 Unit-Tests
+- Neu 2026-10-02, ungetestet: Tooltips stehen neben dem Element (links/rechts je nach Bildschirmhälfte), in alle acht
+  Addons synchronisiert
 
 ## Nächster Schritt
 - Retest Waffenbuff-Fix (PT-AURAS-052–057), PaTiSuite neu (PT-SUITE-033/034, 048, 100–128), Gruppenbuff-Alerts
