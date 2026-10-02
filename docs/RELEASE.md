@@ -95,7 +95,7 @@ Prepared, not done — no accounts, no uploads without an explicit task.
 | Title | TOC `## Title` | ready |
 | Short description | TOC `## Notes` (+ `Notes-deDE`) | ready |
 | Long description | README (Features, Installation, Commands, Known limitations) | ready |
-| Logo / icon | PaTiSuite icon set in nine addons (PaTiAlerts: bell "Alarm", PaTiSuite: the gear emblem, PaTiSocial: speech bubble with two figures (owner-provided), PaTiGroup: the group icon of the former PaTiGroup, all approved by the owner). **PaTiLead and PaTiRota: artwork missing** (FOLLOW_UPS F31, no `## IconTexture` yet). `assets/icon-{1024,512,256,128,64,32}.png` per addon (not packaged); in game `Media/icon.tga` + `## IconTexture`. Cut from the approved sheet at ~244 px, so 512/1024 are upscaled (no new detail) — use the original artwork if a sharper large image is needed | ready except PaTiLead, PaTiRota |
+| Logo / icon | PaTiSuite icon set in all eleven addons (PaTiAlerts: bell "Alarm", PaTiSuite: the gear emblem, PaTiSocial: speech bubble with two figures (owner-provided), PaTiGroup: the group icon of the former PaTiGroup, PaTiRota: rotation arrows with skill icons, PaTiLead: crown with raid markers (both owner-provided 2026-10-02), all approved by the owner). `assets/icon-{1024,512,256,128,64,32}.png` per addon (not packaged); in game `Media/icon.tga` + `## IconTexture`. Cut from the approved sheet at ~244 px, so 512/1024 are upscaled (no new detail) — use the original artwork if a sharper large image is needed | ready |
 | Screenshots | shot list below | not taken |
 | Game version | WoW Forever 1.60.1 (build 70009), Interface 16001 — platforms may not list this client | to check per platform |
 | Release zip | `tools/package.sh` / release workflow | ready |

@@ -135,7 +135,7 @@ one `<Addon>.lua` with a clearly separated adapter function, window, settings, c
   `PaTiLeadBindClear`). Layout only out of combat (`Bar.Layout` → pending until PLAYER_REGEN_ENABLED).
 - No macro creation, no automatic key binding, no SaveBindings. `DoReadyCheck`, `C_PartyInfo.DoCountdown` (leader/assist).
 - Settings: own "Key bindings" section with a help note (`AddNote`) naming the WoW key binding menu path.
-- No AddOns-list icon yet (the crown + raid marker artwork is still to be provided). Slash `/plead`, `/patilead`.
+- Icon: crown with raid markers (owner-provided 2026-10-02). Slash `/plead`, `/patilead`.
 
 ### PaTiGroup 0.1.0 — party awareness (new 2026-10-02)
 - Display only, no secure frames (updates in combat): Tank (you first if you tank; "+n"), Healer (dead/offline),
@@ -159,7 +159,7 @@ one `<Addon>.lua` with a clearly separated adapter function, window, settings, c
   `applySlots()` (out of combat) sets attributes, positions and visibility; in combat `slotsPending` waits for
   PLAYER_REGEN_ENABLED and painting follows each button's bound spell. Never casts by itself (AGENTS.md §8).
 - Events: SPELL_UPDATE_COOLDOWN, SPELL_UPDATE_USABLE, SPELLS_CHANGED, PLAYER_REGEN_*; 0.1 s text ticker only while a
-  shown skill cools down. `PaTiRotaDB` schema 1. No icon yet. Slash `/prota`, `/patirota`.
+  shown skill cools down. `PaTiRotaDB` schema 1. Slash `/prota`, `/patirota`.
 
 ### PaTiTank 0.1.0 (+ [Unreleased]) — own health, target, threat, aggro control
 - Files: `Shared/` → `Locales/` → `Logic.lua` (settings, `ThreatValue`; pure, tested) → `Aggro.lua` (states CONTROLLED /

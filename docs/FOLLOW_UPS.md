@@ -117,12 +117,3 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
 - Alternative: move `GENERAL` into PaTiShared's locales and remove the copies in Heal, Auras, Social, Suite, Lead,
   Group, Rota (the locale check forbids duplicates) — cleaner, but touches eleven repos.
 - Risk: none · Tests: locale check (CI); in game: open each settings window (deDE).
-
-### F31 · Icons for PaTiLead and PaTiRota — low (assets missing)
-- Status 2026-10-02: the owner's new artwork (left: PaTiRota rotation arrows / skill icons, blue-gold; right: PaTiLead
-  crown + raid marker, red-gold) was not in the workspace. Both TOCs have no `## IconTexture` (no white or missing
-  texture); READMEs show no image. The group icon stayed with the new PaTiGroup.
-- Needed: the source image (both motifs on one sheet, or two square images) in `Downloads` or the workspace.
-- Then: crop each motif square (no text), make `assets/icon-{1024,512,256,128,64,32}.png` and `Media/icon.tga`
-  (64×64, 32-bit, uncompressed) the same way as for the other addons, add `## IconTexture: Interface\AddOns\<Addon>\Media\icon`,
-  the README image and set the open icon tests (PT-LEAD-003, PT-ROTA-062).

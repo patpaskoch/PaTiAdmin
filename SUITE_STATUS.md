@@ -29,9 +29,9 @@ Kommunikation · PaTiAlerts = Probleme · PaTiSuite = Steuerfenster. PaTiShared 
 | PaTiSocial | 0.1.0 | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ teilweise (Laden, Icon, Buttons, Layout, Emote) | Nein |
 | PaTiSuite | 0.1.0 (Steuerung) | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ teilweise (Ein-/Ausblenden, Farben, Hover) | Nein |
 
-✅ = erledigt und geprüft · ⏳ = offen. Lizenz: MIT in allen dreizehn Repos. Icons: PaTiSuite-Set in neun Addons, im
-Spiel bestätigt 2026-10-02 (das Gruppen-Icon gehört jetzt zum neuen PaTiGroup, dort neu zu testen: PT-GROUP-203).
-**PaTiLead und PaTiRota haben noch kein Icon** — die Grafik war nicht im Workspace (FOLLOW_UPS F31).
+✅ = erledigt und geprüft · ⏳ = offen. Lizenz: MIT in allen dreizehn Repos. Icons: PaTiSuite-Set in allen elf Addons;
+im Spiel bestätigt 2026-10-02 für neun. Neu zu testen: PaTiGroup (Gruppen-Icon übernommen, PT-GROUP-203), PaTiRota und
+PaTiLead (eigene Grafik des Owners 2026-10-02, PT-ROTA-062, PT-LEAD-003).
 
 ## Alle Addons
 - Eigenständig: keine Abhängigkeit untereinander (TOC-Prüfung erzwingt das), eigene SavedVariables, eigene Slash-Befehle
@@ -81,7 +81,6 @@ Spiel bestätigt 2026-10-02 (das Gruppen-Icon gehört jetzt zum neuen PaTiGroup,
   Abklingzeiten, GCD, „nicht nutzbar“/„nicht gelernt“/„unklar“, der höchste bereite Skill hervorgehoben. Jeder Platz
   hat einen festen Secure-Button (ein Klick = genau dieser Zauber); nichts zaubert von selbst, kein wechselnder Button
 - Tests: 21 Unit-Tests · Offen im Spiel: alles (PT-ROTA-001–062), Cooldown-API und GCD-Referenz (`/prota debug`)
-- Kein Icon (F31)
 
 ## PaTiGroup (TOC 0.1.0, neu 2026-10-02) — Party Awareness
 - Funktion: Tank, Heiler (tot/offline), Ziel des Tanks mit Zielmarker, Rollenübersicht; Party und Schlachtzug; nur
@@ -92,7 +91,7 @@ Spiel bestätigt 2026-10-02 (das Gruppen-Icon gehört jetzt zum neuen PaTiGroup,
 - Funktion: acht Marker + Entfernen, Reset All, Ready Check, Pull, Ziel/Leitung/Rollen, Notiz; Tastenbelegung im
   WoW-Menü; keine automatische Belegung, kein Makro. `/plead`, `/patilead`; eigene `PaTiLeadDB` (alte Einstellungen
   bewusst nicht übernommen)
-- Tests: 15 Unit-Tests · Offen im Spiel: alles (PT-LEAD-001–103; alte PT-GROUP-Tests archiviert) · Kein Icon (F31)
+- Tests: 15 Unit-Tests · Offen im Spiel: alles (PT-LEAD-001–103; alte PT-GROUP-Tests archiviert)
 
 ## PaTiQuest, PaTiDungeon
 - Funktion: ausgewählte Quest mit Zielen · Instanz, Gruppe, Kampfstatus
