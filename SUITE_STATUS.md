@@ -56,7 +56,8 @@ Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md).
   geprüft**
 - Einstellungen: eine „Beobachten“-Auswahl statt Kategorie-Schaltern und doppelter Liste (Schema 2 mit Migration)
 - PaTiAlerts: fehlende beobachtete Gruppenbuffs als eine Warnung pro Buff („Fehlt bei N“), neu, nicht im Spiel geprüft
-- Neu 2026-10-02, ungetestet: Rechtsklick auf eine aktive Zeile entfernt den Buff von dir (PT-AURAS-163–168)
+- Neu 2026-10-02, ungetestet: Rechtsklick auf eine aktive Buff-/Proc-Zeile entfernt den Buff (PT-AURAS-163–169);
+  für Waffenbuffs im Spiel ❌ (Blizzard-Fehler CANCELABLE_ITEMS) → dort entfernt
 - Neu 2026-10-02, ungetestet: Waffenbuff abwählbar (0 oder 1 pro Hand, PT-AURAS-158–160); ❌ PT-AURAS-158 im Spiel
   (Felsbeißer ließ sich nicht abwählen) → Fix: Kästchen im Beobachten-Popup, Neuzeichnen trotz Fehler, Retest offen
 - Tests: 104 Unit-Tests
