@@ -47,14 +47,16 @@ Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md).
 ## PaTiAuras
 - Funktion: eigene Buffs, Procs, Gruppenbuffs (auch solo, Click-to-Buff auf das nächste fehlende Mitglied),
   Heil-Auren pro Mitglied; jede Aura einzeln abschaltbar; Profile Schamane, Priester
-- Schamanen-Waffenbuffs (Waffenhand/Schildhand) als eigene Datenquelle; V1 ohne Imbue-Art. Im Spiel (2026-09-30):
+- Neu 2026-10-02, ungetestet: konkreter Waffenbuff statt „Waffenhand“ (bisher Felsbeißer: Enchant-ID 29 vom Owner
+  beobachtet, Spell-ID 8017 noch zu bestätigen), Klick auf die fehlende Zeile wirkt ihn (PT-AURAS-140–157)
+- Schamanen-Waffenbuffs als eigene Datenquelle. Im Spiel (2026-09-30):
   Waffe an/ab/an wird erkannt; aktiver Felsbeißer zeigte „Fehlt“ (❌ PT-AURAS-053–055, 057). Ursache aus dem
   Owner-`/pa auras` 2026-10-02: das klassische Tupel meldet „kein Imbue“, `C_Item.GetWeaponEnchantInfo` hat ihn
   (`hasEnchant`, `timeLeft>0`, `enchantType=3`). Fix 2026-10-02: moderne API zuerst — **im Spiel noch nicht
   geprüft**
 - Einstellungen: eine „Beobachten“-Auswahl statt Kategorie-Schaltern und doppelter Liste (Schema 2 mit Migration)
 - PaTiAlerts: fehlende beobachtete Gruppenbuffs als eine Warnung pro Buff („Fehlt bei N“), neu, nicht im Spiel geprüft
-- Tests: 86 Unit-Tests
+- Tests: 95 Unit-Tests
 - Im Spiel bestätigt: `C_UnitAuras` und `issecretvalue` vorhanden (`/pa debug`), Priester-IDs für Selbst- und
   Gruppenbuffs; 2026-09-30 Beobachten-Menü (ein Priester-Effekt an/ab), ein aktiver Priester-Gruppenbuff erkannt
 - Offen im Spiel: alles Übrige, besonders Waffenbuffs, Click-to-Buff, Kampf, Schamanen-IDs, Priester-Heilauren

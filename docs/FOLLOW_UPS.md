@@ -68,11 +68,17 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
 - Delivered instead: numbered nameplates (F16). The player clicks the marked nameplate; no automatic targeting or taunt.
 - Reopen only if the Forever client offers a secure API for this (would be recorded in WOW_API_COMPAT first).
 
-### F21 · PaTiAuras: name the weapon imbue (Flametongue, Windfury …) — low
-- Status: V1 (2026-09-29) shows per slot only whether an imbue is on. How the Forever client identifies the imbue
-  (enchant ID from the weapon enchant API, a tooltip line, a spell) is unknown.
-- Next step: owner runs `/pa auras` with each imbue on and reports `enchantID`; then a small `enchantID → spell` table
-  in the Shaman profile and an optional "wanted imbue per slot" setting. No guessing IDs before that.
+### F21 · PaTiAuras: more concrete weapon imbues (Flametongue, Frostbrand, Windfury, other ranks) — low
+- Status 2026-10-02: concrete imbue watches exist; only Rockbiter (enchant ID 29, owner-observed) is mapped.
+- Next step: owner runs `/pa auras` with each imbue (and each Rockbiter rank) on and reports `enchantID` and the
+  "Learned spells with icon" line; then one profile entry per imbue (`spellID`, `slot`, `enchantIDs`). No IDs before.
+
+### F28 · PaTiAuras: click-to-buff for personal buffs (Water Shield, Inner Fire) — low
+- Problem: weapon imbues can be cast from their line (2026-10-02); personal buffs cannot yet. Their lines can move in
+  combat (procs appear and disappear above/below them), and a secure button cannot follow in combat.
+- Smallest solution: give castable personal buffs fixed rows right after WEAPON (like GROUP and WEAPON), reuse the
+  weapon button pattern (`unit = player`, armed only out of combat while Missing).
+- Risk: low–medium (secure layout) · Tests: pure arming helper; in game click, combat, taint. Owner decides.
 
 ### F22 · More PaTiAlerts producers — low
 - V1 (2026-09-29): PaTiTank (aggro), PaTiAuras (personal buffs, weapon imbues), PaTiHeal (dispellable debuffs).
