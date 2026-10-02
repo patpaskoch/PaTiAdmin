@@ -18,7 +18,7 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
 - Risk: medium · Tests: manual — join/leave party members during combat.
 
 ### F4 · Position saved with the wrong anchor — medium
-- Status: fixed in code for all six addons (PaTiShared Window); awaiting in-game drag → reload test.
+- Status: fixed in code for every addon (PaTiShared Window); awaiting in-game drag → reload test.
 - Problem: Heal/Tank/Quest/Dungeon save `x, y` from `GetPoint()` after dragging but restore them as `CENTER` offsets; the window can jump after `/reload`.
 - Approach: PaTiShared `Window:SavePosition` stores point + relativePoint; old saves keep working.
 - Risk: low · Tests: manual drag → reload.
@@ -38,13 +38,14 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
 - Approach: correct ID after verifying in this client (docs/WOW_API_COMPAT.md). Product data change → owner decision.
 
 ### F11 · Slash command sets — low (not release-critical)
-- Status 2026-09-29: all seven addons answer `show, hide, test, lock, unlock, reset, settings, debug, version`, and the
+- Status 2026-10-02 (checked in code): every runtime addon answers `show, hide, lock, unlock, reset, settings, debug,
+  version` and `test` (except PaTiSocial and PaTiSuite: nothing to simulate; PaTiSuite adds `showall, hideall`), and the
   command alone shows/hides the window. Extras on purpose: PaTiHeal `spells, auras`; PaTiAuras `auras, about, changelog`;
   PaTiLead `toggle, about, changelog`; PaTiGroup, PaTiRota `toggle`. `/phq` (PaTiQuest) and `/ptg` (now the new PaTiGroup)
   stay as aliases. PaTiLead got `/plead`, `/patilead` (2026-10-02; `/pl` left out: collision not checkable here).
 - Open: `toggle` exists only in PaTiLead, PaTiGroup and PaTiRota. Add it elsewhere only if players ask for it.
 
-### F12 · Seven repositories — decision needed
+### F12 · Many repositories (13) — decision needed
 - Problem: shared tooling, docs and CI templates live in PaTiAdmin and must be checked out next to each addon; cross-repo changes need several commits.
 - Options: keep multi-repo (current, works) or move to one monorepo with per-addon packaging. Owner decision; do not start without it.
 
