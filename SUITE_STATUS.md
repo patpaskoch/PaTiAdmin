@@ -60,7 +60,8 @@ Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md).
   für Waffenbuffs im Spiel ❌ (Blizzard-Fehler CANCELABLE_ITEMS) → dort entfernt
 - Neu 2026-10-02, ungetestet: Waffenbuff abwählbar (0 oder 1 pro Hand, PT-AURAS-158–160); ❌ PT-AURAS-158 im Spiel
   (Felsbeißer ließ sich nicht abwählen) → Fix: Kästchen im Beobachten-Popup, Neuzeichnen trotz Fehler, Retest offen
-- Tests: 104 Unit-Tests
+- Neu 2026-10-02, ungetestet: Aufspüren (Kräuter-/Mineraliensuche, 0 oder 1, Klick wirkt; PT-AURAS-170–176)
+- Tests: 113 Unit-Tests
 - Im Spiel bestätigt: `C_UnitAuras` und `issecretvalue` vorhanden (`/pa debug`), Priester-IDs für Selbst- und
   Gruppenbuffs; 2026-09-30 Beobachten-Menü (ein Priester-Effekt an/ab), ein aktiver Priester-Gruppenbuff erkannt
 - Offen im Spiel: alles Übrige, besonders Waffenbuffs, Click-to-Buff, Kampf, Schamanen-IDs, Priester-Heilauren

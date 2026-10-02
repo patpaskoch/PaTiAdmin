@@ -51,6 +51,8 @@ explicit test recorded) · **assumed** (not yet used/tested).
 | Secure click on a weapon line (`SecureActionButtonTemplate`, `type1=spell`, `spell1=<name>`, `unit=player`) to cast a weapon imbue | **unknown** (PaTiAuras 2026-10-02) | attributes set out of combat only; PT-AURAS-150–155 |
 | Secure `cancelaura` with `spell2=<buff name>` (own buff/proc) | **unknown** (PaTiAuras 2026-10-02) | PT-AURAS-163/164 |
 | Secure `cancelaura` with `target-slot2=16` (weapon imbue) | **observed broken 2026-10-02** (owner): Blizzard error `SecureTemplates.lua:478: attempt to index global 'CANCELABLE_ITEMS' (a nil value)` | Forever client bug; PaTiAuras offers no imbue right-click. Defining the global from an addon would taint the secure handler — not done |
+| Active tracking: `C_Minimap.GetTrackingInfo` / `GetTrackingInfo` (list with active flag, spellID) or `GetTrackingTexture` (icon), `MINIMAP_UPDATE_TRACKING` | **unknown** (PaTiAuras 2026-10-02) | `/pa auras` prints which API answers and every type; PT-AURAS-170 |
+| Tracking spell IDs Find Herbs 2383, Find Minerals 2580, Find Treasure 2481 | **assumed** (classic data) | offered only if the client resolves the ID and the spell is learned |
 | Result in PaTiAuras | 2026-09-30 "Missing" with and without Rockbiter (the wrong tuple won; `enchantType=3` was also rejected) · **fix 2026-10-02 not yet tested in game** (PT-AURAS-052–057) | |
 | Equipping / removing the main-hand weapon is seen (GetInventoryItemID + PLAYER_EQUIPMENT_CHANGED) | **observed 2026-09-30** (owner) | |
 | `WEAPON_ENCHANT_CHANGED`, `WEAPON_SLOT_CHANGED` events | assumed, pcall-registered | 1 s fallback check |

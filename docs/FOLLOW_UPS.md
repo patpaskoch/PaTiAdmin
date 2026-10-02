@@ -110,3 +110,9 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
   expired, perhaps destroyed (only if the Forever client reports that reliably — check the totem APIs and events in
   WOW_API_COMPAT first). Never the group's aura state, never "recast the totem" advice from members' auras, never a cast.
 - Needs an owner decision and an in-game API check first. Not part of the beta.
+
+### F29 · PaTiAuras: tracking for classes without a profile, more tracking types — low
+- Status 2026-10-02: profession tracking (Find Herbs, Find Minerals, Find Treasure) is added to every *class profile*
+  (Shaman, Priest). Classes without a profile (e.g. Warrior) see "no profile" and get no tracking.
+- Smallest solution: a minimal general profile with only `tracking` for classes without one. Hunter tracks (Track
+  Beasts …) only after their IDs are confirmed. Owner decides.
