@@ -18,5 +18,6 @@ Verified = vom Owner im echten Client bestätigt (`[x]`). Failed = im Client feh
 | [PaTiGroup](https://github.com/patpaskoch/PaTiGroup/blob/main/INGAME_TESTING.md) | 0 | 0 | 0 | 53 | 53 |
 | [PaTiHeal](https://github.com/patpaskoch/PaTiHeal/blob/main/INGAME_TESTING.md) | 7 | 1 | 1 | 62 | 70 |
 | [PaTiQuest](https://github.com/patpaskoch/PaTiQuest/blob/main/INGAME_TESTING.md) | 0 | 0 | 0 | 37 | 37 |
+| [PaTiSocial](https://github.com/patpaskoch/PaTiSocial/blob/main/INGAME_TESTING.md) | 0 | 0 | 0 | 36 | 36 |
 | [PaTiSuite](https://github.com/patpaskoch/PaTiSuite/blob/main/INGAME_TESTING.md) | 3 | 0 | 0 | 72 | 75 |
 | [PaTiTank](https://github.com/patpaskoch/PaTiTank/blob/main/INGAME_TESTING.md) | 0 | 0 | 0 | 59 | 59 |
