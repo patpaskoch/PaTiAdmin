@@ -43,9 +43,10 @@ explicit test recorded) · **assumed** (not yet used/tested).
 | `UnitDetailedThreatSituation` | in use (PaTiTank) | 3rd return = threat percent; secret values only reach the bar |
 | `UNIT_MAXHEALTH` event | assumed (PaTiTank) | added to keep the health bar maximum current |
 | `C_Item.GetWeaponEnchantInfo()` **without a slot**, read like the classic tuple | **observed wrong 2026-09-30** (owner: Main Hand "Unknown" with and without Rockbiter) | the function exists in this client but does not answer that way |
-| `GetWeaponEnchantInfo()` classic tuple (hasMainHand, ms left, charges, enchantID, then the off hand) | assumed, used first (PaTiAuras) | `/pa auras` prints the raw tuple — needed from the owner with and without Rockbiter |
-| Result of the chain above in the Forever client | **observed wrong 2026-09-30** (owner): Main Hand reads "Missing" without **and with** Rockbiter (earlier "Unknown" gone) | the answer is readable but shows no imbue — which API answered and which field changes is unknown; `/pa debug` names the source, `/pa auras` prints every field of both APIs (with type), the player's buffs and the main-hand tooltip. No new guess until that output exists |
-| `C_Item.GetWeaponEnchantInfo(slot)` with `Enum.WeaponSlot`, entry fields hasEnchant / enchantType / timeLeft (ms?) / charges / enchantID | **unknown**, fallback only | no guessed slot numbers; `/pa auras` shows whether `Enum.WeaponSlot` exists |
+| `GetWeaponEnchantInfo()` classic tuple (hasMainHand, ms left, charges, enchantID, then the off hand) | **observed wrong 2026-10-02** (owner `/pa auras`, Rockbiter on): `hasMainHand=false`, the other main-hand values nil | unreliable in Forever: PaTiAuras uses it only where the modern API is missing or unreadable, and then only to confirm an imbue |
+| `C_Item.GetWeaponEnchantInfo(Enum.WeaponSlot.MainHand)` | **observed 2026-10-02** (owner, Rockbiter on): several entries, one with `hasEnchant=true`, `timeLeft=3524825` (ms ≈ 58.7 min), `enchantType=3`, `enchantID=29`, `enchantIconID=136086` | the source PaTiAuras asks first. `hasEnchant=true` + positive `timeLeft` is the most reliable "temporary imbue" signal. `enchantID=29` is **not** confirmed as "Rockbiter" in general — not used |
+| `Enum.WeaponSlot` / `Enum.ItemEnchantType` | **observed 2026-10-02** (owner): WeaponSlot MainHand=0, OffHand=1, Ranged=2; ItemEnchantType None=0, Permanent=1, Temporary=2 | the active imbue comes with `enchantType=3`, a value not in the enum — so the type alone must not decide |
+| Result in PaTiAuras | 2026-09-30 "Missing" with and without Rockbiter (the wrong tuple won; `enchantType=3` was also rejected) · **fix 2026-10-02 not yet tested in game** (PT-AURAS-052–057) | |
 | Equipping / removing the main-hand weapon is seen (GetInventoryItemID + PLAYER_EQUIPMENT_CHANGED) | **observed 2026-09-30** (owner) | |
 | `WEAPON_ENCHANT_CHANGED`, `WEAPON_SLOT_CHANGED` events | assumed, pcall-registered | 1 s fallback check |
 | How the client identifies *which* imbue is on a weapon (enchant ID, name) | **unknown** | V1 only watches "imbue present"; needs `/pa auras` output with Flametongue/Windfury on |
@@ -101,7 +102,7 @@ own child frame of the plate). The player clicks that nameplate; Blizzard's own 
 |---|---|---|
 | `SetBackdropColor` alpha on a frame with secure children, also in combat | assumed (all windows) | not a protected property; only changed from settings |
 | Window snapping at drag end | **observed not working 2026-09-30** (owner) | removed instead of debugged (not needed) |
-| PaTiSuite show/hide of single windows, Show all, Hide all | **observed working 2026-09-30** (owner) | the two buttons are now one dynamic button (not yet tested) |
+| PaTiSuite show/hide of single windows, Show all, Hide all | **observed working 2026-09-30** (owner) | the two buttons are now one dynamic button; compact entries, horizontal layout and collapse added 2026-10-02 (not yet tested) |
 | A HIGHLIGHT-layer texture on a Button is drawn above its FontStrings | **observed 2026-09-30** (PaTiSuite hover unreadable) | use a BACKGROUND texture on OnEnter |
 | `HookScript("OnShow"/"OnHide")` on another addon's window (also windows with secure children) | assumed (PaTiSuite) | post-hooks only, nothing secure is called |
 

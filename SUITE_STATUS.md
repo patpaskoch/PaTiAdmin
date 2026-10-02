@@ -11,7 +11,7 @@ Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md).
 | Addon | Version (TOC) | Code | CI | Paket (ZIP geprüft) | Doku | Fresh Install | WoW-Test | Beta |
 |---|---|---|---|---|---|---|---|---|
 | PaTiHeal | 0.6.0 + [Unreleased] | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ teilweise (Klickzauber, Migration, Sprache) | Nein |
-| PaTiAuras | 0.1.0 | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ teilweise; ❌ Waffenbuff aktiv wird nicht erkannt | Nein |
+| PaTiAuras | 0.1.0 | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ teilweise; Waffenbuff-Fix 2026-10-02 ungetestet | Nein |
 | PaTiTank | 0.1.0 + [Unreleased] | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
 | PaTiGroup | 0.4.0 + [Unreleased] | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
 | PaTiQuest | 0.1.0 + [Unreleased] | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
@@ -47,12 +47,13 @@ Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md).
 - Funktion: eigene Buffs, Procs, Gruppenbuffs (auch solo, Click-to-Buff auf das nächste fehlende Mitglied),
   Heil-Auren pro Mitglied; jede Aura einzeln abschaltbar; Profile Schamane, Priester
 - Schamanen-Waffenbuffs (Waffenhand/Schildhand) als eigene Datenquelle; V1 ohne Imbue-Art. Im Spiel (2026-09-30):
-  Waffe an/ab/an wird erkannt; ohne Imbue „Fehlt“ (kein „Unbekannt“ mehr), **aber aktiver Felsbeißer zeigt auch
-  „Fehlt“** (❌ PT-AURAS-053–055, 057). Ursache offen: `/pa debug` / `/pa auras` zeigen jetzt alle Rohwerte beider APIs,
-  eigene Buffs und die Tooltip-Zeilen — Ausgabe ohne und mit Felsbeißer nötig
+  Waffe an/ab/an wird erkannt; aktiver Felsbeißer zeigte „Fehlt“ (❌ PT-AURAS-053–055, 057). Ursache aus dem
+  Owner-`/pa auras` 2026-10-02: das klassische Tupel meldet „kein Imbue“, `C_Item.GetWeaponEnchantInfo` hat ihn
+  (`hasEnchant`, `timeLeft>0`, `enchantType=3`). Fix 2026-10-02: moderne API zuerst — **im Spiel noch nicht
+  geprüft**
 - Einstellungen: eine „Beobachten“-Auswahl statt Kategorie-Schaltern und doppelter Liste (Schema 2 mit Migration)
 - PaTiAlerts: fehlende beobachtete Gruppenbuffs als eine Warnung pro Buff („Fehlt bei N“), neu, nicht im Spiel geprüft
-- Tests: 77 Unit-Tests
+- Tests: 86 Unit-Tests
 - Im Spiel bestätigt: `C_UnitAuras` und `issecretvalue` vorhanden (`/pa debug`), Priester-IDs für Selbst- und
   Gruppenbuffs; 2026-09-30 Beobachten-Menü (ein Priester-Effekt an/ab), ein aktiver Priester-Gruppenbuff erkannt
 - Offen im Spiel: alles Übrige, besonders Waffenbuffs, Click-to-Buff, Kampf, Schamanen-IDs, Priester-Heilauren
@@ -90,16 +91,17 @@ Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md).
 - Funktion: optionales Steuerfenster — installierte PaTi-Fenster einzeln oder mit einem Button alle
   einblenden/ausblenden (Beschriftung je nach Zustand); im Kampf
   gesperrte Fenster (Heal, Auras, Group) werden genannt und nicht angefasst. Keine Spiellogik
-- Tests: 10 Unit-Tests, Smoke-Test mit PaTiHeal + PaTiTank (Mocks)
+- Tests: 18 Unit-Tests, Smoke-Test mit PaTiHeal + PaTiTank (Mocks, Stand vor dem Umbau 2026-10-02)
 - Im Spiel bestätigt (2026-09-30): einzelnes Ein-/Ausblenden, die früheren Buttons „Alle anzeigen“/„Alle ausblenden“,
   grüne/graue Statusfarben, Hover-Lesbarkeit
-- Neu, noch nicht im Spiel geprüft: ein dynamischer Button statt zwei; offen: Icon in der AddOn-Liste
+- Neu, noch nicht im Spiel geprüft: ein dynamischer Button statt zwei; kompakte Einträge (nur Punkt + Name),
+  Layout vertikal/horizontal, Einklappen (Schema 2); offen: Icon in der AddOn-Liste
 
 ## PaTiShared 0.3.0 (Entwicklungsquelle, kein WoW-Addon, wird nicht veröffentlicht)
 - Fenster, Menü, Modal (mit `AddNote`), Button, Dropdown, Checkbox, Popup, Tooltip, Badge, Aura-Icon; 7 Unit-Tests
 
 ## Nächster Schritt
-- `/pa auras` ohne und mit Felsbeißer (PT-AURAS-053), neuer PaTiSuite-Button (PT-SUITE-048), Gruppenbuff-Alerts
+- Retest Waffenbuff-Fix (PT-AURAS-052–057), PaTiSuite neu (PT-SUITE-033/034, 048, 100–128), Gruppenbuff-Alerts
   (PT-AURAS-112–116); offene Liste: `tools/ingame-status.sh --list open`, dann
   Fresh-Install-Tests nach [`docs/TESTING.md`](docs/TESTING.md#release-testing-per-release-candidate)
 - Icons in der AddOn-Liste prüfen, Namensschild-Marker im echten Pull testen
