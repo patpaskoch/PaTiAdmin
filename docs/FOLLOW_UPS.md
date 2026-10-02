@@ -91,7 +91,7 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
   needs a place in the UI (menu or buttons) and a decision which windows belong to which preset. Not built; owner
   decides the presets first.
 
-### F26 · PaTiAuras: an active weapon imbue reads "Missing" — **high** · FIXED IN CODE 2026-10-02, awaiting in-game test
+### F26 · PaTiAuras: an active weapon imbue reads "Missing" — **high** · FIXED, owner-verified 2026-10-02 (052–054)
 - Problem: owner test 2026-09-30 (PT-AURAS-053–055, 057): weapon detected, but with Rockbiter on Main Hand shows
   "Missing"; removing/re-applying changes nothing; PaTiAlerts keeps "weapon imbue missing".
 - Affected: `PaTiAuras/WeaponImbues.lua` (readLegacy / readModern / ParseModern).
@@ -101,7 +101,8 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
   `enchantType=3` — not in the client's enum). The old code trusted the tuple and rejected type 3.
 - Fix: modern API first per hand; `hasEnchant` + positive `timeLeft` = imbue; the tuple only fills an unreadable
   hand, and only to confirm an imbue. Regression tests from the real values (weaponimbues_spec).
-- Remaining: owner retest PT-AURAS-052–057. Close this entry only after that.
+- Owner-verified 2026-10-02: PT-AURAS-052, 053, 054 (missing → active with time → missing). Still open: 055
+  (re-apply), 057 (PaTiAlerts). Delete this entry once those are confirmed.
 
 ### F27 · PaTiAuras: totem tracker (possible later feature) — low · not planned
 - Owner decision 2026-10-02: PaTiAuras never watches totem/ground auras (PaTiAuras AGENTS.md) — a member outside the

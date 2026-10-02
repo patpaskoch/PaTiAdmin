@@ -11,7 +11,7 @@ Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md).
 | Addon | Version (TOC) | Code | CI | Paket (ZIP geprüft) | Doku | Fresh Install | WoW-Test | Beta |
 |---|---|---|---|---|---|---|---|---|
 | PaTiHeal | 0.6.0 + [Unreleased] | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ teilweise (Klickzauber, Migration, Sprache) | Nein |
-| PaTiAuras | 0.1.0 | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ teilweise; Waffenbuff-Fix 2026-10-02 ungetestet | Nein |
+| PaTiAuras | 0.1.0 | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ teilweise; Waffenbuff-Erkennung bestätigt (052–054) | Nein |
 | PaTiTank | 0.1.0 + [Unreleased] | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
 | PaTiGroup | 0.4.0 + [Unreleased] | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
 | PaTiQuest | 0.1.0 + [Unreleased] | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
@@ -52,8 +52,8 @@ Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md).
 - Schamanen-Waffenbuffs als eigene Datenquelle. Im Spiel (2026-09-30):
   Waffe an/ab/an wird erkannt; aktiver Felsbeißer zeigte „Fehlt“ (❌ PT-AURAS-053–055, 057). Ursache aus dem
   Owner-`/pa auras` 2026-10-02: das klassische Tupel meldet „kein Imbue“, `C_Item.GetWeaponEnchantInfo` hat ihn
-  (`hasEnchant`, `timeLeft>0`, `enchantType=3`). Fix 2026-10-02: moderne API zuerst — **im Spiel noch nicht
-  geprüft**
+  (`hasEnchant`, `timeLeft>0`, `enchantType=3`). Fix 2026-10-02: moderne API zuerst — **vom Owner bestätigt 2026-10-02
+  (052–054: Fehlt → Aktiv mit Restzeit → Fehlt)**; offen: 055, 057
 - Einstellungen: eine „Beobachten“-Auswahl statt Kategorie-Schaltern und doppelter Liste (Schema 2 mit Migration)
 - PaTiAlerts: fehlende beobachtete Gruppenbuffs als eine Warnung pro Buff („Fehlt bei N“), neu, nicht im Spiel geprüft
 - Neu 2026-10-02, ungetestet: Rechtsklick auf eine aktive Buff-/Proc-Zeile entfernt den Buff (PT-AURAS-163–169);
