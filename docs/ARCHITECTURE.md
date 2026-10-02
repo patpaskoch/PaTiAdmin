@@ -1,15 +1,36 @@
 # Architecture
 
-State of 2026-09-29 (code on `main`). Update this file when an addon's structure, SavedVariables, events or secure frames change.
+State of 2026-10-02 (code on `main`). Update this file when an addon's structure, SavedVariables, events or secure frames change.
 
 ## Suite shape
 
-- Eight repos (see `AGENTS.md` §2). No monorepo, no submodules, no runtime dependency between addons.
+- Thirteen repos (see `AGENTS.md` §2): ten gameplay addons, PaTiSuite, PaTiShared, PaTiAdmin. No monorepo, no submodules, no runtime dependency between addons.
 - **PaTiShared 0.3.0** (UI design system) is embedded per addon under `Shared/` via `sync-shared.sh`
-  (`PaTiShared/README.md`) in all seven addons. The legacy `PaTiSharedPanel.lua` is gone.
+  (`PaTiShared/README.md`) in all eleven runtime addons. The legacy `PaTiSharedPanel.lua` is gone.
 - **PaTiAdmin** holds rules, docs, the check/package tools and CI/release templates. It ships nothing to players.
 - **Releases:** one zip per addon with one folder `<Addon>/` (`tools/package.sh`, `docs/RELEASE.md`). PaTiShared and
   PaTiAdmin are never installed by players.
+
+## Addon responsibilities
+
+One job per addon (owner decision 2026-10-02). A feature goes into the addon whose job it is — never into two.
+Addons complement each other but never depend on each other (AGENTS.md §3).
+
+| Addon | Job | Not its job (→ where it lives) |
+|---|---|---|
+| **PaTiHeal** | Heal: player/party frames + heal-target frame, click healing, **the only source of your own HoTs/shields on healable frames**, dispellable debuffs, mana | buffs/procs/weapon imbues (→ Auras), roles overview (→ Group) |
+| **PaTiAuras** | Buffs/auras: own buffs, procs, tracking, group buffs, weapon imbues, click-to-buff | HoTs/shields on members (→ Heal, removed here 2026-10-02) |
+| **PaTiTank** | Tank awareness: target, threat, aggro lost/close, problem mobs, nameplate numbers, PaTiAlerts output | tank target for others (→ Group) |
+| **PaTiRota** | Own skill priority: slots in your order, cooldowns, next ready skill highlighted, fixed cast buttons | any automatic casting, rotation rules (never) |
+| **PaTiGroup** | Party awareness: who tanks, who heals, role counts, the tank's target and its raid marker (display only) | markers, ready check, pull, leader actions (→ Lead), threat (→ Tank), heal details (→ Heal) |
+| **PaTiLead** | Lead/coordinate: raid markers, Clear/Reset All, ready check, pull timer, leader/assist, local note, marker key bindings (the former PaTiGroup) | party awareness (→ Group) |
+| **PaTiQuest** | Quest companion: the selected quest and its objectives | |
+| **PaTiDungeon** | Dungeon context: instance, group and combat status (later: dungeon quests, bosses, role notes, loot wishlist) | |
+| **PaTiSocial** | Quick communication: emote and short message buttons | chat history, friends/guild/BNet, voice (never) |
+| **PaTiAlerts** | One window for currently relevant problems (optional receiver) | producing alerts itself |
+| **PaTiSuite** | Optional control panel: show/hide/overview of the windows | gameplay logic (never) |
+| PaTiShared | Dev source of the shared UI, embedded into every addon (`Shared/`) | runtime dependency (never) |
+| PaTiAdmin | Engineering centre: rules, docs, tools, CI templates — not a player addon | anything players install |
 
 ## Data flow (target for new and changed code)
 
@@ -18,7 +39,7 @@ WoW event ──► adapter: read WoW API, guard missing APIs, return plain valu
           ──► state/logic: pure Lua on plain tables (unit-testable, no WoW calls)
           ──► UI: write widgets; secure attributes only out of combat
 ```
-Heal, Auras, Group and Tank (aggro monitor) follow this split in several files; Quest and Dungeon are small: `Logic.lua` (pure) plus
+Heal, Auras, Lead, Rota and Tank (aggro monitor) follow this split in several files; Group, Quest and Dungeon are small: `Logic.lua` (pure) plus
 one `<Addon>.lua` with a clearly separated adapter function, window, settings, commands and events.
 
 ## Existing patterns
@@ -36,21 +57,23 @@ one `<Addon>.lua` with a clearly separated adapter function, window, settings, c
 | Window registry | `_G.PaTiSuiteWindows[addonName] = window` (every `UI.CreateWindow`); `window.suiteSetShown(shown, → false if blocked)` = the addon's own `setShown(shown, quiet)` | all, read by PaTiSuite |
 | Settings | lazily built `UI.CreateModal` (needs DB); sections, rows, `AddControls`, `Finish(restoreDefaults)` | all |
 | Collapse/Expand | `DB.collapsed` (default false, migration keeps a saved value), ••• menu entry, header-only window; restore defaults expands (PaTiHeal keeps it). With secure children the entry is disabled/blocked in combat | all |
-| Help note in settings | `modal:AddNote(title, highlight, text)` (PaTiShared): accent line, highlighted path, wrapped text — help, never a warning | Group (key bindings), Heal (click dispel) |
-| Combat guard | `if InCombatLockdown() then say("COMBAT_LOCKED") return end`; layout/attributes re-applied on `PLAYER_REGEN_ENABLED` | Heal, Group |
+| Help note in settings | `modal:AddNote(title, highlight, text)` (PaTiShared): accent line, highlighted path, wrapped text — help, never a warning | Lead (key bindings), Heal (click dispel), Rota (skill slots + key bindings) |
+| Combat guard | `if InCombatLockdown() then say("COMBAT_LOCKED") return end`; layout/attributes re-applied on `PLAYER_REGEN_ENABLED` | Heal, Auras, Lead, Rota |
 | Secret values | `isSecret(v)` (issecretvalue) checked **before** any compare/test; widgets get raw values | all |
+| Secure visibility in combat | `SecureHandlerStateTemplate` + `RegisterStateDriver(frame, state, "[macro conditions] show; hide")`; the restricted snippet shows/hides, anchors and sizes protected frames from attributes set out of combat; out of combat the same result is applied in Lua; without the driver: out-of-combat fallback | Heal (heal target, `TargetFrame.lua`) |
+| Fixed secure buttons, moving highlight | one secure button per line/slot with a fixed action set out of combat; in combat only plain regions (texts, border, icon) change — the button never switches its action | Rota (slots), Auras (group/line buttons), Lead (markers) |
 | Missing APIs | `if C_X and C_X.Fn then` + `pcall(...)` | all |
 | Localization | `Locales/<code>.lua` → `ns.Locales[code].KEY`, lookup `UI.L.KEY` / `UI.BindText` | PaTiShared, all addons |
 | Pure logic + migration | `Logic.lua`/`Config.lua` without WoW calls, `Migrate(db)` with `DB.schema`, tests in `tests/` | all |
 
 ## Addons
 
-### PaTiHeal 0.6.0 (+ [Unreleased]) — party frames, click casting, HoTs & shields, dispels
+### PaTiHeal 0.6.0 (+ [Unreleased]) — party + heal-target frames, click casting, own HoTs & shields, dispels
 - Files: `Shared/` → `Locales/` → `Logic.lua` (bindings → attributes, migration, health percent, secret-value helpers;
   pure, tested) → `SpellBook.lua` (spells, ranks) → `Dispels.lua` (dispellable debuffs, filter HARMFUL|RAID) →
   `Profiles/Shaman.lua`, `Profiles/Priest.lua` (data: healer auras + dispel spells) → `HoTs.lua` (own auras via
   HELPFUL|PLAYER + pure matching/texts, tested) → `Settings.lua` (settings modal) → `PaTiHeal.lua` (rows, HoT icons,
-  menu, slash, events).
+  menu, slash, events). `TargetFrame.lua` (heal-target secure driver) loads before `Settings.lua`.
 - `PaTiHealDB` (per character), schema 2: point, relativePoint, x, y, locked, collapsed, language, showDispels,
   bindings{LEFT..ALT_RIGHT = spellID}, bindingRanks{key = rank}, hots{key = false}, hotPosition RIGHT|BELOW,
   showHotTimers, showHotCharges, scale (new keys get defaults, no schema step); `Logic.Migrate` converts 0.6.0.
@@ -60,6 +83,13 @@ one `<Addon>.lua` with a clearly separated adapter function, window, settings, c
   no combination preset. Independent of PaTiAuras by design (duplicated spell data accepted).
 - Secure: `PaTiHealUnit1..5` (`SecureUnitButtonTemplate`, player + party1–4). `applyBindings()` writes every owned
   attribute out of combat; visibility via `RegisterUnitWatch`; collapse/hide/test mode blocked in combat.
+- Heal target (2026-10-02): `PaTiHealTarget` (`SecureUnitButtonTemplate`, unit `target`, the same attributes from
+  `applyBindings()`) above the player row; party rows are chained below `PaTiHealUnit1`. `TargetFrame.lua`:
+  `PaTiHealTargetDriver` (`SecureHandlerStateTemplate`, `RegisterStateDriver` `[@target,help,nodead] show; hide`) —
+  its restricted snippet shows/hides the row, moves the player row and sets the window height from attributes
+  (`Logic.HealLayout`, `Logic.TargetMode`: collapsed hides, test mode shows) also in combat; without the driver only
+  out of combat. Name, level (`Logic.LevelText`), health, mana, own HoTs, dispels; NPC = no class colour, no
+  "offline". Never sends PaTiAlerts alerts. PLAYER_TARGET_CHANGED repaints it.
 - Rows: name in class colour, health in percent (raw value when secret), tank = accent stripe, up to two dispel icons.
 - Events: UNIT_HEALTH/UNIT_POWER_UPDATE/UNIT_CONNECTION/UNIT_FLAGS/UNIT_AURA repaint one row; GROUP_ROSTER_UPDATE,
   PLAYER_REGEN_ENABLED, SPELLS_CHANGED (rescan ranks), PLAYER_ENTERING_WORLD.
@@ -70,7 +100,11 @@ one `<Addon>.lua` with a clearly separated adapter function, window, settings, c
   (states, pure) → `AuraScan.lua` (C_UnitAuras/UnitAura adapter + test data) → `WeaponImbues.lua` (weapon enchant
   adapter: `C_Item.GetWeaponEnchantInfo` or `GetWeaponEnchantInfo`, pure `Evaluate`) → `Profiles/Shaman.lua`, `Profiles/Priest.lua`
   (data; `variants` join spells that give the same buff) → `Watch.lua` → `AuraWindow.lua` → `PaTiAuras.lua`.
-- `PaTiAurasDB` (per character), schema 1 (`Config.DEFAULTS` incl. `collapsed`, `watch`, `seen`, position, scale, `lastChangelog`).
+- `PaTiAurasDB` (per character), schema 3 (`Config.DEFAULTS` incl. `collapsed`, `watch`, `seen`, `categoryLayout`, position,
+  scale, `lastChangelog`). Categories: personal, procs, group, weapon, tracking — no healing since 2026-10-02 (PaTiHeal's
+  job; old watch keys are ignored). Category layout (`categoryLayout`): vertical = one block in line order, horizontal
+  = one column per category (`Auras.PlaceBlocks`, `Auras.ColumnWidth`, wraps on narrow screens); secure buttons follow
+  their line; in combat the column origins are frozen and a change waits for PLAYER_REGEN_ENABLED.
   Collapsed = header only; the buff buttons are hidden out of combat, so collapsing is blocked in combat.
   "New auras" dialog: entries you can use (`Watch.IsOffered`) that are not in `seen` are offered once, out of combat.
 - Events: UNIT_AURA/UNIT_CONNECTION/UNIT_FLAGS (player, party1-4, one unit re-read), GROUP_ROSTER_UPDATE,
@@ -86,21 +120,46 @@ one `<Addon>.lua` with a clearly separated adapter function, window, settings, c
   `WeaponImbues.Signature` changes). Unreadable → UNKNOWN, never MISSING. Nothing cached between reads.
 - What to watch: only `DB.watch[key]` (settings "Watch", a multi-select popup of `Watch.Choices`); schema 2 removed
   the category switches (a switched-off category became watch = false per entry).
-- Group buffs also solo. Priest healing auras: Renew, Power Word: Shield, Prayer of Mending. No runtime API to PaTiHeal
-  (owner decision 2026-09-28). Test mode uses the class profile.
+- Group buffs also solo. No runtime API to PaTiHeal (owner decision 2026-09-28). Test mode uses the class profile.
 - Slash `/pa`, `/patiauras`.
 
-### PaTiGroup 0.4.0 (+ [Unreleased]) — markers, ready check, pull timer
+### PaTiLead 0.4.0 (+ [Unreleased]) — lead the group: markers, ready check, pull timer (former PaTiGroup)
+- Renamed from PaTiGroup on 2026-10-02 (GitHub repo renamed, history kept). Fresh `PaTiLeadDB` — the old
+  `PaTiGroupDB` is not taken over (pre-release). Old in-game IDs `PT-GROUP-001…102` are RETIRED there.
 - Files: `Shared/` → `Locales/` → `Logic.lua` (settings, marker slots, reset text, secret-value helpers; pure, tested)
-  → `Bar.lua` (window, secure buttons, layout, paint) → `PaTiGroup.lua` (settings, commands, binding names, events) + `Bindings.xml`.
-- `PaTiGroupDB` (per character), schema 1: position, locked, scale, language, collapsed, showPull, showGroupInfo, showNote, note, markers[8], lastChangelog.
+  → `Bar.lua` (window, secure buttons, layout, paint) → `PaTiLead.lua` (settings, commands, binding names, events) + `Bindings.xml`.
+- `PaTiLeadDB` (per character), schema 1: position, locked, scale, language, collapsed, showPull, showGroupInfo, showNote, note, markers[8], lastChangelog.
   Collapsed = header only via `Bar.Layout` (secure marker buttons hidden), so collapsing is blocked in combat.
-- Secure: `PaTiGroupMarker1..8` / `PaTiGroupClear` (`type=raidtarget`, `action=set`, `marker` 0-8), `PaTiGroupReset`
-  (`type=macro`, `macrotext` /tm), invisible binding buttons on UIParent (`PaTiGroupQuickSkull`, `PaTiGroupBindMarker1..7`,
-  `PaTiGroupBindClear`). Layout only out of combat (`Bar.Layout` → pending until PLAYER_REGEN_ENABLED).
+- Secure: `PaTiLeadMarker1..8` / `PaTiLeadClear` (`type=raidtarget`, `action=set`, `marker` 0-8), `PaTiLeadReset`
+  (`type=macro`, `macrotext` /tm), invisible binding buttons on UIParent (`PaTiLeadBindMarker1..8`,
+  `PaTiLeadBindClear`). Layout only out of combat (`Bar.Layout` → pending until PLAYER_REGEN_ENABLED).
 - No macro creation, no automatic key binding, no SaveBindings. `DoReadyCheck`, `C_PartyInfo.DoCountdown` (leader/assist).
 - Settings: own "Key bindings" section with a help note (`AddNote`) naming the WoW key binding menu path.
-- Slash `/pg`, `/ptg`, `/patigroup`.
+- No AddOns-list icon yet (the crown + raid marker artwork is still to be provided). Slash `/plead`, `/patilead`.
+
+### PaTiGroup 0.1.0 — party awareness (new 2026-10-02)
+- Display only, no secure frames (updates in combat): Tank (you first if you tank; "+n"), Healer (dead/offline),
+  Tank target (`player` → `target`, else `<unit>target`) with its raid marker or "no target", role counts. Party
+  and raid (`raidN`), solo message. Roles only from `UnitGroupRolesAssigned`, never guessed.
+- Files: `Shared/` → `Locales/` → `Logic.lua` (settings, migration, `Member`, `Summary`, `TargetOf`; pure, tested) →
+  `PaTiGroup.lua` (adapter `readMembers`, window, settings, commands, events).
+- `PaTiGroupDB`, schema 2 (schema 1 = the former PaTiGroup's table: never read, fresh start).
+- Events: GROUP_ROSTER_UPDATE, PLAYER_ENTERING_WORLD, RAID_TARGET_UPDATE, PLAYER_TARGET_CHANGED and UNIT_TARGET (only
+  the tank's line), UNIT_HEALTH/UNIT_CONNECTION/UNIT_FLAGS/UNIT_NAME_UPDATE (only the tank and healers), pcall-registered
+  PLAYER_ROLES_ASSIGNED / ROLE_CHANGED_INFORM. In-game IDs from `PT-GROUP-200`. Slash `/pg`, `/ptg`, `/patigroup`.
+
+### PaTiRota 0.1.0 — own skill priority (new 2026-10-02)
+- Up to ten slots (`PaTiRotaDB.slots`, spell ID or 0) in priority order; typed name/ID or dragged from the spellbook.
+  `Logic.CooldownState` (READY / GCD / COOLDOWN / UNUSABLE / NOT_KNOWN / UNKNOWN; secret → UNKNOWN), GCD via the
+  reference spell 61304 or a 1.5 s fallback; `Logic.Recommend` = first READY-or-GCD slot, else the soonest cooldown.
+- Files: `Shared/` → `Locales/` → `Logic.lua` (pure, tested) → `SpellBook.lua` (spell/cooldown/usable/cursor
+  adapters; small copy of PaTiHeal's) → `Settings.lua` (slot editing) → `PaTiRota.lua` (window, buttons, painting,
+  commands, events) + `Bindings.xml` (one CLICK binding per slot).
+- Secure: `PaTiRotaSlot1..10` (SecureActionButtonTemplate, `type1=spell`, `spell1=<name>`), slot N = button N.
+  `applySlots()` (out of combat) sets attributes, positions and visibility; in combat `slotsPending` waits for
+  PLAYER_REGEN_ENABLED and painting follows each button's bound spell. Never casts by itself (AGENTS.md §8).
+- Events: SPELL_UPDATE_COOLDOWN, SPELL_UPDATE_USABLE, SPELLS_CHANGED, PLAYER_REGEN_*; 0.1 s text ticker only while a
+  shown skill cools down. `PaTiRotaDB` schema 1. No icon yet. Slash `/prota`, `/patirota`.
 
 ### PaTiTank 0.1.0 (+ [Unreleased]) — own health, target, threat, aggro control
 - Files: `Shared/` → `Locales/` → `Logic.lua` (settings, `ThreatValue`; pure, tested) → `Aggro.lua` (states CONTROLLED /
@@ -164,11 +223,13 @@ one `<Addon>.lua` with a clearly separated adapter function, window, settings, c
 ### PaTiSuite 0.1.0 — optional control panel
 - Files: `Shared/` → `Locales/` → `Logic.lua` (settings, window list, show/hide rules; pure, tested) → `PaTiSuite.lua`.
 - Reads `PaTiSuiteWindows` at PLAYER_LOGIN (all addons loaded, any load order) and follows state by post-hooks
-  (OnShow/OnHide). Show/hide via `frame:SetSuiteShown` → the addon's own rules: Heal, Auras, Group refuse in combat
-  (secure children) and PaTiSuite names them in one message; Tank, Quest, Dungeon, Alerts are fine in combat.
+  (OnShow/OnHide). Show/hide via `frame:SetSuiteShown` → the addon's own rules: Heal, Auras, Rota, Lead refuse in
+  combat (secure children) and PaTiSuite names them in one message; Tank, Group, Quest, Dungeon, Social, Alerts are
+  fine in combat. Order `Logic.ORDER`: Heal, Auras, Tank, Rota, Group, Lead, Quest, Dungeon, Social, Alerts.
   PaTiAlerts counts as shown unless hidden by the player (auto-hide aside). A protected frame without suite rules is
   never touched in combat.
-- `PaTiSuiteDB`, schema 1: position, locked, scale, language, opacity. No test mode, no collapse.
+- `PaTiSuiteDB`, schema 4: position, locked, scale, language, opacity, layout, collapsed, visibility (remembered
+  show/hide per addon; schema 4 moved an old `visibility.PaTiGroup` to `PaTiLead`). No test mode.
 - Rows: hover = BACKGROUND texture on OnEnter (text stays readable), status colour `Success` (shown) / `TextMuted`.
 - Slash `/psuite`, `/patisuite`.
 
@@ -176,5 +237,8 @@ one `<Addon>.lua` with a clearly separated adapter function, window, settings, c
 
 - **No Ace3/LibStub**: the addons are small; libraries add load order and update burden.
 - **Embedded PaTiShared instead of a library addon**: players install one addon at a time.
-- **Small adapters are duplicated, not shared** (e.g. `SpellBook.lua` in Heal and Auras): independence beats DRY.
+- **Small adapters are duplicated, not shared** (e.g. `SpellBook.lua` in Heal, Auras and Rota): independence beats DRY.
+- **PaTiGroup → PaTiLead (2026-10-02)**: the old PaTiGroup was a leader tool; it was renamed (history kept) and the
+  name PaTiGroup reused for party awareness. Pre-release: no cross-addon SavedVariables migration; test IDs are never
+  reused (old ones RETIRED in PaTiLead, the new PaTiGroup counts from 200).
 - **Tools in plain Lua 5.1 + bash**: run on Windows (Git Bash + LuaJIT), macOS and CI without C modules.

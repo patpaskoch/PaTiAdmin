@@ -95,7 +95,7 @@ Prepared, not done — no accounts, no uploads without an explicit task.
 | Title | TOC `## Title` | ready |
 | Short description | TOC `## Notes` (+ `Notes-deDE`) | ready |
 | Long description | README (Features, Installation, Commands, Known limitations) | ready |
-| Logo / icon | PaTiSuite icon set in all nine addons (PaTiAlerts: bell "Alarm", PaTiSuite: the gear emblem, PaTiSocial: speech bubble with two figures (owner-provided), all approved by the owner): `assets/icon-{1024,512,256,128,64,32}.png` per addon (not packaged); in game `Media/icon.tga` + `## IconTexture`. Cut from the approved sheet at ~244 px, so 512/1024 are upscaled (no new detail) — use the original artwork if a sharper large image is needed | ready |
+| Logo / icon | PaTiSuite icon set in nine addons (PaTiAlerts: bell "Alarm", PaTiSuite: the gear emblem, PaTiSocial: speech bubble with two figures (owner-provided), PaTiGroup: the group icon of the former PaTiGroup, all approved by the owner). **PaTiLead and PaTiRota: artwork missing** (FOLLOW_UPS F31, no `## IconTexture` yet). `assets/icon-{1024,512,256,128,64,32}.png` per addon (not packaged); in game `Media/icon.tga` + `## IconTexture`. Cut from the approved sheet at ~244 px, so 512/1024 are upscaled (no new detail) — use the original artwork if a sharper large image is needed | ready except PaTiLead, PaTiRota |
 | Screenshots | shot list below | not taken |
 | Game version | WoW Forever 1.60.1 (build 70009), Interface 16001 — platforms may not list this client | to check per platform |
 | Release zip | `tools/package.sh` / release workflow | ready |
@@ -108,10 +108,12 @@ Prepared, not done — no accounts, no uploads without an explicit task.
 
 | Addon | Shots |
 |---|---|
-| PaTiHeal | party frames in a group · settings (click casting + HoTs & shields) · HoT/shield icons with charges/timer · dispel icons · test mode |
-| PaTiAuras | self section · group buffs with tooltip · healing auras · settings (aura switches) · first-start aura window |
+| PaTiHeal | party frames in a group with a heal target above · settings (click casting + HoTs & shields) · HoT/shield icons with charges/timer · dispel icons · test mode |
+| PaTiAuras | self section · group buffs with tooltip · horizontal category layout · settings (Watch) · first-start aura window |
 | PaTiTank | HUD with target and threat · aggro 6 / 6 · lost enemy on the healer · settings |
-| PaTiGroup | marker bar with target · settings with the highlighted key binding note · WoW key binding menu with PaTiGroup |
+| PaTiRota | skill list with the next skill highlighted and cooldowns · settings with the skill slots |
+| PaTiGroup | tank, healer, tank target with marker in a party |
+| PaTiLead | marker bar with target · settings with the highlighted key binding note · WoW key binding menu with PaTiLead |
 | PaTiQuest | selected quest with objectives |
 | PaTiDungeon | window inside a dungeon in a group |
 | PaTiAlerts | window with a red, a yellow and a blue alert during a pull · settings |

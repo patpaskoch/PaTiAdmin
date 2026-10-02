@@ -11,14 +11,14 @@ explicit test recorded) · **assumed** (not yet used/tested).
 
 | API / behaviour | Status | Notes |
 |---|---|---|
-| `SetRaidTarget` from addon Lua | verified protected (before 2026-09-28) | PaTiGroup uses `SecureActionButtonTemplate` `type=raidtarget` and a `/tm` macro instead |
+| `SetRaidTarget` from addon Lua | verified protected (before 2026-09-28) | PaTiLead (former PaTiGroup) uses `SecureActionButtonTemplate` `type=raidtarget` and a `/tm` macro instead |
 | `SecureUnitButtonTemplate` with `[mod-]type<n>=spell`, `[mod-]spell<n>` | **verified 2026-09-28** (owner: Left and Shift+Right cast the chosen spell) | other combinations still to test |
-| `SecureActionButtonTemplate` `type=raidtarget`, `action=set` | in use (PaTiGroup <= 0.4) | |
-| `type=raidtarget` with `marker=0` clears the target's marker | assumed (PaTiGroup Clear) | test Clear button + binding |
-| `type=macro` with `macrotext` running `/tm` lines | assumed (PaTiGroup Reset All, replaces the character macro) | test Reset All |
-| Bindings.xml `CLICK <Button>:LeftButton` + `BINDING_NAME_CLICK ...` names | assumed (PaTiGroup) | check the key binding menu |
-| `RAID_TARGET_1..8` global marker names | assumed (PaTiGroup) | fallback: own L.MARKER_n |
-| `DoReadyCheck`, `C_PartyInfo.DoCountdown` | in use (PaTiGroup) | leader/assistant only, `pcall` |
+| `SecureActionButtonTemplate` `type=raidtarget`, `action=set` | in use (PaTiLead, former PaTiGroup <= 0.4) | |
+| `type=raidtarget` with `marker=0` clears the target's marker | assumed (PaTiLead Clear) | test Clear button + binding |
+| `type=macro` with `macrotext` running `/tm` lines | assumed (PaTiLead Reset All, replaces the character macro) | test Reset All |
+| Bindings.xml `CLICK <Button>:LeftButton` + `BINDING_NAME_CLICK ...` names | assumed (PaTiLead, PaTiRota) | check the key binding menu |
+| `RAID_TARGET_1..8` global marker names | assumed (PaTiLead) | fallback: own L.MARKER_n |
+| `DoReadyCheck`, `C_PartyInfo.DoCountdown` | in use (PaTiLead) | leader/assistant only, `pcall` |
 | `C_SpellBook.IsSpellKnown`, `C_Spell.GetSpellInfo` | in use (PaTiHeal) | `pcall`/existence-guarded; fallback `GetSpellInfo` |
 | Spellbook scan: `C_SpellBook.GetSpellBookItemInfo` (modern) or `GetSpellBookItemName/Info` (classic) | assumed (PaTiHeal ranks) | pcall-guarded; no ranks shown if neither works |
 | Casting a rank via spell attribute "Name(Rank n)" with the client's localized rank text | assumed (PaTiHeal ranks) | classic behaviour; test by choosing a low rank |
@@ -35,10 +35,10 @@ explicit test recorded) · **assumed** (not yet used/tested).
 | `SecureActionButtonTemplate` `type1=spell` + `unit` casts on that unit without changing the target | assumed (PaTiAuras click-to-buff) | same mechanism as PaTiHeal's verified unit clicks |
 | `UnitIsVisible(unit)` | assumed (PaTiAuras: members out of sight are no click target) | missing API → everyone counts as reachable |
 | Secure attributes cannot change in combat, so a buff button cannot move to the next member mid-combat | rule of the secure system | PaTiAuras keeps the pre-combat target |
-| Heal profile IDs: Shaman 974 Earth Shield, 61295 Riptide, dispels 526, 2870, 51886; Priest 139 Renew, 17 Power Word: Shield, 33076 Prayer of Mending, dispels 527, 528, 552 | assumed (PaTiHeal, PaTiAuras healing) | unknown IDs only hide their entry; confirm with `/ph auras` and `/pa auras` |
+| Heal profile IDs: Shaman 974 Earth Shield, 61295 Riptide, dispels 526, 2870, 51886; Priest 139 Renew, 17 Power Word: Shield, 33076 Prayer of Mending, dispels 527, 528, 552 | assumed (PaTiHeal; PaTiAuras has no healing category since 2026-10-02) | unknown IDs only hide their entry; confirm with `/ph auras` |
 | Aura filter `HELPFUL|PLAYER` returns only auras you cast | assumed (PaTiHeal HoTs) | readable foreign `sourceUnit` is skipped as a second guard |
 | Dispel spells cast via the `spell` click attribute on the clicked unit (click dispel) | assumed (PaTiHeal) | same mechanism as the verified click heals |
-| Key binding menu path "ESC > Key Bindings (Tastaturbelegung) > PaTiGroup" | **unknown** (PaTiGroup settings note) | settings also name "ESC > Options > Key Bindings"; owner: report the real path |
+| Key binding menu path "ESC > Key Bindings (Tastaturbelegung) > PaTiLead" (also PaTiRota) | **unknown** (PaTiLead/PaTiRota settings notes) | settings also name "ESC > Options > Key Bindings"; owner: report the real path |
 | `## Notes-deDE` in the TOC shown on a German client | assumed (all addons) | fallback is the English `## Notes` |
 | `UnitDetailedThreatSituation` | in use (PaTiTank) | 3rd return = threat percent; secret values only reach the bar |
 | `UNIT_MAXHEALTH` event | assumed (PaTiTank) | added to keep the health bar maximum current |
@@ -65,10 +65,10 @@ explicit test recorded) · **assumed** (not yet used/tested).
 | `partyNtarget` tokens and `UNIT_TARGET` | assumed (PaTiTank aggro) | enemies nobody targets and without a nameplate stay invisible |
 | `UnitCanAttack`, `UnitIsDead`, `UnitGUID` | assumed (PaTiTank aggro) | GUID used only for de-duplication, secret → skipped; missing APIs → no enemies |
 | Which of these threat/unit values are secret in combat | **unknown** | PaTiTank shows "unclear" rows then |
-| Yes/no API flags (`IsInInstance`, `UnitAffectingCombat`, `UnitIsGroupLeader` …) return true/false or 1/nil | **unknown which** | PaTiDungeon/PaTiGroup accept both |
+| Yes/no API flags (`IsInInstance`, `UnitAffectingCombat`, `UnitIsGroupLeader` …) return true/false or 1/nil | **unknown which** | PaTiDungeon/PaTiLead/PaTiGroup accept both |
 | `C_QuestLog.GetSelectedQuest`, `GetTitleForQuestID`, `GetQuestObjectives` | in use (PaTiQuest) | all `pcall`-guarded |
 | `GetInstanceInfo`, `IsInInstance`, `GetNumGroupMembers`, `UnitIsGroupLeader` | in use (PaTiDungeon) | |
-| `UnitGroupRolesAssigned` | in use (PaTiHeal, PaTiGroup) | may return NONE without LFG roles; checked for secret values first |
+| `UnitGroupRolesAssigned` | in use (PaTiHeal, PaTiLead, PaTiGroup) | may return NONE without LFG roles (PaTiGroup then shows "without role", never guesses); checked for secret values first |
 | `issecretvalue` | assumed present only in clients with restricted values | code treats a missing function as "nothing is secret" |
 | `BackdropTemplate` | in use (all) | |
 | `GLOBAL_MOUSE_DOWN` event | assumed (PaTiShared popup, `pcall`-registered) | popup still closes by click/ESC without it |
@@ -114,6 +114,29 @@ own child frame of the plate). The player clicks that nameplate; Blizzard's own 
 | PaTiSuite: show/hide at the first `PLAYER_ENTERING_WORLD` (after every addon's `PLAYER_LOGIN`) | **assumed** (2026-10-02) | restores the remembered visibility once per login; PT-SUITE-130–136 |
 | A HIGHLIGHT-layer texture on a Button is drawn above its FontStrings | **observed 2026-09-30** (PaTiSuite hover unreadable) | use a BACKGROUND texture on OnEnter |
 | `HookScript("OnShow"/"OnHide")` on another addon's window (also windows with secure children) | assumed (PaTiSuite) | post-hooks only, nothing secure is called |
+
+## Suite rework 2026-10-02 — heal target, party awareness, skill priority
+
+Everything here is **ASSUMPTION / NOT YET VERIFIED** in the Forever client (code review + CI only); each row names the
+in-game test that confirms it.
+
+| API / behaviour | Status | Notes |
+|---|---|---|
+| `SecureHandlerStateTemplate` + `RegisterStateDriver` / `UnregisterStateDriver` exist | **assumed** (PaTiHeal heal target) | the same Blizzard file as `RegisterUnitWatch`, which PaTiHeal already uses; `CreateFrame` is pcall-guarded — without it the heal target updates only out of combat. `/ph debug` prints "driver yes/no" (PT-HEAL-130) |
+| Macro conditions `[@target,help,nodead]` in a state driver: friendly player or NPC you can assist, alive | **assumed** | PT-HEAL-131–135 |
+| Restricted snippet (`_onstate-…`) may Show/Hide the target row, `ClearAllPoints`/`SetPoint` the player row and `SetHeight` the window (protected via its secure children) in combat | **assumed** — Blizzard's documented way for secure layout | if the client refused, the row would still appear but the window not grow until combat ends; PT-HEAL-137, taint PT-HEAL-146 |
+| Party rows anchored to the row above them follow when the player row is moved by the snippet | **assumed** | PT-HEAL-137, PT-HEAL-144 |
+| `UnitLevel("target")` (-1 / 0 = boss or unknown) | **assumed** | shown as "??"; secret → no number (PT-HEAL-142) |
+| `UnitIsPlayer`, `UnitCanAssist` | **assumed** (PaTiHeal) | NPC targets get no "offline" and no class colour; `UnitCanAssist` only in the no-driver fallback |
+| `HELPFUL|PLAYER` / `HARMFUL|RAID` aura filters on `target` | **assumed** | HoTs and dispels on the heal target (PT-HEAL-140/141) |
+| `partyNtarget` / `raidNtarget` tokens, `UNIT_TARGET`, `UnitName`/`GetRaidTargetIndex` on them | **assumed** (PaTiGroup tank target) | out of range they may not exist → "no target" (PT-GROUP-231–234) |
+| `PLAYER_ROLES_ASSIGNED`, `ROLE_CHANGED_INFORM` | **assumed**, pcall-registered (PaTiGroup) | roster events also repaint |
+| `C_Spell.GetSpellCooldown(id)` → `{ startTime, duration }` or `GetSpellCooldown(id)` → start, duration | **assumed** (PaTiRota) | pcall-guarded; secret → "unclear", never READY (PT-ROTA-004, 030–034) |
+| Spell 61304 as the global-cooldown reference | **assumed** (modern-client convention) | unknown/unreadable → a cooldown ≤ 1.5 s counts as GCD (PT-ROTA-032) |
+| `C_Spell.IsSpellUsable` (true/false) or `IsUsableSpell` (1/nil) | **assumed** (PaTiRota) | false → "not usable", never recommended (PT-ROTA-035) |
+| `GetCursorInfo()` while dragging a spell from the spellbook: `"spell", index, bookType, spellID` | **assumed** (PaTiRota settings) | without the 4th value the spellbook index is resolved; `ClearCursor` afterwards (PT-ROTA-022) |
+| `SecureActionButtonTemplate` `type1=spell`, `spell1=<name>` cast on the current target | **assumed** for PaTiRota | same mechanism as PaTiAuras' self casts; PT-ROTA-040–042 |
+| A CLICK key binding on a hidden secure button (empty slot, hidden window) | **unknown** (PaTiRota) | PT-ROTA-045 |
 
 ## Rules that hold regardless of client
 

@@ -28,7 +28,7 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
 - Approach: `RegisterUnitEvent` for the watched units, update only the matching row.
 - Risk: low · Tests: manual in a busy fight; no functional change.
 
-### F8 · PaTiGroup side effects on login — low · FIXED IN CODE (PaTiGroup [Unreleased]): no macro, no automatic binding; awaiting in-game test
+### F8 · PaTiLead (former PaTiGroup) side effects on login — low · FIXED IN CODE (PaTiLead [Unreleased]): no macro, no automatic binding; awaiting in-game test
 - Problem: creates/edits a character macro and may bind Ctrl+Left click and call `SaveBindings` on every login; not visible in settings; binding header strings `BINDING_HEADER_PATIGROUP` / `BINDING_NAME_PATIGROUP_TOGGLE` are not defined.
 - Approach: document in README; define the binding strings; consider an opt-in setting.
 - Risk: low · Tests: manual on a character with a full macro list / existing Ctrl+Left binding.
@@ -40,8 +40,9 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
 ### F11 · Slash command sets — low (not release-critical)
 - Status 2026-09-29: all seven addons answer `show, hide, test, lock, unlock, reset, settings, debug, version`, and the
   command alone shows/hides the window. Extras on purpose: PaTiHeal `spells, auras`; PaTiAuras `auras, about, changelog`;
-  PaTiGroup `toggle, about, changelog`. `/phq` (PaTiQuest) and `/ptg` (PaTiGroup) stay as compatibility aliases.
-- Open: `toggle` exists only in PaTiGroup. Add it elsewhere only if players ask for it.
+  PaTiLead `toggle, about, changelog`; PaTiGroup, PaTiRota `toggle`. `/phq` (PaTiQuest) and `/ptg` (now the new PaTiGroup)
+  stay as aliases. PaTiLead got `/plead`, `/patilead` (2026-10-02; `/pl` left out: collision not checkable here).
+- Open: `toggle` exists only in PaTiLead, PaTiGroup and PaTiRota. Add it elsewhere only if players ask for it.
 
 ### F12 · Seven repositories — decision needed
 - Problem: shared tooling, docs and CI templates live in PaTiAdmin and must be checked out next to each addon; cross-repo changes need several commits.
@@ -49,7 +50,8 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
 
 ### F13 · PaTiHeal.lua above 400 lines — low
 - Status: the settings modal moved to `Settings.lua` (2026-09-29); HoT row code and the scale setting brought
-  `PaTiHeal.lua` back to 500 lines.
+  `PaTiHeal.lua` back to 500 lines; the heal-target row (2026-10-02) brought it to ~610 (its secure driver lives in
+  `TargetFrame.lua`, the geometry in `Logic.HealLayout`). Not split in the rework on purpose (no "while I'm here").
 - Smallest solution: move the HoT row UI (`layoutHoTs`, `paintHoTs`, the timer ticker) next to `HoTs.lua` in its own
   file when PaTiHeal is next touched (not during the beta freeze unless a fix needs it).
 - Risk: low · Tests: `smoke` test mode path (HoT icons with 5 / 8s), hots_spec.
@@ -83,7 +85,8 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
 ### F22 · More PaTiAlerts producers — low
 - V1 (2026-09-29): PaTiTank (aggro), PaTiAuras (personal buffs, weapon imbues), PaTiHeal (dispellable debuffs).
 - 2026-09-30 (owner request): PaTiAuras watched group buffs — one warning per buff, offline/dead/Unknown never count.
-- Candidates when a concrete need appears: PaTiGroup/PaTiQuest/PaTiDungeon — none invented yet. Clickable alert rows only for a safe action (e.g. open settings), never Lua casts.
+- Candidates when a concrete need appears: PaTiGroup/PaTiLead/PaTiRota/PaTiQuest/PaTiDungeon — none invented yet. The
+  PaTiHeal heal target deliberately sends nothing (owner 2026-10-02). Clickable alert rows only for a safe action (e.g. open settings), never Lua casts.
 
 
 ### F25 · PaTiSuite presets (Healer, Tank, Questing) — low
@@ -104,3 +107,22 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
   (Shaman, Priest). Classes without a profile (e.g. Warrior) see "no profile" and get no tracking.
 - Smallest solution: a minimal general profile with only `tracking` for classes without one. Hunter tracks (Track
   Beasts …) only after their IDs are confirmed. Owner decides.
+
+### F30 · Settings section title shows the key "GENERAL" — medium (visible text)
+- Problem: the first settings section uses `L.GENERAL`, but PaTiAlerts, PaTiDungeon, PaTiQuest and PaTiTank never
+  define it, so their settings show "GENERAL" in every language (found 2026-10-02; PaTiLead fixed in its rename, the
+  new PaTiGroup and PaTiRota define it).
+- Affected: `Locales/enUS.lua` + `deDE.lua` of those four addons.
+- Smallest solution: add `L.GENERAL` (General / Allgemein) to each (one line per locale, like PaTiLead).
+- Alternative: move `GENERAL` into PaTiShared's locales and remove the copies in Heal, Auras, Social, Suite, Lead,
+  Group, Rota (the locale check forbids duplicates) — cleaner, but touches eleven repos.
+- Risk: none · Tests: locale check (CI); in game: open each settings window (deDE).
+
+### F31 · Icons for PaTiLead and PaTiRota — low (assets missing)
+- Status 2026-10-02: the owner's new artwork (left: PaTiRota rotation arrows / skill icons, blue-gold; right: PaTiLead
+  crown + raid marker, red-gold) was not in the workspace. Both TOCs have no `## IconTexture` (no white or missing
+  texture); READMEs show no image. The group icon stayed with the new PaTiGroup.
+- Needed: the source image (both motifs on one sheet, or two square images) in `Downloads` or the workspace.
+- Then: crop each motif square (no text), make `assets/icon-{1024,512,256,128,64,32}.png` and `Media/icon.tga`
+  (64×64, 32-bit, uncompressed) the same way as for the other addons, add `## IconTexture: Interface\AddOns\<Addon>\Media\icon`,
+  the README image and set the open icon tests (PT-LEAD-003, PT-ROTA-062).

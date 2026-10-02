@@ -11,14 +11,16 @@ sind optionale Ergänzungen.
 | Repo | Zweck |
 | --- | --- |
 | [PaTiSuite](https://github.com/patpaskoch/PaTiSuite) | optionales Steuerfenster: PaTi-Fenster anzeigen/ausblenden |
-| [PaTiHeal](https://github.com/patpaskoch/PaTiHeal) | Heiler-Gruppenrahmen und Klickzauber |
-| [PaTiAuras](https://github.com/patpaskoch/PaTiAuras) | Auren-, Buff- und Proc-Überwachung |
-| [PaTiTank](https://github.com/patpaskoch/PaTiTank) | Tank-HUD und Aggro-Monitor |
-| [PaTiGroup](https://github.com/patpaskoch/PaTiGroup) | Zielmarker, Ready Check und Pull-Countdown |
-| [PaTiQuest](https://github.com/patpaskoch/PaTiQuest) | ausgewählte Quest und ihre Ziele |
-| [PaTiDungeon](https://github.com/patpaskoch/PaTiDungeon) | Instanz-, Gruppen- und Kampfstatus |
-| [PaTiAlerts](https://github.com/patpaskoch/PaTiAlerts) | zentrales Fenster für offene Probleme aus PaTiTank, PaTiAuras, PaTiHeal (optional) |
-| [PaTiSocial](https://github.com/patpaskoch/PaTiSocial) | „Party Social“: Schnellbuttons für Emotes und kurze Nachrichten |
+| [PaTiHeal](https://github.com/patpaskoch/PaTiHeal) | **Heilen:** Gruppen- und Heal-Target-Rahmen, Klickzauber, eigene HoTs/Schilde, bannbare Debuffs |
+| [PaTiAuras](https://github.com/patpaskoch/PaTiAuras) | **Buffs/Auren:** eigene Buffs, Procs, Aufspüren, Gruppenbuffs, Waffenbuffs, Click-to-Buff |
+| [PaTiTank](https://github.com/patpaskoch/PaTiTank) | **Tank:** Ziel, Bedrohung, Aggro-Kontrolle, Namensschild-Nummern |
+| [PaTiRota](https://github.com/patpaskoch/PaTiRota) | **Rotation:** eigene Skill-Reihenfolge, Abklingzeiten, nächster bereiter Skill, feste Zauber-Buttons |
+| [PaTiGroup](https://github.com/patpaskoch/PaTiGroup) | **Gruppe beobachten:** Tank, Heiler, Rollen, Ziel des Tanks mit Zielmarker |
+| [PaTiLead](https://github.com/patpaskoch/PaTiLead) | **Gruppe führen:** Zielmarker, Ready Check, Pull-Countdown (früher PaTiGroup) |
+| [PaTiQuest](https://github.com/patpaskoch/PaTiQuest) | **Quests:** ausgewählte Quest und ihre Ziele |
+| [PaTiDungeon](https://github.com/patpaskoch/PaTiDungeon) | **Dungeon-Kontext:** Instanz-, Gruppen- und Kampfstatus |
+| [PaTiSocial](https://github.com/patpaskoch/PaTiSocial) | **Kommunikation:** „Party Social“, Schnellbuttons für Emotes und kurze Nachrichten |
+| [PaTiAlerts](https://github.com/patpaskoch/PaTiAlerts) | **Probleme:** zentrales Fenster für offene Probleme aus PaTiTank, PaTiAuras, PaTiHeal (optional) |
 
 ## Entwicklungs-Repositories
 

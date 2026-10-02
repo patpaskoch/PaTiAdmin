@@ -10,20 +10,24 @@ PaTiSuite = small, independent World of Warcraft addons for one player/developer
 
 Principles, in this order: **small · focused · reliable · readable before clever · maintainability before
 abstraction · existing patterns before new patterns · no bloat.**
+One job per addon ([`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md#addon-responsibilities)): a feature goes into the addon whose job
+it is — never into two, never into PaTiAdmin (not a player addon).
 
-## 2. Repository layout (eleven Git repos side by side: PaTiAdmin, PaTiShared, eight gameplay addons, PaTiSuite)
+## 2. Repository layout (thirteen Git repos side by side: PaTiAdmin, PaTiShared, ten gameplay addons, PaTiSuite)
 
 ```
 <code>/                                  (any folder, not a repo; e.g. ~/code)
 ├── PaTiAdmin/     THIS repo: rules, docs, tools, CI templates, suite status (public)
 ├── PaTiShared/    design system + UI components, embedded into addons (not a WoW addon)
 └── PaTiAddons/
-    ├── PaTiHeal/     healer party frames, click casting (secure), HoTs, dispels /ph
+    ├── PaTiHeal/     healing: party + heal-target frames, click casting (secure), own HoTs/shields, dispels  /ph
     ├── PaTiTank/     own health, target threat, aggro control monitor      /pt
-    ├── PaTiGroup/    raid markers (secure), ready check, pull timer        /pg /ptg /patigroup
+    ├── PaTiRota/     own skill priority, cooldowns, fixed cast buttons (secure) /prota /patirota
+    ├── PaTiGroup/    party awareness: tank, healer, roles, tank target (display) /pg /ptg /patigroup
+    ├── PaTiLead/     lead: raid markers (secure), ready check, pull timer /plead /patilead
     ├── PaTiQuest/    selected quest + objectives                           /phq
     ├── PaTiDungeon/  instance, group and combat status                     /pd
-    ├── PaTiAuras/    aura/buff watch (optional, standalone)                  /pa /patiauras
+    ├── PaTiAuras/    own buffs, procs, tracking, group buffs, weapon imbues    /pa /patiauras
     ├── PaTiAlerts/   open problems reported by the others (optional receiver) /pal /palerts
     ├── PaTiSocial/   "Party Social": quick emote and message buttons         /psocial /patisocial
     └── PaTiSuite/    optional control panel: show/hide the others' windows   /psuite /patisuite
@@ -104,9 +108,12 @@ Split a file when it mixes responsibilities, not before. PaTiShared decides *how
 - No gameplay automation: no automatic target, spell, marker or decision. The player clicks, the addon executes exactly that one click.
   Owner-approved exception (2026-09-28): PaTiAuras may pre-select *which* member a buff button casts on (the next one
   missing the buff, set out of combat and shown in the tooltip). Still one click = one cast; no target change, no loops.
+  Owner-approved (2026-10-02): PaTiRota may *highlight* the highest-priority ready skill of the player's own list (display
+  only). Every slot has its own fixed secure button whose spell changes only out of combat; never a button that
+  switches its spell, never a cast without the click, never chains.
 - Never work around Blizzard protection (taint tricks, hidden click forwarding, OnUpdate spamming protected calls).
 - Keybindings and macros are the player's: never bind keys, call SaveBindings or create/edit macros automatically.
-  Offer bindings through `Bindings.xml` (PaTiGroup is the pattern).
+  Offer bindings through `Bindings.xml` (PaTiLead is the pattern).
 - Addon messages (none exist yet): versioned prefix, validate every field, never trust remote data, no periodic full-state broadcasts. Document in `docs/PROTOCOL.md` before shipping.
 
 ## 9. SavedVariables
