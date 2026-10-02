@@ -101,7 +101,8 @@ Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md).
   vordefinierte kurze Nachrichten (Sagen, Gruppe, Schlachtzug; Gruppe nur in einer Gruppe, Schlachtzug nur im
   Schlachtzug). Ein Klick = eine Aktion, nichts automatisch. Horizontal/vertikal, Einklappen, PaTiSuite-Fenster
 - Tests: Unit-Tests für Aktionen, Kanäle, Einstellungen, Slots, Layout
-- Offen im Spiel: alles (PT-SOCIAL-…); welche Emotes der Forever-Client kennt, zeigt `/psocial debug`
+- Im Spiel bestätigt 2026-10-02: lädt ohne Fehler, Icon, Anzahl der Buttons, horizontal/vertikal, Emote-Button
+- Offen im Spiel: Nachrichten (Sagen/Gruppe), Einstellungen pro Button, PaTiSuite; `/psocial debug`-Ausgabe
 
 ## PaTiSuite (TOC 0.1.0, neu)
 - Funktion: optionales Steuerfenster — installierte PaTi-Fenster einzeln oder mit einem Button alle
