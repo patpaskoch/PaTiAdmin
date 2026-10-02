@@ -11,7 +11,7 @@ Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md).
 | Addon | Version (TOC) | Code | CI | Paket (ZIP geprüft) | Doku | Fresh Install | WoW-Test | Beta |
 |---|---|---|---|---|---|---|---|---|
 | PaTiHeal | 0.6.0 + [Unreleased] | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ teilweise (Klickzauber, Migration, Sprache) | Nein |
-| PaTiAuras | 0.1.0 | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ teilweise; Waffenbuff-Erkennung bestätigt (052–054) | Nein |
+| PaTiAuras | 0.1.0 | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ teilweise; Waffenbuff-Erkennung, Abwählen, PaTiAlerts bestätigt | Nein |
 | PaTiTank | 0.1.0 + [Unreleased] | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
 | PaTiGroup | 0.4.0 + [Unreleased] | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
 | PaTiQuest | 0.1.0 + [Unreleased] | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
@@ -53,13 +53,13 @@ Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md).
   Waffe an/ab/an wird erkannt; aktiver Felsbeißer zeigte „Fehlt“ (❌ PT-AURAS-053–055, 057). Ursache aus dem
   Owner-`/pa auras` 2026-10-02: das klassische Tupel meldet „kein Imbue“, `C_Item.GetWeaponEnchantInfo` hat ihn
   (`hasEnchant`, `timeLeft>0`, `enchantType=3`). Fix 2026-10-02: moderne API zuerst — **vom Owner bestätigt 2026-10-02
-  (052–054: Fehlt → Aktiv mit Restzeit → Fehlt)**; offen: 055, 057
+  (052–055, 057: Fehlt → Aktiv mit Restzeit → Fehlt → Aktiv; PaTiAlerts-Warnung kommt und geht)**
 - Einstellungen: eine „Beobachten“-Auswahl statt Kategorie-Schaltern und doppelter Liste (Schema 2 mit Migration)
 - PaTiAlerts: fehlende beobachtete Gruppenbuffs als eine Warnung pro Buff („Fehlt bei N“), neu, nicht im Spiel geprüft
 - Neu 2026-10-02, ungetestet: Rechtsklick auf eine aktive Buff-/Proc-Zeile entfernt den Buff (PT-AURAS-163–169);
   für Waffenbuffs im Spiel ❌ (Blizzard-Fehler CANCELABLE_ITEMS) → dort entfernt
-- Neu 2026-10-02, ungetestet: Waffenbuff abwählbar (0 oder 1 pro Hand, PT-AURAS-158–160); ❌ PT-AURAS-158 im Spiel
-  (Felsbeißer ließ sich nicht abwählen) → Fix: Kästchen im Beobachten-Popup, Neuzeichnen trotz Fehler, Retest offen
+- Waffenbuff abwählbar (0 oder 1 pro Hand): vom Owner bestätigt 2026-10-02 (PT-AURAS-158, 159); 160 offen
+  (Fix für den früheren Fehlschlag: Kästchen im Beobachten-Popup, Neuzeichnen trotz Fehler)
 - Neu 2026-10-02, ungetestet: Aufspüren (Kräuter-/Mineraliensuche, 0 oder 1, Klick wirkt; PT-AURAS-170–176)
 - Tests: 113 Unit-Tests
 - Im Spiel bestätigt: `C_UnitAuras` und `issecretvalue` vorhanden (`/pa debug`), Priester-IDs für Selbst- und
