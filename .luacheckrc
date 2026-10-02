@@ -24,6 +24,7 @@ read_globals = {
     "LOCALIZED_CLASS_NAMES_MALE", "RegisterUnitWatch", "UnregisterUnitWatch",
     "DebuffTypeColor", "Enum", "GetNumSpellTabs", "GetSpellBookItemInfo", "GetSpellBookItemName", "GetSpellTabInfo",
     "GetInventoryItemID", "GetInventoryItemTexture", "GetItemInfoInstant", "GetWeaponEnchantInfo",
+    "GetSpellCooldown", "IsUsableSpell", "RegisterStateDriver", "UnregisterStateDriver", "UnitCanAssist", "UnitLevel",
     "GetTime", "UnitAura", "issecretvalue", "IsInRaid", "GetSpecialization", "GetSpecializationInfo", "GetRaidTargetIndex", "GetBindingKey", "RAID_CLASS_COLORS", "UnitIsVisible",
     "SaveBindings", "SetBinding", "SetBindingClick",
     "UIParent", "UISpecialFrames",
@@ -52,7 +53,12 @@ files["**/PaTiSocial/**/*.lua"] = { globals = { "PaTiSocialDB", "SLASH_PATISOCIA
 -- PaTiSuiteWindows: the window registry (frames only) of the embedded PaTiShared copies (AGENTS.md §3).
 files["**/Shared/Suite.lua"] = { globals = { "PaTiSuiteWindows" } }
 files["**/PaTiShared/src/Suite.lua"] = { globals = { "PaTiSuiteWindows" } }
-files["**/PaTiGroup/**/*.lua"] = { globals = { "PaTiGroupDB", "SLASH_PATIGROUP1", "SLASH_PATIGROUP2", "SLASH_PATIGROUP3", "PaTiGroup_Toggle" } }
+-- PaTiLead (the former PaTiGroup, renamed 2026-10-02): PaTiLead_Toggle is the key binding function (Bindings.xml).
+files["**/PaTiLead/**/*.lua"] = { globals = { "PaTiLeadDB", "SLASH_PATILEAD1", "SLASH_PATILEAD2", "PaTiLead_Toggle" } }
+-- PaTiGroup (new 2026-10-02): party awareness, display only.
+files["**/PaTiGroup/**/*.lua"] = { globals = { "PaTiGroupDB", "SLASH_PATIGROUP1", "SLASH_PATIGROUP2", "SLASH_PATIGROUP3" } }
+-- PaTiRota (new 2026-10-02): own skill priority; fixed secure cast buttons, nothing casts by itself.
+files["**/PaTiRota/**/*.lua"] = { globals = { "PaTiRotaDB", "SLASH_PATIROTA1", "SLASH_PATIROTA2" } }
 
 -- Specs run under tools/lua/test.lua (busted-compatible); mocks install WoW functions as globals.
 files["**/tests/**/*.lua"] = { std = "+busted", globals = { "GetLocale", "InCombatLockdown" } }
