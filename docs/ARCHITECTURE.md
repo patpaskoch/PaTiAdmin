@@ -151,6 +151,16 @@ one `<Addon>.lua` with a clearly separated adapter function, window, settings, c
   so load order does not matter; while PaTiAlerts exists, a collapsed Tank/Heal keeps scanning.
 - Slash `/pal`, `/palerts`.
 
+### PaTiSocial 0.1.0 — "Party Social", quick emote and message buttons
+- Files: `Shared/` → `Locales/` → `Actions.lua` (action library + rules; pure, tested) → `Logic.lua` (settings,
+  slots, layout; pure, tested) → `PaTiSocial.lua` (adapters, window, settings, commands).
+- An action = data: emote (`DoEmote(token)`, offered only if the token is in the client's `EMOTEn_TOKEN` list) or
+  predefined chat (`SendChatMessage(text, SAY|PARTY|RAID)`; PARTY only in a group, RAID only in a raid, no
+  fallback to another channel). One click = one action, called from the click (a hardware event; SAY needs one).
+- `PaTiSocialDB`, schema 1: position, locked, collapsed, scale, language, opacity, layout (horizontal|vertical),
+  slotCount (4/6/8/10/12), slots = 12 action keys (`NONE` = empty). No secure frames, no test mode.
+- Slash `/psocial`, `/patisocial`.
+
 ### PaTiSuite 0.1.0 — optional control panel
 - Files: `Shared/` → `Locales/` → `Logic.lua` (settings, window list, show/hide rules; pure, tested) → `PaTiSuite.lua`.
 - Reads `PaTiSuiteWindows` at PLAYER_LOGIN (all addons loaded, any load order) and follows state by post-hooks

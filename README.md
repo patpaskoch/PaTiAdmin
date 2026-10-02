@@ -18,6 +18,7 @@ sind optionale Ergänzungen.
 | [PaTiQuest](https://github.com/patpaskoch/PaTiQuest) | ausgewählte Quest und ihre Ziele |
 | [PaTiDungeon](https://github.com/patpaskoch/PaTiDungeon) | Instanz-, Gruppen- und Kampfstatus |
 | [PaTiAlerts](https://github.com/patpaskoch/PaTiAlerts) | zentrales Fenster für offene Probleme aus PaTiTank, PaTiAuras, PaTiHeal (optional) |
+| [PaTiSocial](https://github.com/patpaskoch/PaTiSocial) | „Party Social“: Schnellbuttons für Emotes und kurze Nachrichten |
 
 ## Entwicklungs-Repositories
 

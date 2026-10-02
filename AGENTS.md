@@ -11,7 +11,7 @@ PaTiSuite = small, independent World of Warcraft addons for one player/developer
 Principles, in this order: **small · focused · reliable · readable before clever · maintainability before
 abstraction · existing patterns before new patterns · no bloat.**
 
-## 2. Repository layout (ten Git repos side by side: PaTiAdmin, PaTiShared, seven gameplay addons, PaTiSuite)
+## 2. Repository layout (eleven Git repos side by side: PaTiAdmin, PaTiShared, eight gameplay addons, PaTiSuite)
 
 ```
 <code>/                                  (any folder, not a repo; e.g. ~/code)
@@ -25,6 +25,7 @@ abstraction · existing patterns before new patterns · no bloat.**
     ├── PaTiDungeon/  instance, group and combat status                     /pd
     ├── PaTiAuras/    aura/buff watch (optional, standalone)                  /pa /patiauras
     ├── PaTiAlerts/   open problems reported by the others (optional receiver) /pal /palerts
+    ├── PaTiSocial/   "Party Social": quick emote and message buttons         /psocial /patisocial
     └── PaTiSuite/    optional control panel: show/hide the others' windows   /psuite /patisuite
 ```
 Each addon repo: `<Addon>.toc`, `<Addon>.lua` (+ `Logic.lua` and further files per responsibility), `Locales/`,

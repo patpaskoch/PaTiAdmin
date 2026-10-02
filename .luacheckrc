@@ -46,6 +46,9 @@ files["**/PaTiDungeon/**/*.lua"] = { globals = { "PaTiDungeonDB", "SLASH_PATIDUN
 files["**/PaTiAuras/**/*.lua"] = { globals = { "PaTiAurasDB", "SLASH_PATIAURAS1", "SLASH_PATIAURAS2" }, read_globals = { "PaTiAlertsAPI" } }
 files["**/PaTiAlerts/**/*.lua"] = { globals = { "PaTiAlertsDB", "SLASH_PATIALERTS1", "SLASH_PATIALERTS2", "PaTiAlertsAPI" } }
 files["**/PaTiSuite/**/*.lua"] = { globals = { "PaTiSuiteDB", "SLASH_PATISUITE1", "SLASH_PATISUITE2" } }
+-- PaTiSocial: DoEmote and SendChatMessage only from a button click (one click = one action; owner 2026-10-02).
+files["**/PaTiSocial/**/*.lua"] = { globals = { "PaTiSocialDB", "SLASH_PATISOCIAL1", "SLASH_PATISOCIAL2" },
+    read_globals = { "DoEmote", "SendChatMessage" } }
 -- PaTiSuiteWindows: the window registry (frames only) of the embedded PaTiShared copies (AGENTS.md §3).
 files["**/Shared/Suite.lua"] = { globals = { "PaTiSuiteWindows" } }
 files["**/PaTiShared/src/Suite.lua"] = { globals = { "PaTiSuiteWindows" } }

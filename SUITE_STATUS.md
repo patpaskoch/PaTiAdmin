@@ -17,6 +17,7 @@ Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md).
 | PaTiQuest | 0.1.0 + [Unreleased] | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
 | PaTiDungeon | 0.1.0 + [Unreleased] | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
 | PaTiAlerts | 0.1.0 (neu) | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ nur `/pal test` | Nein |
+| PaTiSocial | 0.1.0 (neu) | ✅ | ⏳ | ⏳ | ✅ | ⏳ | ⏳ | Nein |
 | PaTiSuite | 0.1.0 (neu, Steuerung) | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ teilweise (Ein-/Ausblenden, Farben, Hover) | Nein |
 
 ✅ = erledigt und geprüft · ⏳ = offen. Lizenz: MIT in allen zehn Repos. Icons: PaTiSuite-Set in allen acht Addons (inkl. PaTiSuite)
@@ -94,6 +95,13 @@ Release-Regeln, Beta-Kriterien und Freeze: [`docs/RELEASE.md`](docs/RELEASE.md).
 - Tests: 18 Unit-Tests, Smoke-Tests mit PaTiTank und PaTiHeal (Mocks)
 - Im Spiel bestätigt (2026-09-30): `/pal test`
 - Offen im Spiel: echte Alerts der anderen Addons; Waffenbuff-Warnung bleibt bei aktivem Imbue (Ursache PaTiAuras)
+
+## PaTiSocial (TOC 0.1.0, neu 2026-10-02) — „Party Social“
+- Funktion: frei belegbare Schnellbuttons (4/6/8/10/12) für Emotes (nur die, deren Token der Client kennt) und
+  vordefinierte kurze Nachrichten (Sagen, Gruppe, Schlachtzug; Gruppe nur in einer Gruppe, Schlachtzug nur im
+  Schlachtzug). Ein Klick = eine Aktion, nichts automatisch. Horizontal/vertikal, Einklappen, PaTiSuite-Fenster
+- Tests: Unit-Tests für Aktionen, Kanäle, Einstellungen, Slots, Layout
+- Offen im Spiel: alles (PT-SOCIAL-…); welche Emotes der Forever-Client kennt, zeigt `/psocial debug`
 
 ## PaTiSuite (TOC 0.1.0, neu)
 - Funktion: optionales Steuerfenster — installierte PaTi-Fenster einzeln oder mit einem Button alle
