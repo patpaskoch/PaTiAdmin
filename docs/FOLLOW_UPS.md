@@ -107,13 +107,3 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
   (Shaman, Priest). Classes without a profile (e.g. Warrior) see "no profile" and get no tracking.
 - Smallest solution: a minimal general profile with only `tracking` for classes without one. Hunter tracks (Track
   Beasts …) only after their IDs are confirmed. Owner decides.
-
-### F30 · Settings section title shows the key "GENERAL" — medium (visible text)
-- Problem: the first settings section uses `L.GENERAL`, but PaTiAlerts, PaTiDungeon, PaTiQuest and PaTiTank never
-  define it, so their settings show "GENERAL" in every language (found 2026-10-02; PaTiLead fixed in its rename, the
-  new PaTiGroup and PaTiRota define it).
-- Affected: `Locales/enUS.lua` + `deDE.lua` of those four addons.
-- Smallest solution: add `L.GENERAL` (General / Allgemein) to each (one line per locale, like PaTiLead).
-- Alternative: move `GENERAL` into PaTiShared's locales and remove the copies in Heal, Auras, Social, Suite, Lead,
-  Group, Rota (the locale check forbids duplicates) — cleaner, but touches eleven repos.
-- Risk: none · Tests: locale check (CI); in game: open each settings window (deDE).

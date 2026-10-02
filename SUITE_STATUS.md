@@ -30,8 +30,9 @@ Kommunikation · PaTiAlerts = Probleme · PaTiSuite = Steuerfenster. PaTiShared 
 | PaTiSuite | 0.1.0 (Steuerung) | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ teilweise (Ein-/Ausblenden, Farben, Hover) | Nein |
 
 ✅ = erledigt und geprüft · ⏳ = offen. Lizenz: MIT in allen dreizehn Repos. Icons: PaTiSuite-Set in allen elf Addons;
-im Spiel bestätigt 2026-10-02 für neun. Neu zu testen: PaTiGroup (Gruppen-Icon übernommen, PT-GROUP-203), PaTiRota und
-PaTiLead (eigene Grafik des Owners 2026-10-02, PT-ROTA-062, PT-LEAD-003).
+im Spiel bestätigt 2026-10-02 für **8 von 11** (Heal, Auras, Tank, Quest, Dungeon, Alerts, Social, Suite). Offen: PaTiGroup
+(Gruppen-Icon übernommen — die alte Bestätigung gilt nach dem Umbau nicht mehr, PT-GROUP-203), PaTiRota und PaTiLead
+(eigene Grafik des Owners 2026-10-02, PT-ROTA-062, PT-LEAD-003).
 
 ## Alle Addons
 - Eigenständig: keine Abhängigkeit untereinander (TOC-Prüfung erzwingt das), eigene SavedVariables, eigene Slash-Befehle
@@ -42,7 +43,8 @@ PaTiLead (eigene Grafik des Owners 2026-10-02, PT-ROTA-062, PT-LEAD-003).
 - Befehle: allein = ein-/ausblenden, `show hide test lock unlock reset settings debug version`
 - Release: ZIP mit genau einem Ordner (inkl. Icon, ohne `assets/`/LICENSE), Entwurfs-Release per Tag `vX.Y.Z`,
   Bug-Report-Vorlage; Release-Workflow noch nie gelaufen (erst mit dem ersten Tag)
-- Bekannt: in PaTiAlerts, PaTiDungeon, PaTiQuest, PaTiTank zeigt der erste Einstellungsabschnitt „GENERAL“ (F30)
+- Behoben 2026-10-02: in PaTiAlerts, PaTiDungeon, PaTiQuest, PaTiTank zeigte der erste Einstellungsabschnitt „GENERAL“
+  (F30) — jetzt „Allgemein“, im Spiel noch nicht gesehen
 
 ## PaTiHeal
 - Funktion: Gruppenrahmen (Leben, Mana, Tank-Streifen), Klickzauber für neun Kombinationen mit Rangwahl, eigene HoTs und
