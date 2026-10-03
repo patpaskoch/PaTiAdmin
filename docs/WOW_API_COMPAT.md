@@ -147,6 +147,8 @@ in-game test that confirms it.
 | `isActive` / `isOnGCD` fields of the modern cooldown info | **unknown** | only shown by `/prota debug` when present and readable; never used for a decision until confirmed |
 | A Blizzard `Cooldown` widget (`CooldownFrameTemplate`) showing secret cooldown values (`SetCooldown` with the raw values, or `SetCooldownFromDurationObject` + `C_Spell.GetSpellCooldownDuration`) | **assumed** — the way Blizzard shows secret values to the player (widgets may take them) | PaTiRota cooldown clock; PT-ROTA-038 |
 | Client build | **observed 2026-10-03: 1.60.1 build 70205** (owner `/prota debug`), was 70009 | Interface stays 16001 |
+| `C_AssistedCombat` (Blizzard's own rotation helper) | **present (owner `/dump` 2026-10-03)**: `IsAvailable`, `GetActionSpell`, `GetNextCastSpell`, `GetRotationSpells` | not used yet; whether its answers are readable in combat (not secret) and what they return in Forever is unknown — owner decision whether PaTiRota may show Blizzard's suggestion |
+| `Button:SetEnabled()` on a plain button inside a window with secure children, in combat | **observed blocked** (taint.log 2026-09-28: "An action was blocked in combat because of taint … Button:SetEnabled()") | PaTiLead fixed 2026-10-03: no `SetEnabled` in combat; rule for all windows with secure children |
 
 ## Rules that hold regardless of client
 
