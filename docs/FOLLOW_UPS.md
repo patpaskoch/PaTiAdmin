@@ -108,3 +108,23 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
   (Shaman, Priest). Classes without a profile (e.g. Warrior) see "no profile" and get no tracking.
 - Smallest solution: a minimal general profile with only `tracking` for classes without one. Hunter tracks (Track
   Beasts …) only after their IDs are confirmed. Owner decides.
+
+### F32 · Hardening stage 2 — after the owner's in-game test (not before) — medium
+- Context: hardening stage 1 (2026-10-02) changed no secure mechanism on purpose: heal target, Rota slot buttons,
+  Lead markers and the Auras click overlays have no in-game confirmation yet; a refactor now would destroy the test
+  baseline. Decide each point from the test results:
+  1. **AnyUp + AnyDown** (`RegisterForClicks` in PaTiLead, PaTiAuras, PaTiRota): if a click or key fires twice
+     (PT-ROTA-040, PT-LEAD-050/082, PT-AURAS-195), switch to the PaTiHeal variant (`AnyUp`, owner-verified for clicks)
+     and re-test key bindings, which may then need `ActionButtonUseKeyDown` off. No change on assumption.
+  2. **Heal target** (PT-HEAL-137/146): if the restricted snippet may not move the player row or resize the window in
+     combat, anchor the player row to the target row (the snippet then only shows/hides the target row) and size the
+     window out of combat; WOW_API_COMPAT has the plan.
+  3. **PaTiHeal.lua split** (F13, ~620 lines): rows/painting and the HoT view into their own files — only once the heal
+     target is confirmed, so a regression can be told apart from a target-driver problem.
+  4. **PaTiAuras boundaries**: `PaTiAuras.lua` mixes settings, dialog, commands, events and alerts; `AuraWindow.lua`
+     rendering and secure overlays. Candidate split: `Settings.lua` (modal + new-auras dialog) and a small
+     `ClickButtons.lua` — after PT-AURAS-190–199 and 150–155 are confirmed. Weapon imbue detection stays as it is.
+- Checked and **not** worth doing (no concrete gain): a versioned `RegisterWindow` API for `PaTiSuiteWindows` (the
+  registry holds frames only and is read defensively), an adaptive PaTiRota ticker (≤ 10 buttons at 0.1 s, stops when
+  nothing cools down or the window is hidden).
+- Risk: medium (secure code) · Tests: the named in-game tests before and after each change.
