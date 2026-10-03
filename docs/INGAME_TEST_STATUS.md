@@ -16,10 +16,10 @@ Verified = vom Owner im echten Client bestätigt (`[x]`). Failed = im Client feh
 | [PaTiAuras](https://github.com/patpaskoch/PaTiAuras/blob/main/INGAME_TESTING.md) | 14 | 0 | 0 | 113 | 127 |
 | [PaTiDungeon](https://github.com/patpaskoch/PaTiDungeon/blob/main/INGAME_TESTING.md) | 1 | 0 | 0 | 39 | 40 |
 | [PaTiGroup](https://github.com/patpaskoch/PaTiGroup/blob/main/INGAME_TESTING.md) | 0 | 0 | 0 | 34 | 34 |
-| [PaTiHeal](https://github.com/patpaskoch/PaTiHeal/blob/main/INGAME_TESTING.md) | 8 | 1 | 1 | 79 | 88 |
+| [PaTiHeal](https://github.com/patpaskoch/PaTiHeal/blob/main/INGAME_TESTING.md) | 8 | 2 | 2 | 83 | 93 |
 | [PaTiLead](https://github.com/patpaskoch/PaTiLead/blob/main/INGAME_TESTING.md) | 0 | 0 | 0 | 53 | 53 |
 | [PaTiQuest](https://github.com/patpaskoch/PaTiQuest/blob/main/INGAME_TESTING.md) | 1 | 0 | 0 | 36 | 37 |
 | [PaTiRota](https://github.com/patpaskoch/PaTiRota/blob/main/INGAME_TESTING.md) | 0 | 0 | 0 | 37 | 37 |
 | [PaTiSocial](https://github.com/patpaskoch/PaTiSocial/blob/main/INGAME_TESTING.md) | 6 | 0 | 0 | 31 | 37 |
-| [PaTiSuite](https://github.com/patpaskoch/PaTiSuite/blob/main/INGAME_TESTING.md) | 4 | 0 | 0 | 79 | 83 |
+| [PaTiSuite](https://github.com/patpaskoch/PaTiSuite/blob/main/INGAME_TESTING.md) | 4 | 0 | 0 | 86 | 90 |
 | [PaTiTank](https://github.com/patpaskoch/PaTiTank/blob/main/INGAME_TESTING.md) | 1 | 0 | 0 | 58 | 59 |

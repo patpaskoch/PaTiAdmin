@@ -54,7 +54,8 @@ Architecture and data flow: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
   nothing changes; PaTiAlerts never reads the producers.
 - Owner-approved (2026-09-30): **`PaTiSuiteWindows`** — `[addonName] = main window frame`, written by every embedded
   PaTiShared (`UI.CreateWindow`), read for snapping and by PaTiSuite. Frames only: no settings, data or APIs.
-  Other addons' frames are only read (position, visibility) or shown/hidden through their own `SetSuiteShown`.
+  Other addons' frames are only read (position, visibility) or shown/hidden through their own `SetSuiteShown`;
+  owner-approved (2026-10-03): the theme may be switched through their own `SetSuiteTheme(id)` (the addon stores it).
   No other cross-addon global.
 
 ## 4. Before editing — every time

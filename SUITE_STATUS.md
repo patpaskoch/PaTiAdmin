@@ -127,6 +127,11 @@ im Spiel bestätigt 2026-10-02 für **8 von 11** (Heal, Auras, Tank, Quest, Dung
   Fensterposition → Standard; Anzeige-Fenster im Kampf verschiebbar (PT-SUITE-154); `/debug` zeigt den letzten
   abgefangenen Fehler (Heal, Auras, Tank, Rota, Lead); Reset-Semantik dokumentiert. Stufe 2 erst nach dem Ingame-Test (F32)
 
+## Themes (2026-10-03)
+- Drei Themes in PaTiShared: Default (wie bisher), WoForever (warmes Braun, Gold/Bronze), Dracula (Lila/Pink/Cyan);
+  nur Farben. Jedes Addon speichert sein Theme selbst (Einstellungen → Fenster → Theme); PaTiSuite schaltet alle um.
+  Offen im Spiel: PT-SUITE-160–166, PT-HEAL-152
+
 ## Nächster Schritt
 - Ordner im WoW-AddOns-Verzeichnis: alten `PaTiGroup/` ersetzen, `PaTiLead/` und `PaTiRota/` neu
 - Zuerst prüfen: Laden aller Addons, `/ph debug` (Heal-Target-Treiber), `/prota debug`, `/pg debug`

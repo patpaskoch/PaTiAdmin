@@ -68,6 +68,7 @@ one `<Addon>.lua` with a clearly separated adapter function, window, settings, c
 | Robust migration | `Migrate` accepts nil/broken saves (`type(db) ~= "table"` → fresh), a broken schema runs the steps, a scale outside 0.5–2 falls back; only broken values are replaced, `Migrate(Migrate(db))` is stable — table-driven `tests/robustness_spec.lua` per addon | all |
 | Caught-error diagnostics | `pcall` around APIs and PaTiAlerts `Sync`; the last error per source is kept as one short string (`<Module>.lastError` / a local) and shown only by `/<cmd> debug` — no chat, nothing saved | Heal, Auras, Tank, Rota, Lead |
 | Window safety | `UI.WindowPosition` (broken saved anchor/offset → default), `SetClampedToScreen`; `window:SetCombatMovable(true)` for windows without secure children (`UI.CanMoveWindow`, never when protected) | PaTiShared; combat-movable: Tank, Group, Quest, Dungeon, Social, Alerts, Suite |
+| Themes | three colour sets in PaTiShared (`UI.THEMES`: default, woforever, dracula); static colours via `UI.Paint`, state colours recomputed and repainted from `UI.OnThemeChanged` (the addon's existing refresh); `db.theme` per addon (validated in `Migrate`, applied by `window:Attach`, chosen under Settings → Window); PaTiSuite switches all through `window:SetSuiteTheme` — never a theme `if` in addon code | PaTiShared, all |
 
 ## Reset semantics (checked in code 2026-10-02)
 
