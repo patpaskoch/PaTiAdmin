@@ -24,7 +24,7 @@ read_globals = {
     "LOCALIZED_CLASS_NAMES_MALE", "RegisterUnitWatch", "UnregisterUnitWatch",
     "DebuffTypeColor", "Enum", "GetNumSpellTabs", "GetSpellBookItemInfo", "GetSpellBookItemName", "GetSpellTabInfo",
     "GetInventoryItemID", "GetInventoryItemTexture", "GetItemInfoInstant", "GetWeaponEnchantInfo",
-    "ClearCursor", "GetCursorInfo", "GetSpellCooldown", "IsUsableSpell", "RegisterStateDriver", "UnregisterStateDriver", "UnitCanAssist", "UnitIsPlayer", "UnitIsUnit", "UnitLevel",
+    "ClearCursor", "GetCursorInfo", "GetSpellCooldown", "IsUsableSpell", "RegisterStateDriver", "SecureCmdOptionParse", "UnregisterStateDriver", "UnitCanAssist", "UnitIsPlayer", "UnitIsUnit", "UnitLevel",
     "GetTime", "UnitAura", "issecretvalue", "IsInRaid", "GetSpecialization", "GetSpecializationInfo", "GetRaidTargetIndex", "GetBindingKey", "RAID_CLASS_COLORS", "UnitIsVisible",
     "SaveBindings", "SetBinding", "SetBindingClick",
     "UIParent", "UISpecialFrames",
