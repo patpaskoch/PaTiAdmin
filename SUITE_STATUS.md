@@ -122,6 +122,11 @@ im Spiel bestätigt 2026-10-02 für **8 von 11** (Heal, Auras, Tank, Quest, Dung
 - Fenster, Menü, Modal (mit `AddNote`), Button, Dropdown, Checkbox, Popup, Tooltip, Badge, Aura-Icon; 12 Unit-Tests
 - Neu 2026-10-02, ungetestet: ruhigerer Fenstertitel (`UI.WindowHeader`), in alle elf Runtime-Addons synchronisiert
 
+## Hardening Stufe 1 (2026-10-02, ohne Verhaltensänderung am Secure-Code)
+- Migrationen in allen elf Addons robust gegen kaputte Saves (Robustheits- und Idempotenz-Tests); kaputte gespeicherte
+  Fensterposition → Standard; Anzeige-Fenster im Kampf verschiebbar (PT-SUITE-154); `/debug` zeigt den letzten
+  abgefangenen Fehler (Heal, Auras, Tank, Rota, Lead); Reset-Semantik dokumentiert. Stufe 2 erst nach dem Ingame-Test (F32)
+
 ## Nächster Schritt
 - Ordner im WoW-AddOns-Verzeichnis: alten `PaTiGroup/` ersetzen, `PaTiLead/` und `PaTiRota/` neu
 - Zuerst prüfen: Laden aller Addons, `/ph debug` (Heal-Target-Treiber), `/prota debug`, `/pg debug`
