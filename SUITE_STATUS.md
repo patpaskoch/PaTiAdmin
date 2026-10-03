@@ -82,6 +82,8 @@ im Spiel bestätigt 2026-10-02 für **8 von 11** (Heal, Auras, Tank, Quest, Dung
 - Funktion: bis zu zehn Skill-Plätze in eigener Prioritätsreihenfolge (Name/ID oder aus dem Zauberbuch ziehen),
   Abklingzeiten, GCD, „nicht nutzbar“/„nicht gelernt“/„unklar“, der höchste bereite Skill hervorgehoben. Jeder Platz
   hat einen festen Secure-Button (ein Klick = genau dieser Zauber); nichts zaubert von selbst, kein wechselnder Button
+- Im Spiel bestätigt 2026-10-03: `/prota debug` (PT-ROTA-004), feste Buttons wirken (PT-ROTA-040). Im Kampf zeigte die
+  Anzeige „unklar“ (❌ PT-ROTA-031, 033) — Adapter-Fix (modern, dann legacy; Diagnose je API), Retest offen
 - Tests: 21 Unit-Tests · Offen im Spiel: alles (PT-ROTA-001–062), Cooldown-API und GCD-Referenz (`/prota debug`)
 
 ## PaTiGroup (TOC 0.1.0, neu 2026-10-02) — Party Awareness
@@ -130,6 +132,7 @@ im Spiel bestätigt 2026-10-02 für **8 von 11** (Heal, Auras, Tank, Quest, Dung
 ## Themes (2026-10-03)
 - Drei Themes in PaTiShared: Default (wie bisher), WoForever (warmes Braun, Gold/Bronze), Dracula (Lila/Pink/Cyan);
   nur Farben. Jedes Addon speichert sein Theme selbst (Einstellungen → Fenster → Theme); PaTiSuite schaltet alle um.
+  Im Spiel bestätigt 2026-10-03: Live-Themewechsel (PT-SUITE-167).
   Offen im Spiel: PT-SUITE-160–166, PT-HEAL-152
 
 ## Nächster Schritt

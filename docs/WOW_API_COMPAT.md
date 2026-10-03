@@ -131,7 +131,7 @@ in-game test that confirms it.
 | `HELPFUL|PLAYER` / `HARMFUL|RAID` aura filters on `target` | **assumed** | HoTs and dispels on the heal target (PT-HEAL-140/141) |
 | `partyNtarget` / `raidNtarget` tokens, `UNIT_TARGET`, `UnitName`/`GetRaidTargetIndex` on them | **assumed** (PaTiGroup tank target) | out of range they may not exist → "no target" (PT-GROUP-231–234) |
 | `PLAYER_ROLES_ASSIGNED`, `ROLE_CHANGED_INFORM` | **assumed**, pcall-registered (PaTiGroup) | roster events also repaint |
-| `C_Spell.GetSpellCooldown(id)` → `{ startTime, duration }` or `GetSpellCooldown(id)` → start, duration | **assumed** (PaTiRota) | pcall-guarded; secret → "unclear", never READY (PT-ROTA-004, 030–034) |
+| `C_Spell.GetSpellCooldown(id)` → `{ startTime, duration }` or `GetSpellCooldown(id)` → start, duration | modern **present (owner 2026-10-03)**, readability in combat see below (PaTiRota) | pcall-guarded; secret → "unclear", never READY (PT-ROTA-004, 030–034) |
 | Spell 61304 as the global-cooldown reference | **assumed** (modern-client convention) | unknown/unreadable → a cooldown ≤ 1.5 s counts as GCD (PT-ROTA-032) |
 | `C_Spell.IsSpellUsable` (true/false) or `IsUsableSpell` (1/nil) | **assumed** (PaTiRota) | false → "not usable", never recommended (PT-ROTA-035) |
 | `GetCursorInfo()` while dragging a spell from the spellbook: `"spell", index, bookType, spellID` | **assumed** (PaTiRota settings) | without the 4th value the spellbook index is resolved; `ClearCursor` afterwards (PT-ROTA-022) |
@@ -140,6 +140,11 @@ in-game test that confirms it.
 | `UnitIsUnit("raidN", "player")` | **assumed** (PaTiGroup) | your own unit events arrive as `player` in a raid; secret → not matched |
 | Restricted snippet acting on the PaTiHeal window (plain PaTiShared frame with secure children) | **observed failing 2026-10-03** (owner): `RestrictedFrames.lua:478: Invalid relative frame handle` — the window is no valid relative frame in the restricted environment | fixed: the snippet only shows/hides the target row and anchors the player row to it; the window height follows out of combat (PT-HEAL-131 retest, PT-HEAL-137) |
 | `RegisterForClicks("AnyUp", "AnyDown")` on SecureActionButtons fires once (filtered by `ActionButtonUseKeyDown`) | **assumed** (PaTiLead, PaTiAuras, PaTiRota) | if it fired twice, a cast would repeat — watch for double casts in PT-ROTA-040, PT-LEAD-050 |
+| PaTiRota, owner-observed 2026-10-03 (Blitzschlag 403, Erdschock 8042): `C_Spell.GetSpellCooldown` present; usable API `C_Spell` present; both spells `known=true`; out of combat both READY with the old adapter; GCD reference 61304 not readable; in combat both UNKNOWN with the old adapter, no API call error; the fixed secure cast buttons cast both spells in combat | **verified 2026-10-03** (owner) | PT-ROTA-004, PT-ROTA-040 |
+| Cause of the UNKNOWN in combat | code: the old adapter returned `C_Spell.GetSpellCooldown`'s values as soon as a table came back and never asked `GetSpellCooldown` | fixed 2026-10-03: `Logic.ReadCooldown` — first source with readable numbers wins (modern, then legacy) |
+| `C_Spell.GetSpellCooldown` returns secret values in combat | **strongly suspected**, not yet verified: matches the observed READY → UNKNOWN transition; the exact raw readability per API is pending the new `/prota debug` (per API: start/duration readable \| secret \| missing) | PT-ROTA-036; update this row after the owner's retest |
+| `GetSpellCooldown` (legacy) readable in combat | **unknown** | if it is: PaTiRota uses it (`source legacy`); if not: no bypass, the state reads "unreadable in combat" (PT-ROTA-037) |
+| `isActive` / `isOnGCD` fields of the modern cooldown info | **unknown** | only shown by `/prota debug` when present and readable; never used for a decision until confirmed |
 
 ## Rules that hold regardless of client
 
