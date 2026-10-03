@@ -29,7 +29,7 @@ Werden von Spielern nicht separat installiert.
 | Repo | Zweck |
 | --- | --- |
 | [PaTiAdmin](https://github.com/patpaskoch/PaTiAdmin) | dieses Repo: Regeln, Doku, Prüf-Tools, CI-Vorlagen, Stand — kein WoW-Addon |
-| PaTiShared (privat) | Entwicklungsquelle der gemeinsamen UI-Komponenten, Version 0.3.0; bereits in jedes Addon eingebettet (`Shared/`) |
+| PaTiShared (privat) | Entwicklungsquelle der gemeinsamen UI-Komponenten, Version 0.4.0; bereits in jedes Addon eingebettet (`Shared/`) |
 
 Die Addons werden in einem gemeinsamen Code-Ordner entwickelt und zum Testen in den WoW-AddOns-Ordner kopiert.
 Stand und Release-Reife: [`SUITE_STATUS.md`](SUITE_STATUS.md) · Ingame-Tests:

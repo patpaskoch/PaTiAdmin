@@ -5,7 +5,7 @@ State of 2026-10-02 (code on `main`). Update this file when an addon's structure
 ## Suite shape
 
 - Thirteen repos (see `AGENTS.md` §2): ten gameplay addons, PaTiSuite, PaTiShared, PaTiAdmin. No monorepo, no submodules, no runtime dependency between addons.
-- **PaTiShared 0.3.0** (UI design system) is embedded per addon under `Shared/` via `sync-shared.sh`
+- **PaTiShared 0.4.0** (UI design system) is embedded per addon under `Shared/` via `sync-shared.sh`
   (`PaTiShared/README.md`) in all eleven runtime addons. The legacy `PaTiSharedPanel.lua` is gone.
 - **PaTiAdmin** holds rules, docs, the check/package tools and CI/release templates. It ships nothing to players.
 - **Releases:** one zip per addon with one folder `<Addon>/` (`tools/package.sh`, `docs/RELEASE.md`). PaTiShared and

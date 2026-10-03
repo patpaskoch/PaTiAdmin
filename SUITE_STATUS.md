@@ -120,7 +120,7 @@ im Spiel bestätigt 2026-10-02 für **8 von 11** (Heal, Auras, Tank, Quest, Dung
 - Im Spiel bestätigt: einzelnes Ein-/Ausblenden, Alle anzeigen/ausblenden, Statusfarben, Hover, Icon
 - Offen im Spiel: Sichtbarkeit über `/reload`, horizontal, Tooltips, neue Einträge
 
-## PaTiShared 0.3.0 (Entwicklungsquelle, kein WoW-Addon, wird nicht veröffentlicht)
+## PaTiShared 0.4.0 (Entwicklungsquelle, kein WoW-Addon, wird nicht veröffentlicht)
 - Fenster, Menü, Modal (mit `AddNote`), Button, Dropdown, Checkbox, Popup, Tooltip, Badge, Aura-Icon; 12 Unit-Tests
 - Neu 2026-10-02, ungetestet: ruhigerer Fenstertitel (`UI.WindowHeader`), in alle elf Runtime-Addons synchronisiert
 
@@ -130,6 +130,10 @@ im Spiel bestätigt 2026-10-02 für **8 von 11** (Heal, Auras, Tank, Quest, Dung
   abgefangenen Fehler (Heal, Auras, Tank, Rota, Lead); Reset-Semantik dokumentiert. Stufe 2 erst nach dem Ingame-Test (F32)
 
 ## Themes (2026-10-03)
+- PaTiShared 0.4.0 in allen elf Addons; „Standard wiederherstellen“ in PaTiSuite setzt das Theme aller Fenster auf
+  Default (PT-SUITE-168); offene Popups zeichnen sich beim Wechsel neu. Bekannte Grenzen: Tooltip-Rahmen bleibt
+  Blizzard, WoForever ohne Verzierung (Entscheidung nach dem visuellen Test). **Code-Freeze** für Themes bis zum
+  Ingame-Test.
 - Drei Themes in PaTiShared: Default (wie bisher), WoForever (warmes Braun, Gold/Bronze), Dracula (Lila/Pink/Cyan);
   nur Farben. Jedes Addon speichert sein Theme selbst (Einstellungen → Fenster → Theme); PaTiSuite schaltet alle um.
   Im Spiel bestätigt 2026-10-03: Live-Themewechsel (PT-SUITE-167).
