@@ -143,8 +143,10 @@ in-game test that confirms it.
 | PaTiRota, owner-observed 2026-10-03 (Blitzschlag 403, Erdschock 8042): `C_Spell.GetSpellCooldown` present; usable API `C_Spell` present; both spells `known=true`; out of combat both READY with the old adapter; GCD reference 61304 not readable; in combat both UNKNOWN with the old adapter, no API call error; the fixed secure cast buttons cast both spells in combat | **verified 2026-10-03** (owner) | PT-ROTA-004, PT-ROTA-040 |
 | Cause of the UNKNOWN in combat | code: the old adapter returned `C_Spell.GetSpellCooldown`'s values as soon as a table came back and never asked `GetSpellCooldown` | fixed 2026-10-03: `Logic.ReadCooldown` — first source with readable numbers wins (modern, then legacy) |
 | `C_Spell.GetSpellCooldown` returns secret values in combat | **strongly suspected**, not yet verified: matches the observed READY → UNKNOWN transition; the exact raw readability per API is pending the new `/prota debug` (per API: start/duration readable \| secret \| missing) | PT-ROTA-036; update this row after the owner's retest |
-| `GetSpellCooldown` (legacy) readable in combat | **unknown** | if it is: PaTiRota uses it (`source legacy`); if not: no bypass, the state reads "unreadable in combat" (PT-ROTA-037) |
+| `GetSpellCooldown` (legacy) | **not present (owner `/prota debug` 2026-10-03, build 70205: "legacy no")** — no fallback possible | if it is: PaTiRota uses it (`source legacy`); if not: no bypass, the state reads "unreadable in combat" (PT-ROTA-037) |
 | `isActive` / `isOnGCD` fields of the modern cooldown info | **unknown** | only shown by `/prota debug` when present and readable; never used for a decision until confirmed |
+| A Blizzard `Cooldown` widget (`CooldownFrameTemplate`) showing secret cooldown values (`SetCooldown` with the raw values, or `SetCooldownFromDurationObject` + `C_Spell.GetSpellCooldownDuration`) | **assumed** — the way Blizzard shows secret values to the player (widgets may take them) | PaTiRota cooldown clock; PT-ROTA-038 |
+| Client build | **observed 2026-10-03: 1.60.1 build 70205** (owner `/prota debug`), was 70009 | Interface stays 16001 |
 
 ## Rules that hold regardless of client
 
