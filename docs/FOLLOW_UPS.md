@@ -116,9 +116,8 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
   1. **AnyUp + AnyDown** (`RegisterForClicks` in PaTiLead, PaTiAuras, PaTiRota): if a click or key fires twice
      (PT-ROTA-040, PT-LEAD-050/082, PT-AURAS-195), switch to the PaTiHeal variant (`AnyUp`, owner-verified for clicks)
      and re-test key bindings, which may then need `ActionButtonUseKeyDown` off. No change on assumption.
-  2. **Heal target** (PT-HEAL-137/146): if the restricted snippet may not move the player row or resize the window in
-     combat, anchor the player row to the target row (the snippet then only shows/hides the target row) and size the
-     window out of combat; WOW_API_COMPAT has the plan.
+  2. **Heal target**: DONE 2026-10-03 after the owner's error ("Invalid relative frame handle") — the snippet only
+     touches the two secure rows, the window height follows out of combat. Retest PT-HEAL-131, 137, 146.
   3. **PaTiHeal.lua split** (F13, ~620 lines): rows/painting and the HoT view into their own files — only once the heal
      target is confirmed, so a regression can be told apart from a target-driver problem.
   4. **PaTiAuras boundaries**: `PaTiAuras.lua` mixes settings, dialog, commands, events and alerts; `AuraWindow.lua`
