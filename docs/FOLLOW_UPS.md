@@ -71,17 +71,33 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
 - Delivered instead: numbered nameplates (F16). The player clicks the marked nameplate; no automatic targeting or taunt.
 - Reopen only if the Forever client offers a secure API for this (would be recorded in WOW_API_COMPAT first).
 
-### F21 · PaTiAuras: more concrete weapon imbues (Flametongue, Frostbrand, Windfury, other ranks) — low
+### F21 · PaTiAuras: more concrete weapon imbues (Flametongue, Frostbrand, Windfury, other ranks) — medium · owner-approved plan (F33 step 2)
 - Status 2026-10-02: concrete imbue watches exist; only Rockbiter (enchant ID 29, owner-observed) is mapped.
 - Next step: owner runs `/pa auras` with each imbue (and each Rockbiter rank) on and reports `enchantID` and the
   "Learned spells with icon" line; then one profile entry per imbue (`spellID`, `slot`, `enchantIDs`). No IDs before.
+- 2026-10-06 (owner): Rockbiter now reads Unknown (probably a higher rank) and Flametongue is not mapped at all.
+  Replaced by F33 step 2: an own imbue list per hand that learns the enchant ID when the player casts the imbue.
 
-### F28 · PaTiAuras: click-to-buff for personal buffs (Water Shield, Inner Fire) — low
-- Problem: weapon imbues can be cast from their line (2026-10-02); personal buffs cannot yet. Their lines can move in
+### F28 · PaTiAuras: click-to-buff for personal buffs (Water Shield, Inner Fire) — DONE IN CODE 2026-10-06, awaiting in-game test
+- Done with the own buff list (F33 step 1): a missing own buff line casts it on you; the lines keep their place in
+  combat through the existing frozen click rows (`Auras.MergeRows`), so no fixed rows were needed. Test PT-AURAS-201/204.
+- Original problem: weapon imbues could be cast from their line (2026-10-02); personal buffs could not. Their lines can move in
   combat (procs appear and disappear above/below them), and a secure button cannot follow in combat.
 - Smallest solution: give castable personal buffs fixed rows right after WEAPON (like GROUP and WEAPON), reuse the
   weapon button pattern (`unit = player`, armed only out of combat while Missing).
 - Risk: low–medium (secure layout) · Tests: pure arming helper; in game click, combat, taint. Owner decides.
+
+### F33 · PaTiAuras: own lists instead of fixed class profiles — medium · owner-approved 2026-10-06
+- Problem: fixed class profiles miss what the player wants (Lightning Shield was missing; other procs, buffs and
+  imbues) and weapon imbues need hand-entered enchant IDs per rank.
+- Owner decision: a list like the PaTiRota slots where the player puts what to watch; the name stays PaTiAuras.
+- Step 1 (DONE IN CODE 2026-10-06): own buff list (`DB.ownBuffs`, OwnBuffs.lua); unedited (nil) = the known
+  profile self buffs, so nothing changes by itself; a missing one is cast with a left click. PT-AURAS-204.
+- Step 2 (next): weapon imbue list per hand; the enchant ID is learned when the player casts the listed imbue
+  (spell cast succeeded → new enchant ID on that hand → saved mapping), so ranks and Flametongue need no table.
+  Risk: medium (learning must ignore other imbues, poisons, enchant changes in combat). Tests: pure learn step.
+- Step 3: procs as an option per own-list entry ("only while active"), if the owner wants it. Tracking and group
+  buffs stay as they are.
 
 ### F22 · More PaTiAlerts producers — low
 - V1 (2026-09-29): PaTiTank (aggro), PaTiAuras (personal buffs, weapon imbues), PaTiHeal (dispellable debuffs).
