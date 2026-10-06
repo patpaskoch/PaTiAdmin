@@ -87,17 +87,13 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
   weapon button pattern (`unit = player`, armed only out of combat while Missing).
 - Risk: low–medium (secure layout) · Tests: pure arming helper; in game click, combat, taint. Owner decides.
 
-### F33 · PaTiAuras: own lists instead of fixed class profiles — medium · owner-approved 2026-10-06
+### F33 · PaTiAuras: own lists instead of fixed class profiles — DONE IN CODE 2026-10-06, awaiting in-game test
 - Problem: fixed class profiles miss what the player wants (Lightning Shield was missing; other procs, buffs and
   imbues) and weapon imbues need hand-entered enchant IDs per rank.
-- Owner decision: a list like the PaTiRota slots where the player puts what to watch; the name stays PaTiAuras.
-- Step 1 (DONE IN CODE 2026-10-06): own buff list (`DB.ownBuffs`, OwnBuffs.lua); unedited (nil) = the known
-  profile self buffs, so nothing changes by itself; a missing one is cast with a left click. PT-AURAS-204.
-- Step 2 (next): weapon imbue list per hand; the enchant ID is learned when the player casts the listed imbue
-  (spell cast succeeded → new enchant ID on that hand → saved mapping), so ranks and Flametongue need no table.
-  Risk: medium (learning must ignore other imbues, poisons, enchant changes in combat). Tests: pure learn step.
-- Step 3: procs as an option per own-list entry ("only while active"), if the owner wants it. Tracking and group
-  buffs stay as they are.
+- Owner decision: one list like the PaTiRota slots for everything on yourself; the name stays PaTiAuras.
+- DONE IN CODE 2026-10-06 ("My auras"): buffs, procs (checkbox per slot), weapon imbues (enchant ID learned on
+  cast, OwnList.lua) and tracking in one list; grid 1–3 columns without headers; Show all / only missing / only
+  active. Group buffs stay profile + popup. Tests PT-AURAS-205 … 210.
 
 ### F22 · More PaTiAlerts producers — low
 - V1 (2026-09-29): PaTiTank (aggro), PaTiAuras (personal buffs, weapon imbues), PaTiHeal (dispellable debuffs).
