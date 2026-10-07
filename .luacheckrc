@@ -27,7 +27,7 @@ read_globals = {
     "ClearCursor", "GetCursorInfo", "GetSpellCooldown", "IsUsableSpell", "RegisterStateDriver", "SecureCmdOptionParse", "UnregisterStateDriver", "UnitCanAssist", "UnitIsPlayer", "UnitIsUnit", "UnitLevel",
     "GetTime", "UnitAura", "issecretvalue", "IsInRaid", "GetSpecialization", "GetSpecializationInfo", "GetRaidTargetIndex", "GetBindingKey", "RAID_CLASS_COLORS", "UnitIsVisible",
     "SaveBindings", "SetBinding", "SetBindingClick",
-    "UIParent", "UISpecialFrames", "hooksecurefunc", "ShowUIPanel", "IsHarmfulSpell",
+    "UIParent", "UISpecialFrames", "hooksecurefunc", "ShowUIPanel", "IsHarmfulSpell", "IsPassiveSpell",
     "UnitAffectingCombat", "UnitClass", "UnitDetailedThreatSituation", "UnitExists", "UnitGroupRolesAssigned",
     "UnitCanAttack", "UnitGUID", "UnitIsDead", "UnitThreatSituation",
     "UnitHealth", "UnitHealthMax", "UnitIsConnected", "UnitIsDeadOrGhost", "UnitIsGroupAssistant",
