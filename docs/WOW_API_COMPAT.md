@@ -132,7 +132,7 @@ in-game test that confirms it.
 | `partyNtarget` / `raidNtarget` tokens, `UNIT_TARGET`, `UnitName`/`GetRaidTargetIndex` on them | **assumed** (PaTiGroup tank target) | out of range they may not exist → "no target" (PT-GROUP-231–234) |
 | `PLAYER_ROLES_ASSIGNED`, `ROLE_CHANGED_INFORM` | **assumed**, pcall-registered (PaTiGroup) | roster events also repaint |
 | `C_Spell.GetSpellCooldown(id)` → `{ startTime, duration }` or `GetSpellCooldown(id)` → start, duration | modern **present (owner 2026-10-03)**, readability in combat see below (PaTiRota) | pcall-guarded; secret → "unclear", never READY (PT-ROTA-004, 030–034) |
-| `C_Spell.IsSpellHarmful(id)` / `IsHarmfulSpell(name)` | **unverified** (2026-10-07) | PaTiAuras refuses attack spells in "My auras" (Shadow Bolt); pcall-guarded, missing API → accepted as before |
+| `C_Spell.IsSpellHarmful(id)` / `IsHarmfulSpell(name)` | **works (owner 2026-10-07: Shadow Bolt reported as harmful)**; which of the two answered is not logged | PaTiAuras refuses attack spells in "My auras" (Shadow Bolt); pcall-guarded, missing API → accepted as before |
 | `UNIT_SPELLCAST_SUCCEEDED` (player) + `GetWeaponEnchantInfo` enchant ID after the cast | **unverified** (2026-10-06) | PaTiAuras learns a listed weapon imbue's enchant ID from your own cast (OwnList.lua); secret IDs are never learned |
 | Spell 61304 as the global-cooldown reference | **assumed** (modern-client convention) | unknown/unreadable → a cooldown ≤ 1.5 s counts as GCD (PT-ROTA-032) |
 | `C_Spell.IsSpellUsable` (true/false) or `IsUsableSpell` (1/nil) | **assumed** (PaTiRota) | false → "not usable", never recommended (PT-ROTA-035) |
