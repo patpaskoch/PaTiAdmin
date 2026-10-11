@@ -182,7 +182,7 @@ configuration that is hard to rebuild is kept on purpose; where a list is reset,
 - Events: SPELL_UPDATE_COOLDOWN, SPELL_UPDATE_USABLE, SPELLS_CHANGED, PLAYER_REGEN_*; 0.1 s text ticker only while a
   shown skill cools down. `PaTiRotaDB` schema 1. Slash `/prota`, `/patirota`.
 
-### PaTiTank 0.1.0 (+ [Unreleased]) — own health, target, threat, aggro control
+### PaTiTank 0.1.0 (+ [Unreleased]) — target, threat, who pulls next, aggro control
 - Files: `Shared/` → `Locales/` → `Logic.lua` (settings, `ThreatValue`; pure, tested) → `Aggro.lua` (states CONTROLLED /
   DANGER / LOST / UNKNOWN, summary, holder label; pure, tested) → `Threat.lua` (adapter: the only threat/nameplate API
   calls; tested with mocks) → `Plates.lua` (nameplate markers; tested with mocks) → `PaTiTank.lua` (window, aggro

@@ -21,7 +21,7 @@ it is — never into two, never into PaTiAdmin (not a player addon).
 ├── PaTiShared/    design system + UI components, embedded into addons (not a WoW addon)
 └── PaTiAddons/
     ├── PaTiHeal/     healing: party + heal-target frames, click casting (secure), own HoTs/shields, dispels  /ph
-    ├── PaTiTank/     own health, target threat, aggro control monitor      /pt
+    ├── PaTiTank/     target threat, who pulls next, aggro monitor         /pt
     ├── PaTiRota/     own skill priority, cooldowns, fixed cast buttons (secure) /prota /patirota
     ├── PaTiGroup/    party awareness: tank, healer, roles, tank target (display) /pg /ptg /patigroup
     ├── PaTiLead/     lead: raid markers (secure), ready check, pull timer /plead /patilead

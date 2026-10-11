@@ -40,7 +40,7 @@ explicit test recorded) · **assumed** (not yet used/tested).
 | Dispel spells cast via the `spell` click attribute on the clicked unit (click dispel) | assumed (PaTiHeal) | same mechanism as the verified click heals |
 | Key binding menu path "ESC > Key Bindings (Tastaturbelegung) > PaTiLead" (also PaTiRota) | **unknown** (PaTiLead/PaTiRota settings notes) | settings also name "ESC > Options > Key Bindings"; owner: report the real path |
 | `## Notes-deDE` in the TOC shown on a German client | assumed (all addons) | fallback is the English `## Notes` |
-| `UnitDetailedThreatSituation` | in use (PaTiTank) | 3rd return = threat percent; secret values only reach the bar |
+| `UnitDetailedThreatSituation` | in use (PaTiTank) | 3rd return = threat percent; secret values only reach the bar. Also read for party1-4/pet on your target ("Next" line): isTanking + scaled percent (100 = pulls) — **assumed** for party units in Forever; secret/error → "unclear" |
 | `UNIT_MAXHEALTH` event | assumed (PaTiTank) | added to keep the health bar maximum current |
 | `C_Item.GetWeaponEnchantInfo()` **without a slot**, read like the classic tuple | **observed wrong 2026-09-30** (owner: Main Hand "Unknown" with and without Rockbiter) | the function exists in this client but does not answer that way |
 | `GetWeaponEnchantInfo()` classic tuple (hasMainHand, ms left, charges, enchantID, then the off hand) | **observed wrong 2026-10-02** (owner `/pa auras`, Rockbiter on): `hasMainHand=false`, the other main-hand values nil | unreliable in Forever: PaTiAuras uses it only where the modern API is missing or unreadable, and then only to confirm an imbue |
