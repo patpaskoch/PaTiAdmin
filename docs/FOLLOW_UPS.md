@@ -140,7 +140,7 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
   nothing cools down or the window is hidden).
 - Risk: medium (secure code) · Tests: the named in-game tests before and after each change.
 
-### F33 · PaTiAggro: healer/damage alerts in PaTiAlerts — low · open
+### F35 · PaTiAggro: healer/damage alerts in PaTiAlerts — low · open
 - Problem: the healer/damage view ("enemies on you") sends nothing to PaTiAlerts; PaTiAlerts only knows AGGRO_LOST /
   AGGRO_DANGER, whose texts are tank wording.
 - Affected code: `PaTiAggro/PaTiAggro.lua` (paintAggro sends `{}` outside the tank view), `PaTiAlerts` kinds/locales.
@@ -148,7 +148,7 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
 - Alternative without change: none needed — the PaTiAggro window shows the rows. Risk: low. Tests: unit + PT-AGGRO-014.
 - Priority: low, after the role views are confirmed in game.
 
-### F34 · PaTiAggro.lua above 400 lines — low · open
+### F36 · PaTiAggro.lua above 400 lines — low · open
 - Problem: `PaTiAggro.lua` (~580 lines) mixes window layout, tank/healer painting, scheduler, settings, commands and events.
 - Smallest solution: move painting (`paintTarget`, `paintSelf`, `paintAggro`, rows) into `View.lua` — after the
   owner's first in-game tests of the role views, so a regression can be told apart.
