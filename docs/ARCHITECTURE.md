@@ -22,7 +22,7 @@ Addons complement each other but never depend on each other (AGENTS.md §3).
 | **PaTiAuras** | Buffs/auras: own buffs, procs, tracking, group buffs, weapon imbues, click-to-buff | HoTs/shields on members (→ Heal, removed here 2026-10-02) |
 | **PaTiAggro** (formerly PaTiTank, renamed 2026-10-14) | Aggro for every role: tank view (threat on target by status, who pulls next, lost/close enemies, nameplate numbers, PaTiAlerts output); healer/damage view (own highest threat 70/90 %, enemies on you) | tank target for others (→ Group), cooldowns/defensives (→ Rota), buffs (→ Auras) |
 | **PaTiRota** | Own skill priority: slots in your order, cooldowns, next ready skill highlighted, fixed cast buttons | any automatic casting, rotation rules (never) |
-| **PaTiGroup** | Party awareness: who tanks, who heals, role counts, the tank's target and its raid marker (display only) | markers, ready check, pull, leader actions (→ Lead), threat (→ Tank), heal details (→ Heal) |
+| **PaTiGroup** | Party awareness: who tanks, who heals, role counts, the tank's target and its raid marker — display, plus one click on the tank target to target it (2026-10-14) | markers, ready check, pull, leader actions (→ Lead), threat (→ Aggro), heal details (→ Heal) |
 | **PaTiLead** | Lead/coordinate: raid markers, Clear/Reset All, ready check, pull timer, leader/assist, local note, marker key bindings (the former PaTiGroup) | party awareness (→ Group) |
 | **PaTiQuest** | Quest companion: the selected quest and its objectives | |
 | **PaTiDungeon** | Dungeon context: instance, group and combat status (later: dungeon quests, bosses, role notes, loot wishlist) | |
