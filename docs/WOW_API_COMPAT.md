@@ -162,6 +162,9 @@ in-game test that confirms it.
 - Aura APIs: `C_UnitAuras.GetAuraDataByIndex` if present, else `UnitAura` (PaTiAuras `AuraScan.lua`, PaTiHeal `Dispels.lua`).
   Which one this client offers is unconfirmed — `/pa auras` prints it.
 - Addon communication (`C_ChatInfo.SendAddonMessage`, prefix registration): not used yet; verify limits in this client before designing a protocol.
+- `SendChatMessage` (PaTiSocial buttons, PaTiHeal Mana button): only from a button click (hardware event; SAY needs one
+  in modern clients), wrapped in `pcall`. Unconfirmed in this client: a party message from a click during combat, and
+  whether `UnitPower("player", 0)` is readable (not secret) in combat — PT-HEAL-158 checks both.
 
 ## How to verify something
 
