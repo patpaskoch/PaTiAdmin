@@ -27,7 +27,7 @@ Addons complement each other but never depend on each other (AGENTS.md §3).
 | **PaTiQuest** | Quest companion: the selected quest and its objectives | |
 | **PaTiDungeon** | Dungeon context: instance, group and combat status (later: dungeon quests, bosses, role notes, loot wishlist) | |
 | **PaTiSocial** | Quick communication: emote and short message buttons | chat history, friends/guild/BNet, voice (never) |
-| **PaTiAlerts** | One window for currently relevant problems (optional receiver) | producing alerts itself |
+| **PaTiAlerts** | One window for currently relevant problems (optional receiver); rows whose producer sends a `cast` are clickable out of combat (PaTiAuras buffs, 2026-10-14) | producing alerts itself |
 | **PaTiSuite** | Optional control panel: show/hide/overview of the windows | gameplay logic (never) |
 | PaTiShared | Dev source of the shared UI, embedded into every addon (`Shared/`) | runtime dependency (never) |
 | PaTiAdmin | Engineering centre: rules, docs, tools, CI templates — not a player addon | anything players install |
@@ -222,12 +222,15 @@ configuration that is hard to rebuild is kept on purpose; where a list is reset,
 
 ### PaTiAlerts 0.1.0 — open problems reported by the other addons (optional receiver)
 - Files: `Shared/` → `Locales/` → `Logic.lua` (settings, auto-hide rule; pure, tested) → `State.lua` (alert store;
-  pure, tested) → `PaTiAlerts.lua` (window, `PaTiAlertsAPI`, settings, commands).
+  pure, tested) → `Clicks.lua` (secure click buttons) → `PaTiAlerts.lua` (window, `PaTiAlertsAPI`, settings, commands).
 - `PaTiAlertsDB`, schema 1: position, locked, collapsed, scale, language, autoHide, pulseNew, sourceFilters,
-  priorityFilters. Alerts are never saved. No secure frames; rows are not clickable.
+  priorityFilters (schema 2: PaTiTank filter → PaTiAggro). Alerts are never saved. Secure frames only in `Clicks.lua`:
+  SecureActionButtons on a holder parented to UIParent (not the window) and hidden in combat by a state driver
+  `[combat] hide`; armed, moved, cleared only out of combat (cleared on PLAYER_REGEN_DISABLED and window drag).
 - API v1 (`_G.PaTiAlertsAPI`, the one cross-addon global, AGENTS.md §3): `Sync(source, list)` (preferred: the
   producer's complete current list), `Upsert(alert)`, `Remove(source, id)`, `ClearSource(source)`; all pcall-guarded.
-  Key = source + id. Alert = { id, priority CRITICAL|WARNING|INFO (unknown → INFO), kind, text | name, detail?, number? };
+  Key = source + id. Alert = { id, priority CRITICAL|WARNING|INFO (unknown → INFO), kind, text | name, detail?, number?,
+  cast? = { spell (plain, ≤ 60), unit player|party1-4 } };
   plain strings checked for secrecy first, `name` may be secret (SetText only). Order: priority, then first seen.
 - Producers (V1): PaTiAggro (`Aggro.Alerts`: LOST → CRITICAL AGGRO_LOST, DANGER → WARNING AGGRO_DANGER, same number as
   panel + nameplate), PaTiAuras (`Auras.Alerts`: personal buffs + weapon imbues MISSING/EXPIRING → WARNING; UNKNOWN

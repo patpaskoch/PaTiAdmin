@@ -60,6 +60,8 @@ explicit test recorded) · **assumed** (not yet used/tested).
 | `UNIT_INVENTORY_CHANGED` / `PLAYER_EQUIPMENT_CHANGED` fire when an imbue is applied, expires or the weapon changes | assumed (PaTiAuras) | 2 s change check as fallback |
 | `C_PaperDollInfo.GetTemporaryEnchantmentInfo` | **unknown**, not used | only reported by `/pa debug` |
 | `GetInventoryItemID` + `GetItemInfoInstant` classID 2 = weapon (shield/held item → no imbue) | assumed (PaTiAuras) | unreadable → UNKNOWN instead of "missing" |
+| `RegisterStateDriver(frame, "visibility", "[combat] hide; show")` on a plain holder frame hides its secure children in combat without addon code | assumed (PaTiAlerts click rows, 2026-10-14) | PT-ALERTS-096 |
+| SecureActionButtons positioned in UIParent coordinates over rows of a non-secure window (not anchored to it) keep the window movable/hideable in combat | assumed (PaTiAlerts) | PT-ALERTS-097/098 |
 | `UnitThreatSituation(unit, enemy)` returns 0-3/nil per enemy | assumed (PaTiAggro aggro) | pcall + secret check; missing/secret → UNKNOWN; `/paggro debug` shows presence |
 | Nameplate unit tokens `nameplateN` + `NAME_PLATE_UNIT_ADDED/REMOVED` | assumed (PaTiAggro aggro) | pcall-registered; without them only target and party targets count |
 | `partyNtarget` tokens and `UNIT_TARGET` | assumed (PaTiAggro aggro) | enemies nobody targets and without a nameplate stay invisible |
