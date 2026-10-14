@@ -13,14 +13,14 @@ sind optionale Ergänzungen.
 | [PaTiSuite](https://github.com/patpaskoch/PaTiSuite) | optionales Steuerfenster: PaTi-Fenster anzeigen/ausblenden |
 | [PaTiHeal](https://github.com/patpaskoch/PaTiHeal) | **Heilen:** Gruppen- und Heal-Target-Rahmen, Klickzauber, eigene HoTs/Schilde, bannbare Debuffs |
 | [PaTiAuras](https://github.com/patpaskoch/PaTiAuras) | **Buffs/Auren:** eigene Buffs, Procs, Aufspüren, Gruppenbuffs, Waffenbuffs, Click-to-Buff |
-| [PaTiTank](https://github.com/patpaskoch/PaTiTank) | **Tank:** Ziel, Bedrohung, Aggro-Kontrolle, Namensschild-Nummern |
+| [PaTiAggro](https://github.com/patpaskoch/PaTiAggro) | **Aggro** (früher PaTiTank): Bedrohung für Tank, Heiler und Schaden, wer als Nächstes zieht, verlorene Gegner, Gegner auf dir, Namensschild-Nummern |
 | [PaTiRota](https://github.com/patpaskoch/PaTiRota) | **Rotation:** eigene Skill-Reihenfolge, Abklingzeiten, nächster bereiter Skill, feste Zauber-Buttons |
 | [PaTiGroup](https://github.com/patpaskoch/PaTiGroup) | **Gruppe beobachten:** Tank, Heiler, Rollen, Ziel des Tanks mit Zielmarker |
 | [PaTiLead](https://github.com/patpaskoch/PaTiLead) | **Gruppe führen:** Zielmarker, Ready Check, Pull-Countdown (früher PaTiGroup) |
 | [PaTiQuest](https://github.com/patpaskoch/PaTiQuest) | **Quests:** ausgewählte Quest und ihre Ziele |
 | [PaTiDungeon](https://github.com/patpaskoch/PaTiDungeon) | **Dungeon-Kontext:** Instanz-, Gruppen- und Kampfstatus |
 | [PaTiSocial](https://github.com/patpaskoch/PaTiSocial) | **Kommunikation:** „Party Social“, Schnellbuttons für Emotes und kurze Nachrichten |
-| [PaTiAlerts](https://github.com/patpaskoch/PaTiAlerts) | **Probleme:** zentrales Fenster für offene Probleme aus PaTiTank, PaTiAuras, PaTiHeal (optional) |
+| [PaTiAlerts](https://github.com/patpaskoch/PaTiAlerts) | **Probleme:** zentrales Fenster für offene Probleme aus PaTiAggro, PaTiAuras, PaTiHeal (optional) |
 
 ## Entwicklungs-Repositories
 

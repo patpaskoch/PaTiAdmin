@@ -110,7 +110,7 @@ Prepared, not done — no accounts, no uploads without an explicit task.
 |---|---|
 | PaTiHeal | party frames in a group with a heal target above · settings (click casting + HoTs & shields) · HoT/shield icons with charges/timer · dispel icons · test mode |
 | PaTiAuras | self section · group buffs with tooltip · horizontal category layout · settings (Watch) · first-start aura window |
-| PaTiTank | HUD with target and threat · aggro 6 / 6 · lost enemy on the healer · settings |
+| PaTiAggro | HUD with target and threat · aggro 6 / 6 · lost enemy on the healer · settings |
 | PaTiRota | skill list with the next skill highlighted and cooldowns · settings with the skill slots |
 | PaTiGroup | tank, healer, tank target with marker in a party |
 | PaTiLead | marker bar with target · settings with the highlighted key binding note · WoW key binding menu with PaTiLead |

@@ -39,7 +39,7 @@ Results: PASS / FAIL / SKIP (tool missing locally) / NONE (nothing to check yet)
   PaTiHeal heal target (mode, layout, level text), PaTiLead (settings, marker slots, secret-value helpers, 1/true
   flags), PaTiGroup (fresh start over the old table, members, summary, target tokens), PaTiRota (slots, cooldown
   states incl. GCD and secret values, recommendation, fixed slot attributes), PaTiSuite (order, schema-4
-  visibility migration), PaTiTank (migration, collapse, threat value, aggro states, threat adapter with mocks),
+  visibility migration), PaTiAggro (migration, collapse, threat value, aggro states, threat adapter with mocks),
   PaTiQuest (migration, collapse, quest lines), PaTiDungeon (migration, collapse, status incl. 1/nil flags).
 
 ## Regression rule
@@ -60,7 +60,7 @@ Every concrete test lives in exactly one place: the addon's `INGAME_TESTING.md` 
 
 ## In-game test files
 
-Every runtime addon (PaTiHeal, PaTiAuras, PaTiTank, PaTiRota, PaTiGroup, PaTiLead, PaTiQuest, PaTiDungeon, PaTiSocial,
+Every runtime addon (PaTiHeal, PaTiAuras, PaTiAggro, PaTiRota, PaTiGroup, PaTiLead, PaTiQuest, PaTiDungeon, PaTiSocial,
 PaTiAlerts, PaTiSuite) has
 `INGAME_TESTING.md` in its repo root: the permanent, Git-tracked record of what was tested in the real WoW client, what
 is still open and what failed. PaTiShared has none (not a runtime addon). Not shipped in the release zip (`*.md`).
@@ -103,7 +103,7 @@ Format (one test = one line with a permanent ID `PT-<ADDON>-NNN`, results as ind
   (`PT-GROUP-200…`) and its file states which block belonged to the old implementation.
 - Sections per file: Installation / Laden, Fenster, SavedVariables, Sprachen, the addon's features, Combat / Sicherheit,
   Combined. Only features that exist in the code on `main` — nothing planned.
-- Integration tests (PaTiAlerts) live in the producer's file (PaTiTank, PaTiAuras, PaTiHeal); PaTiAlerts links to them.
+- Integration tests (PaTiAlerts) live in the producer's file (PaTiAggro, PaTiAuras, PaTiHeal); PaTiAlerts links to them.
 - A feature or fix that needs new manual tests adds them in the same task (open). A test whose behaviour a fix
   changed gets `🔧 FIX IMPLEMENTED <date>` + `MANUAL RETEST REQUIRED`.
 - Owner results: "Rockbiter works now" → PT-AURAS-053 `[x]` + `✅ VERIFIED <date>`; "does not work" → box open +
@@ -118,7 +118,7 @@ PaTiAdmin/tools/ingame-status.sh                     # verified / failed / open 
 PaTiAdmin/tools/ingame-status.sh --list failed       # every failed test (incl. fixed, retest pending)
 PaTiAdmin/tools/ingame-status.sh --list retest       # "what do I test in WoW tonight?" – fixes to confirm first
 PaTiAdmin/tools/ingame-status.sh --list open         # everything never tested yet
-grep -n '\[x\]' PaTiAddons/PaTiTank/INGAME_TESTING.md   # what is confirmed for PaTiTank
+grep -n '\[x\]' PaTiAddons/PaTiAggro/INGAME_TESTING.md   # what is confirmed for PaTiAggro
 ```
 
 ## Fresh install test
@@ -132,9 +132,9 @@ grep -n '\[x\]' PaTiAddons/PaTiTank/INGAME_TESTING.md   # what is confirmed for 
 5. Login: the addon is listed with its description and loads; no Lua error.
 6. `/reload`; open the main window and the settings (`/<cmd> settings`); `/<cmd> test`; no Lua error.
 
-**Independence test:** the fresh install test once for each addon alone (PaTiHeal, PaTiAuras, PaTiTank, PaTiRota,
+**Independence test:** the fresh install test once for each addon alone (PaTiHeal, PaTiAuras, PaTiAggro, PaTiRota,
 PaTiGroup, PaTiLead, PaTiQuest, PaTiDungeon, PaTiAlerts, PaTiSocial). **Combined test:** all together: every window opens, every slash command answers the right
-addon (`/ph /pa /pt /prota /pg /ptg /plead /phq /pd /pal /psocial /psuite`), each settings window saves its own values, no Lua or taint error.
+addon (`/ph /pa /paggro /prota /pg /ptg /plead /phq /pd /pal /psocial /psuite`), each settings window saves its own values, no Lua or taint error.
 
 
 ## Release testing (per release candidate)

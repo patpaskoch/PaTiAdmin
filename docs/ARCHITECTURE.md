@@ -20,7 +20,7 @@ Addons complement each other but never depend on each other (AGENTS.md §3).
 |---|---|---|
 | **PaTiHeal** | Heal: player/party frames + heal-target frame, click healing, **the only source of your own HoTs/shields on healable frames**, dispellable debuffs, mana | buffs/procs/weapon imbues (→ Auras), roles overview (→ Group) |
 | **PaTiAuras** | Buffs/auras: own buffs, procs, tracking, group buffs, weapon imbues, click-to-buff | HoTs/shields on members (→ Heal, removed here 2026-10-02) |
-| **PaTiTank** | Tank awareness: target, threat, aggro lost/close, problem mobs, nameplate numbers, PaTiAlerts output | tank target for others (→ Group) |
+| **PaTiAggro** (formerly PaTiTank, renamed 2026-10-14) | Aggro for every role: tank view (threat on target by status, who pulls next, lost/close enemies, nameplate numbers, PaTiAlerts output); healer/damage view (own highest threat 70/90 %, enemies on you) | tank target for others (→ Group), cooldowns/defensives (→ Rota), buffs (→ Auras) |
 | **PaTiRota** | Own skill priority: slots in your order, cooldowns, next ready skill highlighted, fixed cast buttons | any automatic casting, rotation rules (never) |
 | **PaTiGroup** | Party awareness: who tanks, who heals, role counts, the tank's target and its raid marker (display only) | markers, ready check, pull, leader actions (→ Lead), threat (→ Tank), heal details (→ Heal) |
 | **PaTiLead** | Lead/coordinate: raid markers, Clear/Reset All, ready check, pull timer, leader/assist, local note, marker key bindings (the former PaTiGroup) | party awareness (→ Group) |
@@ -80,7 +80,7 @@ configuration that is hard to rebuild is kept on purpose; where a list is reset,
 |---|---|---|
 | PaTiHeal | dispels, HoT choices/position/timers/charges, scale, opacity, lock, language | click bindings + ranks, collapsed, position |
 | PaTiAuras | all settings incl. category layout; the Watch list (everything watched again) | seen auras, position |
-| PaTiTank, PaTiQuest, PaTiDungeon, PaTiGroup | all settings | position |
+| PaTiAggro, PaTiQuest, PaTiDungeon, PaTiGroup | all settings | position |
 | PaTiRota | all settings | the skill slots, position |
 | PaTiLead | all settings incl. marker order | the local note, position |
 | PaTiSocial | all settings and the button actions (six default buttons, PT-SOCIAL-053) | position |
@@ -182,15 +182,19 @@ configuration that is hard to rebuild is kept on purpose; where a list is reset,
 - Events: SPELL_UPDATE_COOLDOWN, SPELL_UPDATE_USABLE, SPELLS_CHANGED, PLAYER_REGEN_*; 0.1 s text ticker only while a
   shown skill cools down. `PaTiRotaDB` schema 1. Slash `/prota`, `/patirota`.
 
-### PaTiTank 0.1.0 (+ [Unreleased]) — target, threat, who pulls next, aggro control
+### PaTiAggro 0.1.0 (+ [Unreleased]) — formerly PaTiTank; threat and aggro by role
 - Files: `Shared/` → `Locales/` → `Logic.lua` (settings, `ThreatValue`; pure, tested) → `Aggro.lua` (states CONTROLLED /
   DANGER / LOST / UNKNOWN, summary, holder label; pure, tested) → `Threat.lua` (adapter: the only threat/nameplate API
-  calls; tested with mocks) → `Plates.lua` (nameplate markers; tested with mocks) → `PaTiTank.lua` (window, aggro
+  calls; tested with mocks) → `Plates.lua` (nameplate markers; tested with mocks) → `PaTiAggro.lua` (window, aggro
   block, scan scheduler, settings, commands, events).
-- `PaTiTankDB`, schema 1: x, y (+ point/relativePoint), locked, collapsed, scale, language (0.1.0 values kept).
-- Events: UNIT_HEALTH/UNIT_MAXHEALTH (only `player` repaints), PLAYER_TARGET_CHANGED, UNIT_THREAT_LIST_UPDATE,
+- `PaTiAggroDB`, schema 1: x, y (+ point/relativePoint), locked, collapsed, scale, language, markPlates, opacity, theme,
+  myRole (AUTO | TANK | HEALER | DAMAGER). The old `PaTiTankDB` belongs to the old folder and is not read (rename
+  2026-10-14, documented reset of window settings).
+- View: `Logic.EffectiveRole(DB.myRole, group role)` — tank, or healer/damage (`Aggro.SelfThreat`/`SelfWorst`: own
+  status + scaled percent per enemy, worst wins, unreadable never "calm"; `Aggro.OnYou` rows = enemies with your status 2/3).
+- Events: PLAYER_TARGET_CHANGED, UNIT_THREAT_LIST_UPDATE,
   UNIT_THREAT_SITUATION_UPDATE, PLAYER_ENTERING_WORLD; pcall-registered NAME_PLATE_UNIT_ADDED/REMOVED, UNIT_TARGET
-  (party1-4 only), GROUP_ROSTER_UPDATE, PLAYER_REGEN_DISABLED/ENABLED. APIs `UnitDetailedThreatSituation`,
+  (party1-4 only), GROUP_ROSTER_UPDATE, PLAYER_ROLES_ASSIGNED, PLAYER_REGEN_DISABLED/ENABLED. APIs `UnitDetailedThreatSituation`,
   `UnitThreatSituation`, `UnitCanAttack`, `UnitIsDead`, `UnitGUID`. No secure frames.
 - Aggro: enemies = target + tracked nameplate tokens + party1-4 targets, de-duplicated by GUID. Per enemy
   `UnitThreatSituation("player", enemy)`: 3 CONTROLLED, 2 DANGER; otherwise the group (party1-4, pet) is searched for
@@ -202,7 +206,7 @@ configuration that is hard to rebuild is kept on purpose; where a list is reset,
   list in the same call. NAME_PLATE_UNIT_ADDED/REMOVED clears that plate's number and the panel row's number
   synchronously (`forgetPlate`); forbidden plates are skipped.
   Clickable panel rows are TECHNICALLY BLOCKED (F17, WOW_API_COMPAT): the player clicks the marked nameplate.
-- Settings add `markPlates` (default on). Slash `/pt`, `/patitank`.
+- Settings add `markPlates` (default on) and `myRole`. Slash `/paggro`, `/patiaggro`, `/pt` (transition alias).
 
 ### PaTiQuest 0.1.0 (+ [Unreleased]) — selected quest + objectives
 - Files: `Shared/` → `Locales/` → `Logic.lua` (settings, `QuestLines`; pure, tested) → `PaTiQuest.lua`
@@ -225,7 +229,7 @@ configuration that is hard to rebuild is kept on purpose; where a list is reset,
   producer's complete current list), `Upsert(alert)`, `Remove(source, id)`, `ClearSource(source)`; all pcall-guarded.
   Key = source + id. Alert = { id, priority CRITICAL|WARNING|INFO (unknown → INFO), kind, text | name, detail?, number? };
   plain strings checked for secrecy first, `name` may be secret (SetText only). Order: priority, then first seen.
-- Producers (V1): PaTiTank (`Aggro.Alerts`: LOST → CRITICAL AGGRO_LOST, DANGER → WARNING AGGRO_DANGER, same number as
+- Producers (V1): PaTiAggro (`Aggro.Alerts`: LOST → CRITICAL AGGRO_LOST, DANGER → WARNING AGGRO_DANGER, same number as
   panel + nameplate), PaTiAuras (`Auras.Alerts`: personal buffs + weapon imbues MISSING/EXPIRING → WARNING; UNKNOWN
   never), PaTiHeal (`Logic.DispelAlerts`: dispellable debuff → INFO DISPELLABLE). Each sends after its normal refresh,
   so load order does not matter; while PaTiAlerts exists, a collapsed Tank/Heal keeps scanning.

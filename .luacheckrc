@@ -41,7 +41,8 @@ globals = { "SlashCmdList" }
 -- Globals an addon may create: its SavedVariables, SLASH_* names and binding functions — nothing else.
 -- PaTiAlertsAPI: the one cross-addon global (AGENTS.md §3) — created by PaTiAlerts, only read (optionally) by producers.
 files["**/PaTiHeal/**/*.lua"] = { globals = { "PaTiHealDB", "SLASH_PATIHEAL1", "SLASH_PATIHEAL2" }, read_globals = { "PaTiAlertsAPI" } }
-files["**/PaTiTank/**/*.lua"] = { globals = { "PaTiTankDB", "SLASH_PATITANK1", "SLASH_PATITANK2" }, read_globals = { "PaTiAlertsAPI" } }
+files["**/PaTiAggro/**/*.lua"] = { globals = { "PaTiAggroDB", "SLASH_PATIAGGRO1", "SLASH_PATIAGGRO2", "SLASH_PATIAGGRO3" },
+    read_globals = { "PaTiAlertsAPI" } }
 files["**/PaTiQuest/**/*.lua"] = { globals = { "PaTiQuestDB", "SLASH_PATIQUEST1", "SLASH_PATIQUEST2" } }
 files["**/PaTiDungeon/**/*.lua"] = { globals = { "PaTiDungeonDB", "SLASH_PATIDUNGEON1", "SLASH_PATIDUNGEON2" } }
 files["**/PaTiAuras/**/*.lua"] = { globals = { "PaTiAurasDB", "SLASH_PATIAURAS1", "SLASH_PATIAURAS2" }, read_globals = { "PaTiAlertsAPI" } }

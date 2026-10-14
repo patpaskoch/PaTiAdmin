@@ -21,7 +21,7 @@ it is — never into two, never into PaTiAdmin (not a player addon).
 ├── PaTiShared/    design system + UI components, embedded into addons (not a WoW addon)
 └── PaTiAddons/
     ├── PaTiHeal/     healing: party + heal-target frames, click casting (secure), own HoTs/shields, dispels  /ph
-    ├── PaTiTank/     target threat, who pulls next, aggro monitor         /pt
+    ├── PaTiAggro/    aggro for every role: threat, who pulls next, lost enemies, enemies on you /paggro
     ├── PaTiRota/     own skill priority, cooldowns, fixed cast buttons (secure) /prota /patirota
     ├── PaTiGroup/    party awareness: tank, healer, roles, tank target (display) /pg /ptg /patigroup
     ├── PaTiLead/     lead: raid markers (secure), ready check, pull timer /plead /patilead
@@ -49,7 +49,7 @@ Architecture and data flow: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 - Small duplication between addons is acceptable when it keeps them independent.
   Shared pattern ≠ shared runtime dependency.
 - Owner-approved exception (2026-09-29): **`PaTiAlertsAPI`**, the versioned global of PaTiAlerts, may be *read* by
-  producers (PaTiTank, PaTiAuras, PaTiHeal) — only as `local api = _G.PaTiAlertsAPI; if api and api.version == 1 …`,
+  producers (PaTiAggro, formerly PaTiTank; PaTiAuras, PaTiHeal) — only as `local api = _G.PaTiAlertsAPI; if api and api.version == 1 …`,
   calls wrapped in `pcall`, alerts re-sent on every normal refresh (no load-order assumptions). Without PaTiAlerts
   nothing changes; PaTiAlerts never reads the producers.
 - Owner-approved (2026-09-30): **`PaTiSuiteWindows`** — `[addonName] = main window frame`, written by every embedded

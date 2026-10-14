@@ -9,7 +9,7 @@ grüne CI heißt nicht, dass es im Spiel funktioniert. Release-Regeln, Beta-Krit
 ## Aufteilung der Suite (2026-10-02)
 
 Jedes Addon hat genau eine Aufgabe ([`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md#addon-responsibilities)):
-PaTiHeal = heilen · PaTiAuras = Buffs/Auren · PaTiTank = Tank/Aggro · PaTiRota = Rotation · PaTiGroup = Gruppe
+PaTiHeal = heilen · PaTiAuras = Buffs/Auren · PaTiAggro (früher PaTiTank) = Aggro für alle Rollen · PaTiRota = Rotation · PaTiGroup = Gruppe
 beobachten · PaTiLead = Gruppe führen · PaTiQuest = Quests · PaTiDungeon = Dungeon-Kontext · PaTiSocial =
 Kommunikation · PaTiAlerts = Probleme · PaTiSuite = Steuerfenster. PaTiShared und PaTiAdmin sind keine Spieler-Addons.
 
@@ -19,7 +19,7 @@ Kommunikation · PaTiAlerts = Probleme · PaTiSuite = Steuerfenster. PaTiShared 
 |---|---|---|---|---|---|---|---|---|
 | PaTiHeal | 0.6.0 + [Unreleased] | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ teilweise (Klickzauber, Migration, Sprache) | Nein |
 | PaTiAuras | 0.1.0 | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ teilweise; Waffenbuff-Erkennung, Abwählen, PaTiAlerts bestätigt | Nein |
-| PaTiTank | 0.1.0 + [Unreleased] | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
+| PaTiAggro | 0.1.0 + [Unreleased] | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
 | PaTiRota | 0.1.0 (neu) | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
 | PaTiGroup | 0.1.0 (neu, Party Awareness) | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
 | PaTiLead | 0.4.0 + [Unreleased] (früher PaTiGroup) | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
@@ -73,9 +73,11 @@ im Spiel bestätigt 2026-10-02 für **8 von 11** (Heal, Auras, Tank, Quest, Dung
   Felsbeißer-Erkennung und Abwählen, PaTiAlerts-Warnung, Icon
 - Offen im Spiel: Layout, Click-to-Buff, Kampf, Schamanen-IDs, Aufspüren
 
-## PaTiTank
-- Funktion: eigene Gesundheit, Ziel, Bedrohung; Aggro-Kontrolle mit nummerierten Problem-Gegnern (Panel und Namensschild),
-  PaTiAlerts-Ausgabe. Anklickbare Panel-Zeilen: technisch blockiert (F17)
+## PaTiAggro (früher PaTiTank)
+- Umbenannt 2026-10-14 (Audit Variante C). Funktion: Rolle (Auto/Tank/Heiler/Schaden). Tank: Ziel, Bedrohung (Farbe nach
+  Status), „Nächster“, Aggro-Kontrolle mit nummerierten Problem-Gegnern (Panel und Namensschild),
+  PaTiAlerts-Ausgabe. Heiler/Schaden: eigene höchste Bedrohung (70/90 %), Gegner auf dir. Anklickbare Panel-Zeilen:
+  technisch blockiert (F17)
 - Tests: 34 Unit-Tests · Im Spiel bestätigt: Icon · Offen: alles Übrige
 
 ## PaTiRota (TOC 0.1.0, neu 2026-10-02)
@@ -102,7 +104,7 @@ im Spiel bestätigt 2026-10-02 für **8 von 11** (Heal, Auras, Tank, Quest, Dung
 - Tests: 7 bzw. 8 Unit-Tests · Im Spiel bestätigt: Icon · Offen: alles Übrige
 
 ## PaTiAlerts
-- Funktion: offene Probleme aus PaTiTank (Aggro), PaTiAuras (Buffs, Waffenbuffs, Gruppenbuffs), PaTiHeal (bannbare
+- Funktion: offene Probleme aus PaTiAggro (Aggro), PaTiAuras (Buffs, Waffenbuffs, Gruppenbuffs), PaTiHeal (bannbare
   Debuffs; der Heal-Target-Rahmen meldet nichts); optionaler Empfänger
 - Tests: 18 Unit-Tests · Im Spiel bestätigt: `/pal test`, Icon · Offen: echte Alerts der anderen Addons
 

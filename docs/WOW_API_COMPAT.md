@@ -40,8 +40,8 @@ explicit test recorded) · **assumed** (not yet used/tested).
 | Dispel spells cast via the `spell` click attribute on the clicked unit (click dispel) | assumed (PaTiHeal) | same mechanism as the verified click heals |
 | Key binding menu path "ESC > Key Bindings (Tastaturbelegung) > PaTiLead" (also PaTiRota) | **unknown** (PaTiLead/PaTiRota settings notes) | settings also name "ESC > Options > Key Bindings"; owner: report the real path |
 | `## Notes-deDE` in the TOC shown on a German client | assumed (all addons) | fallback is the English `## Notes` |
-| `UnitDetailedThreatSituation` | in use (PaTiTank) | 3rd return = threat percent; secret values only reach the bar. Also read for party1-4/pet on your target ("Next" line): isTanking + scaled percent (100 = pulls) — **assumed** for party units in Forever; secret/error → "unclear" |
-| `UNIT_MAXHEALTH` event | assumed (PaTiTank) | added to keep the health bar maximum current |
+| `UnitDetailedThreatSituation` | in use (PaTiAggro) | 3rd return = threat percent; secret values only reach the bar. Also read for party1-4/pet on your target ("Next" line): isTanking + scaled percent (100 = pulls) — **assumed** for party units in Forever; secret/error → "unclear" |
+| `UNIT_MAXHEALTH` event | no longer used (PaTiAggro has no health bar since 2026-10-10) | |
 | `C_Item.GetWeaponEnchantInfo()` **without a slot**, read like the classic tuple | **observed wrong 2026-09-30** (owner: Main Hand "Unknown" with and without Rockbiter) | the function exists in this client but does not answer that way |
 | `GetWeaponEnchantInfo()` classic tuple (hasMainHand, ms left, charges, enchantID, then the off hand) | **observed wrong 2026-10-02** (owner `/pa auras`, Rockbiter on): `hasMainHand=false`, the other main-hand values nil | unreliable in Forever: PaTiAuras uses it only where the modern API is missing or unreadable, and then only to confirm an imbue |
 | `C_Item.GetWeaponEnchantInfo(Enum.WeaponSlot.MainHand)` | **observed 2026-10-02** (owner, Rockbiter on): several entries, one with `hasEnchant=true`, `timeLeft=3524825` (ms ≈ 58.7 min), `enchantType=3`, `enchantID=29`, `enchantIconID=136086` | the source PaTiAuras asks first. `hasEnchant=true` + positive `timeLeft` is the most reliable "temporary imbue" signal. `enchantID=29` is **not** a universal Rockbiter ID — see the mapping row below |
@@ -60,11 +60,11 @@ explicit test recorded) · **assumed** (not yet used/tested).
 | `UNIT_INVENTORY_CHANGED` / `PLAYER_EQUIPMENT_CHANGED` fire when an imbue is applied, expires or the weapon changes | assumed (PaTiAuras) | 2 s change check as fallback |
 | `C_PaperDollInfo.GetTemporaryEnchantmentInfo` | **unknown**, not used | only reported by `/pa debug` |
 | `GetInventoryItemID` + `GetItemInfoInstant` classID 2 = weapon (shield/held item → no imbue) | assumed (PaTiAuras) | unreadable → UNKNOWN instead of "missing" |
-| `UnitThreatSituation(unit, enemy)` returns 0-3/nil per enemy | assumed (PaTiTank aggro) | pcall + secret check; missing/secret → UNKNOWN; `/pt debug` shows presence |
-| Nameplate unit tokens `nameplateN` + `NAME_PLATE_UNIT_ADDED/REMOVED` | assumed (PaTiTank aggro) | pcall-registered; without them only target and party targets count |
-| `partyNtarget` tokens and `UNIT_TARGET` | assumed (PaTiTank aggro) | enemies nobody targets and without a nameplate stay invisible |
-| `UnitCanAttack`, `UnitIsDead`, `UnitGUID` | assumed (PaTiTank aggro) | GUID used only for de-duplication, secret → skipped; missing APIs → no enemies |
-| Which of these threat/unit values are secret in combat | **unknown** | PaTiTank shows "unclear" rows then |
+| `UnitThreatSituation(unit, enemy)` returns 0-3/nil per enemy | assumed (PaTiAggro aggro) | pcall + secret check; missing/secret → UNKNOWN; `/paggro debug` shows presence |
+| Nameplate unit tokens `nameplateN` + `NAME_PLATE_UNIT_ADDED/REMOVED` | assumed (PaTiAggro aggro) | pcall-registered; without them only target and party targets count |
+| `partyNtarget` tokens and `UNIT_TARGET` | assumed (PaTiAggro aggro) | enemies nobody targets and without a nameplate stay invisible |
+| `UnitCanAttack`, `UnitIsDead`, `UnitGUID` | assumed (PaTiAggro aggro) | GUID used only for de-duplication, secret → skipped; missing APIs → no enemies |
+| Which of these threat/unit values are secret in combat | **unknown** | PaTiAggro shows "unclear" rows then |
 | Yes/no API flags (`IsInInstance`, `UnitAffectingCombat`, `UnitIsGroupLeader` …) return true/false or 1/nil | **unknown which** | PaTiDungeon/PaTiLead/PaTiGroup accept both |
 | `C_QuestLog.GetSelectedQuest`, `GetTitleForQuestID`, `GetQuestObjectives` | in use (PaTiQuest) | all `pcall`-guarded |
 | `GetInstanceInfo`, `IsInInstance`, `GetNumGroupMembers`, `UnitIsGroupLeader` | in use (PaTiDungeon) | |
@@ -77,7 +77,7 @@ explicit test recorded) · **assumed** (not yet used/tested).
 | XML `<Script file>` inside an addon passes `(addonName, ns)` | **verified 2026-09-28** (PaTiHeal with embedded PaTiShared loaded without Lua errors) | |
 | CJK glyphs via Blizzard font objects on a deDE client | assumed | manual font test |
 
-## Clickable targeting from the PaTiTank aggro panel (F17) — investigation 2026-09-29
+## Clickable targeting from the PaTiAggro aggro panel (F17) — investigation 2026-09-29
 
 Owner wish: click a "lost enemy" row → that enemy becomes the target. Investigated from the secure-system rules
 (below); **nothing of this was tried in the Forever client** — each point is ASSUMPTION / NOT YET VERIFIED there.
@@ -92,16 +92,16 @@ Owner wish: click a "lost enemy" row → that enemy becomes the target. Investig
 | Variant A — one fixed secure button per nameplate token | Possible, but its position is fixed at combat start while the aggro rows are sorted and change in combat → a row would sit over the button of a different token → **wrong enemy**. Showing all enemy plates as fixed rows avoids that, but is the "six bars" threat list the owner rejected, and still needs secure layout via state drivers (≈0.2 s lag). Rejected. |
 | Variant B — stable tokens `target`, `party1target`…`party4target` | The same mapping problem: which row shows which token is decided in combat. Rejected. |
 | Variant C — other official secure way | None found: every secure target path needs the unit decided out of combat or by the player (click on the unit itself). |
-| `IsForbidden()` on nameplates | Blizzard can mark plates forbidden (e.g. friendly plates in instances on Retail). Addon code must not touch them; PaTiTank skips them. |
+| `IsForbidden()` on nameplates | Blizzard can mark plates forbidden (e.g. friendly plates in instances on Retail). Addon code must not touch them; PaTiAggro skips them. |
 
 **Result: TECHNICALLY BLOCKED** for "click a row of the compact, sorted aggro list in combat". Implemented instead
-(the safe fallback): the problem row's number above the nameplate of that enemy, coloured by state (`PaTiTank/Plates.lua`, our
+(the safe fallback): the problem row's number above the nameplate of that enemy, coloured by state (`PaTiAggro/Plates.lua`, our
 own child frame of the plate). The player clicks that nameplate; Blizzard's own click targets exactly that enemy.
 
 | API / behaviour | Status | Notes |
 |---|---|---|
-| `C_NamePlate.GetNamePlateForUnit(unit)` returns the plate frame | assumed (PaTiTank markers) | pcall-guarded; missing API → no markers |
-| A child frame of a nameplate moves and hides with it and does not taint | assumed (PaTiTank markers) | taint log test required |
+| `C_NamePlate.GetNamePlateForUnit(unit)` returns the plate frame | assumed (PaTiAggro markers) | pcall-guarded; missing API → no markers |
+| A child frame of a nameplate moves and hides with it and does not taint | assumed (PaTiAggro markers) | taint log test required |
 
 ## Window opacity, snapping, PaTiSuite (2026-09-30)
 

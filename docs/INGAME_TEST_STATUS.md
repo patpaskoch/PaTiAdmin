@@ -22,4 +22,4 @@ Verified = vom Owner im echten Client bestätigt (`[x]`). Failed = im Client feh
 | [PaTiRota](https://github.com/patpaskoch/PaTiRota/blob/main/INGAME_TESTING.md) | 15 | 2 | 1 | 29 | 46 |
 | [PaTiSocial](https://github.com/patpaskoch/PaTiSocial/blob/main/INGAME_TESTING.md) | 6 | 0 | 0 | 31 | 37 |
 | [PaTiSuite](https://github.com/patpaskoch/PaTiSuite/blob/main/INGAME_TESTING.md) | 7 | 0 | 0 | 85 | 92 |
-| [PaTiTank](https://github.com/patpaskoch/PaTiTank/blob/main/INGAME_TESTING.md) | 1 | 0 | 0 | 58 | 59 |
+| [PaTiAggro](https://github.com/patpaskoch/PaTiAggro/blob/main/INGAME_TESTING.md) | 1 | 0 | 0 | 58 | 59 |
