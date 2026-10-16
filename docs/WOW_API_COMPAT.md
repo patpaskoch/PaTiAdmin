@@ -165,6 +165,9 @@ in-game test that confirms it.
 - `SendChatMessage` (PaTiSocial buttons, PaTiHeal Mana button): only from a button click (hardware event; SAY needs one
   in modern clients), wrapped in `pcall`. Unconfirmed in this client: a party message from a click during combat, and
   whether `UnitPower("player", 0)` is readable (not secret) in combat — PT-HEAL-158 checks both.
+- Secure child button with `useparent-unit = true` (PaTiHeal click dispel on the debuff icons): takes the unit of its
+  secure parent row at click time, so it follows the row order. Standard SecureTemplates behaviour; unconfirmed in
+  this client (PT-HEAL-163).
 
 ## How to verify something
 
