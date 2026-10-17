@@ -114,8 +114,7 @@ Split a file when it mixes responsibilities, not before. PaTiShared decides *how
   switches its spell, never a cast without the click, never chains.
   Owner-approved (2026-10-17): PaTiHeal sets the plain left click of a *dead* member's frame to the class resurrection
   (out of combat only, when the dead state changes and after combat). Still one click = one cast on that member.
-  Owner-approved (2026-10-14, extended 2026-10-17): PaTiGroup's tank-target line is one secure button — left click
-  `/target <tank>target` + `/startattack` (the assist macro), right click only target. No other target or attack.
+  Owner-approved (2026-10-14, extended 2026-10-17): PaTiGroup's tank-target line is one secure button — right click  `/target <tank>target` + `/startattack` (the assist macro), left click only target. No other target or attack.
 - Never work around Blizzard protection (taint tricks, hidden click forwarding, OnUpdate spamming protected calls).
 - Keybindings and macros are the player's: never bind keys, call SaveBindings or create/edit macros automatically.
   Offer bindings through `Bindings.xml` (PaTiLead is the pattern).
