@@ -23,7 +23,7 @@ it is — never into two, never into PaTiAdmin (not a player addon).
     ├── PaTiHeal/     healing: party + heal-target frames, click casting (secure), own HoTs/shields, dispels  /ph
     ├── PaTiAggro/    aggro for every role: threat, who pulls next, lost enemies, enemies on you /paggro
     ├── PaTiRota/     own skill priority, cooldowns, fixed cast buttons (secure) /prota /patirota
-    ├── PaTiGroup/    party awareness: tank, healer, roles, tank target (click: target it) /pg /ptg /patigroup
+    ├── PaTiGroup/    party awareness: tank, healer, tank target (click: target it)       /pg /ptg /patigroup
     ├── PaTiLead/     lead: raid markers (secure), ready check, pull timer /plead /patilead
     ├── PaTiQuest/    selected quest + objectives                           /phq
     ├── PaTiDungeon/  instance name and type, hand-drawn dungeon map        /pd

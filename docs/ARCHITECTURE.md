@@ -161,9 +161,10 @@ configuration that is hard to rebuild is kept on purpose; where a list is reset,
 - Icon: crown with raid markers (owner-provided 2026-10-02). Slash `/plead`, `/patilead`.
 
 ### PaTiGroup 0.1.0 — party awareness (new 2026-10-02)
-- Display only, no secure frames (updates in combat): Tank (you first if you tank; "+n"), Healer (dead/offline),
-  Tank target (`player` → `target`, else `<unit>target`) with its raid marker or "no target", role counts. Party
-  and raid (`raidN`), solo message. Roles only from `UnitGroupRolesAssigned`, never guessed.
+- Display only (one secure click button for the tank target): Tank and Healer in one line (dead/offline, "+n"),
+  Tank target (`player` → `target`, else `<unit>target`) with portrait and raid marker or "no target". Party
+  and raid (`raidN`), solo message. Roles only from `UnitGroupRolesAssigned`, never guessed. Roles line removed
+  (owner 2026-10-17).
 - Files: `Shared/` → `Locales/` → `Logic.lua` (settings, migration, `Member`, `Summary`, `TargetOf`; pure, tested) →
   `PaTiGroup.lua` (adapter `readMembers`, window, settings, commands, events).
 - `PaTiGroupDB`, schema 2 (schema 1 = the former PaTiGroup's table: never read, fresh start).
