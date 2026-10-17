@@ -25,7 +25,7 @@ explicit test recorded) · **assumed** (not yet used/tested).
 | `SetPortraitTexture(texture, "<unit>target")` | assumed (PaTiGroup tank target portrait, 2026-10-17) | Blizzard unit frames use it in every client; takes the token, reads no unit data. PT-GROUP-243 |
 | Resurrection IDs 2006 (Priest) and 2008 (Shaman), cast by name = highest rank | assumed (PaTiHeal click resurrect, 2026-10-17) | `/ph auras`-style check: PT-HEAL-166 |
 | SecureActionButton `type=macro`, `macrotext` `/target party1target` + `/startattack` | assumed (PaTiGroup tank-target right click, 2026-10-17) | classic assist macro; set out of combat, token read at click time. PT-GROUP-245 |
-| `DoEmote("OOM")` (voice emote /oom) from a button click | assumed (PaTiHeal Mana button, 2026-10-17) | vanilla voice emote; unknown token → nothing (pcall). PT-HEAL-170 |
+| `DoEmote("OOM")` (voice emote /oom) from a button click | **verified 2026-10-17** (owner: "/oom works", PaTiHeal Mana button) | out of combat in a group; in combat untested. PT-HEAL-170 |
 | `DoReadyCheck`, `C_PartyInfo.DoCountdown` | in use (PaTiLead) | leader/assistant only, `pcall` |
 | `C_SpellBook.IsSpellKnown`, `C_Spell.GetSpellInfo` | in use (PaTiHeal) | `pcall`/existence-guarded; fallback `GetSpellInfo` |
 | Spellbook scan: `C_SpellBook.GetSpellBookItemInfo` (modern) or `GetSpellBookItemName/Info` (classic) | assumed (PaTiHeal ranks) | pcall-guarded; no ranks shown if neither works |
