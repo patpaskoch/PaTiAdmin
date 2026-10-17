@@ -20,6 +20,7 @@ explicit test recorded) · **assumed** (not yet used/tested).
 | `RAID_TARGET_1..8` global marker names | assumed (PaTiLead) | fallback: own L.MARKER_n |
 | `UnitPosition("player")` outside instances | **verified 2026-10-17** (owner /dump, Dun Morogh): y -5621.8, x -359.7, z **0**, instance 0 | height is always 0. **Inside a dungeon blocked, verified 2026-10-17** (Die Halle der Thanen): only the 4th value (instance 3065), no x/y → no walked-path map in PaTiDungeon |
 | `C_Map.GetBestMapForUnit("player")` | **verified 2026-10-17** outside: 1426 (Dun Morogh) | C_Map exists in this client; **inside a dungeon empty result** (verified 2026-10-17) |
+| Position inside dungeons via other APIs | **verified blocked 2026-10-17** (owner, Die Halle der Thanen) | `GetSubZoneText()` "" at the tested spot, `GetMinimapZoneText()` = dungeon name; `Minimap:GetPingPosition()` after a self-ping does not change while walking; `GetPlayerFacing` restricted in instances (wiki). No walked-path map possible |
 | `DoReadyCheck`, `C_PartyInfo.DoCountdown` | in use (PaTiLead) | leader/assistant only, `pcall` |
 | `C_SpellBook.IsSpellKnown`, `C_Spell.GetSpellInfo` | in use (PaTiHeal) | `pcall`/existence-guarded; fallback `GetSpellInfo` |
 | Spellbook scan: `C_SpellBook.GetSpellBookItemInfo` (modern) or `GetSpellBookItemName/Info` (classic) | assumed (PaTiHeal ranks) | pcall-guarded; no ranks shown if neither works |
