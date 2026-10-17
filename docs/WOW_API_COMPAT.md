@@ -18,6 +18,8 @@ explicit test recorded) · **assumed** (not yet used/tested).
 | `type=macro` with `macrotext` running `/tm` lines | assumed (PaTiLead Reset All, replaces the character macro) | test Reset All |
 | Bindings.xml `CLICK <Button>:LeftButton` + `BINDING_NAME_CLICK ...` names | assumed (PaTiLead, PaTiRota) | check the key binding menu |
 | `RAID_TARGET_1..8` global marker names | assumed (PaTiLead) | fallback: own L.MARKER_n |
+| `UnitPosition("player")` outside instances | **verified 2026-10-17** (owner /dump, Dun Morogh): y -5621.8, x -359.7, z **0**, instance 0 | height is always 0 here, so it cannot separate dungeon floors; inside a dungeon still untested (PaTiDungeon map idea) |
+| `C_Map.GetBestMapForUnit("player")` | **verified 2026-10-17** outside: 1426 (Dun Morogh) | C_Map exists in this client; inside a dungeon untested |
 | `DoReadyCheck`, `C_PartyInfo.DoCountdown` | in use (PaTiLead) | leader/assistant only, `pcall` |
 | `C_SpellBook.IsSpellKnown`, `C_Spell.GetSpellInfo` | in use (PaTiHeal) | `pcall`/existence-guarded; fallback `GetSpellInfo` |
 | Spellbook scan: `C_SpellBook.GetSpellBookItemInfo` (modern) or `GetSpellBookItemName/Info` (classic) | assumed (PaTiHeal ranks) | pcall-guarded; no ranks shown if neither works |
