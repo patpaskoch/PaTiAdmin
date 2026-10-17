@@ -26,7 +26,7 @@ it is — never into two, never into PaTiAdmin (not a player addon).
     ├── PaTiGroup/    party awareness: tank, healer, roles, tank target (click: target it) /pg /ptg /patigroup
     ├── PaTiLead/     lead: raid markers (secure), ready check, pull timer /plead /patilead
     ├── PaTiQuest/    selected quest + objectives                           /phq
-    ├── PaTiDungeon/  instance, group and combat status                     /pd
+    ├── PaTiDungeon/  instance name and type                                /pd
     ├── PaTiAuras/    own buffs, procs, tracking, group buffs, weapon imbues    /pa /patiauras
     ├── PaTiAlerts/   open problems reported by the others (optional receiver) /pal /palerts
     ├── PaTiSocial/   "Party Social": quick emote and message buttons         /psocial /patisocial

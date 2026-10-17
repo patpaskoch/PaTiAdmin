@@ -25,7 +25,7 @@ Addons complement each other but never depend on each other (AGENTS.md §3).
 | **PaTiGroup** | Party awareness: who tanks, who heals, role counts, the tank's target and its raid marker — display, plus one click on the tank target to target it (2026-10-14) | markers, ready check, pull, leader actions (→ Lead), threat (→ Aggro), heal details (→ Heal) |
 | **PaTiLead** | Lead/coordinate: raid markers, Clear/Reset All, ready check, pull timer, leader/assist, local note, marker key bindings (the former PaTiGroup) | party awareness (→ Group) |
 | **PaTiQuest** | Quest companion: the selected quest and its objectives | |
-| **PaTiDungeon** | Dungeon context: instance, group and combat status (later: dungeon quests, bosses, role notes, loot wishlist) | |
+| **PaTiDungeon** | Dungeon context: instance name and type (later: dungeon map of the walked path, bosses, dungeon quests, role notes, loot wishlist). No group or combat lines (owner 2026-10-17: PaTiGroup, WoW) | |
 | **PaTiSocial** | Quick communication: emote and short message buttons | chat history, friends/guild/BNet, voice (never) |
 | **PaTiAlerts** | One window for currently relevant problems (optional receiver); rows whose producer sends a `cast` are clickable out of combat (PaTiAuras buffs, 2026-10-14) | producing alerts itself |
 | **PaTiSuite** | Optional control panel: show/hide/overview of the windows | gameplay logic (never) |
@@ -216,10 +216,10 @@ configuration that is hard to rebuild is kept on purpose; where a list is reset,
 - `PaTiQuestDB`, schema 1 (as Tank). Events: PLAYER_LOGIN, PLAYER_ENTERING_WORLD, QUEST_LOG_UPDATE. No secure frames.
 - No addon communication (duo sync would need `docs/PROTOCOL.md` first). Slash `/phq` (kept), `/patiquest`.
 
-### PaTiDungeon 0.1.0 (+ [Unreleased]) — instance, group, combat status
+### PaTiDungeon 0.1.0 (+ [Unreleased]) — instance status
 - Files: `Shared/` → `Locales/` → `Logic.lua` (settings, `Status` normalisation incl. 1/nil flags; pure, tested) → `PaTiDungeon.lua`.
-- `PaTiDungeonDB`, schema 1 (as Tank). Events: PLAYER_LOGIN, PLAYER_ENTERING_WORLD, GROUP_ROSTER_UPDATE,
-  ZONE_CHANGED_NEW_AREA, PLAYER_REGEN_DISABLED/ENABLED (rare → full repaint). API `GetInstanceInfo`, `IsInInstance`.
+- `PaTiDungeonDB`, schema 1 (as Tank). Events: PLAYER_LOGIN, PLAYER_ENTERING_WORLD,
+  ZONE_CHANGED_NEW_AREA (rare → full repaint). API `GetInstanceInfo`, `IsInInstance`.
 - Slash `/pd`, `/patidungeon`.
 
 ### PaTiAlerts 0.1.0 — open problems reported by the other addons (optional receiver)
