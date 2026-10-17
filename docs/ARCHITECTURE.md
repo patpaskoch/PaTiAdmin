@@ -25,7 +25,7 @@ Addons complement each other but never depend on each other (AGENTS.md §3).
 | **PaTiGroup** | Party awareness: who tanks, who heals, role counts, the tank's target and its raid marker — display, plus one click on the tank target to target it (2026-10-14) | markers, ready check, pull, leader actions (→ Lead), threat (→ Aggro), heal details (→ Heal) |
 | **PaTiLead** | Lead/coordinate: raid markers, Clear/Reset All, ready check, pull timer, leader/assist, local note, marker key bindings (the former PaTiGroup) | party awareness (→ Group) |
 | **PaTiQuest** | Quest companion: the selected quest and its objectives | |
-| **PaTiDungeon** | Dungeon context: instance name and type (later: dungeon map of the walked path, bosses, dungeon quests, role notes, loot wishlist). No group or combat lines (owner 2026-10-17: PaTiGroup, WoW) | |
+| **PaTiDungeon** | Dungeon context: instance name and type (later: bosses, dungeon quests, role notes, loot wishlist; no walked-path map: the client hides the position in dungeons, WOW_API_COMPAT). No group or combat lines (owner 2026-10-17: PaTiGroup, WoW) | |
 | **PaTiSocial** | Quick communication: emote and short message buttons | chat history, friends/guild/BNet, voice (never) |
 | **PaTiAlerts** | One window for currently relevant problems (optional receiver); rows whose producer sends a `cast` are clickable out of combat (PaTiAuras buffs, 2026-10-14) | producing alerts itself |
 | **PaTiSuite** | Optional control panel: show/hide/overview of the windows | gameplay logic (never) |
