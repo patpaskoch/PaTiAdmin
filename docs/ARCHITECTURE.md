@@ -98,7 +98,7 @@ configuration that is hard to rebuild is kept on purpose; where a list is reset,
   (header Mana button: one click = one chat line, SendChatMessage from the click like PaTiSocial) after it.
 - `PaTiHealDB` (per character), schema 2: point, relativePoint, x, y, locked, collapsed, language, showDispels,
   bindings{LEFT..ALT_RIGHT = spellID}, bindingRanks{key = rank}, hots{key = false}, hotPosition RIGHT|BELOW,
-  showHotTimers, showHotCharges, scale, showManaButton, manaWarn (0 = never, default 30) (new keys get defaults, no
+  showHotTimers, showHotCharges, scale, showManaButton, manaWarn (0 = never, default 30), manaLanguage ("en" default | "ui") (new keys get defaults, no
   schema step); `Logic.Migrate` converts 0.6.0.
   Scale: `SetScale` only out of combat, else pending until PLAYER_REGEN_ENABLED (secure rows).
 - HoTs & shields: up to 3 plain icons per row (charges first, else timer; 0.5 s redraw only while a timer shows),
