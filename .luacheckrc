@@ -19,7 +19,7 @@ read_globals = {
     "C_Minimap", "C_TooltipInfo", "C_UnitAuras", "GetNumTrackingTypes", "GetTrackingInfo", "GetTrackingTexture",
     "CreateFrame", "CreateMacro", "DoReadyCheck", "EditMacro",
     "GameTooltip", "geterrorhandler", "GetAddOnMetadata", "GetBindingAction", "GetBuildInfo", "GetCurrentBindingSet", "GetInstanceInfo",
-    "GetLocale", "GetMacroIndexByName", "GetMacroInfo", "GetNumGroupMembers", "GetSpellInfo", "GetSpellTexture",
+    "GetCursorPosition", "GetLocale", "GetMacroIndexByName", "GetMacroInfo", "GetNumGroupMembers", "GetSpellInfo", "GetSpellTexture",
     "InCombatLockdown", "IsAltKeyDown", "IsControlKeyDown", "IsInGroup", "IsInInstance", "IsShiftKeyDown",
     "LOCALIZED_CLASS_NAMES_MALE", "RegisterUnitWatch", "UnregisterUnitWatch",
     "DebuffTypeColor", "Enum", "GetNumSpellTabs", "GetSpellBookItemInfo", "GetSpellBookItemName", "GetSpellTabInfo",
