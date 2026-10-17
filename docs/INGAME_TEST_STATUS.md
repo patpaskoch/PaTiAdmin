@@ -1,6 +1,6 @@
 # PaTiSuite Ingame Test Status
 
-Stand: 2026-10-14. Übersicht über die Ingame-Testdateien der elf Runtime-Addons — die einzelnen Tests und ihre Historie
+Stand: 2026-10-17. Übersicht über die Ingame-Testdateien der elf Runtime-Addons — die einzelnen Tests und ihre Historie
 stehen nur in der jeweiligen `INGAME_TESTING.md` (Source of Truth). Regeln: [`TESTING.md`](TESTING.md#in-game-test-files).
 
 Neu erzeugen: `tools/ingame-status.sh --markdown` (Tabelle unten ersetzen). Einzelne Listen:
@@ -15,7 +15,7 @@ Verified = vom Owner im echten Client bestätigt (`[x]`). Failed = im Client feh
 | [PaTiAggro](https://github.com/patpaskoch/PaTiAggro/blob/main/INGAME_TESTING.md) | 1 | 1 | 1 | 78 | 80 |
 | [PaTiAlerts](https://github.com/patpaskoch/PaTiAlerts/blob/main/INGAME_TESTING.md) | 2 | 0 | 0 | 46 | 48 |
 | [PaTiAuras](https://github.com/patpaskoch/PaTiAuras/blob/main/INGAME_TESTING.md) | 22 | 1 | 1 | 120 | 143 |
-| [PaTiDungeon](https://github.com/patpaskoch/PaTiDungeon/blob/main/INGAME_TESTING.md) | 1 | 0 | 0 | 39 | 40 |
+| [PaTiDungeon](https://github.com/patpaskoch/PaTiDungeon/blob/main/INGAME_TESTING.md) | 1 | 0 | 0 | 35 | 36 |
 | [PaTiGroup](https://github.com/patpaskoch/PaTiGroup/blob/main/INGAME_TESTING.md) | 0 | 0 | 0 | 38 | 38 |
 | [PaTiHeal](https://github.com/patpaskoch/PaTiHeal/blob/main/INGAME_TESTING.md) | 16 | 1 | 1 | 89 | 106 |
 | [PaTiLead](https://github.com/patpaskoch/PaTiLead/blob/main/INGAME_TESTING.md) | 1 | 1 | 1 | 51 | 53 |
