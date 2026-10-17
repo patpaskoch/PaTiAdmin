@@ -112,6 +112,8 @@ Split a file when it mixes responsibilities, not before. PaTiShared decides *how
   Owner-approved (2026-10-02): PaTiRota may *highlight* the highest-priority ready skill of the player's own list (display
   only). Every slot has its own fixed secure button whose spell changes only out of combat; never a button that
   switches its spell, never a cast without the click, never chains.
+  Owner-approved (2026-10-17): PaTiHeal sets the plain left click of a *dead* member's frame to the class resurrection
+  (out of combat only, when the dead state changes and after combat). Still one click = one cast on that member.
 - Never work around Blizzard protection (taint tricks, hidden click forwarding, OnUpdate spamming protected calls).
 - Keybindings and macros are the player's: never bind keys, call SaveBindings or create/edit macros automatically.
   Offer bindings through `Bindings.xml` (PaTiLead is the pattern).
