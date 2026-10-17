@@ -15,7 +15,7 @@ Verified = vom Owner im echten Client bestätigt (`[x]`). Failed = im Client feh
 | [PaTiAggro](https://github.com/patpaskoch/PaTiAggro/blob/main/INGAME_TESTING.md) | 1 | 1 | 1 | 79 | 81 |
 | [PaTiAlerts](https://github.com/patpaskoch/PaTiAlerts/blob/main/INGAME_TESTING.md) | 2 | 0 | 0 | 46 | 48 |
 | [PaTiAuras](https://github.com/patpaskoch/PaTiAuras/blob/main/INGAME_TESTING.md) | 22 | 1 | 1 | 120 | 143 |
-| [PaTiDungeon](https://github.com/patpaskoch/PaTiDungeon/blob/main/INGAME_TESTING.md) | 1 | 0 | 0 | 49 | 50 |
+| [PaTiDungeon](https://github.com/patpaskoch/PaTiDungeon/blob/main/INGAME_TESTING.md) | 2 | 0 | 0 | 48 | 50 |
 | [PaTiGroup](https://github.com/patpaskoch/PaTiGroup/blob/main/INGAME_TESTING.md) | 0 | 0 | 0 | 40 | 40 |
 | [PaTiHeal](https://github.com/patpaskoch/PaTiHeal/blob/main/INGAME_TESTING.md) | 17 | 1 | 1 | 93 | 111 |
 | [PaTiLead](https://github.com/patpaskoch/PaTiLead/blob/main/INGAME_TESTING.md) | 1 | 1 | 1 | 51 | 53 |
