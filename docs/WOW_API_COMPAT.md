@@ -24,6 +24,7 @@ explicit test recorded) · **assumed** (not yet used/tested).
 | `GetCursorPosition` + `GetEffectiveScale` → grid cell; raid target icon textures `Interface\TargetingFrame\UI-RaidTargetingIcon_1..8` | assumed (PaTiDungeon map, 2026-10-17) | standard since vanilla; PT-DUNGEON-076/078/084 check cell accuracy and icons |
 | `SetPortraitTexture(texture, "<unit>target")` | assumed (PaTiGroup tank target portrait, 2026-10-17) | Blizzard unit frames use it in every client; takes the token, reads no unit data. PT-GROUP-243 |
 | Resurrection IDs 2006 (Priest) and 2008 (Shaman), cast by name = highest rank | assumed (PaTiHeal click resurrect, 2026-10-17) | `/ph auras`-style check: PT-HEAL-166 |
+| SecureActionButton `type=macro`, `macrotext` `/target party1target` + `/startattack` | assumed (PaTiGroup tank-target left click, 2026-10-17) | classic assist macro; set out of combat, token read at click time. PT-GROUP-245 |
 | `DoReadyCheck`, `C_PartyInfo.DoCountdown` | in use (PaTiLead) | leader/assistant only, `pcall` |
 | `C_SpellBook.IsSpellKnown`, `C_Spell.GetSpellInfo` | in use (PaTiHeal) | `pcall`/existence-guarded; fallback `GetSpellInfo` |
 | Spellbook scan: `C_SpellBook.GetSpellBookItemInfo` (modern) or `GetSpellBookItemName/Info` (classic) | assumed (PaTiHeal ranks) | pcall-guarded; no ranks shown if neither works |
