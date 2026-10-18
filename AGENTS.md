@@ -23,7 +23,7 @@ it is — never into two, never into PaTiAdmin (not a player addon).
     ├── PaTiHeal/     healing: party + heal-target frames, click casting (secure), own HoTs/shields, dispels  /ph
     ├── PaTiAggro/    aggro for every role: threat, who pulls next, lost enemies, enemies on you /paggro
     ├── PaTiRota/     own skill priority, cooldowns, fixed cast buttons (secure) /prota /patirota
-    ├── PaTiGroup/    party awareness: tank, healer, tank target (click: target + attack) /pg /ptg /patigroup
+    ├── PaTiGroup/    party awareness: tank, healer (click: target), tank target (click: target + attack) /pg /ptg /patigroup
     ├── PaTiLead/     lead: raid markers (secure), ready check, pull timer /plead /patilead
     ├── PaTiQuest/    selected quest + objectives                           /phq
     ├── PaTiDungeon/  instance name and type, hand-drawn dungeon map        /pd
@@ -115,7 +115,8 @@ Split a file when it mixes responsibilities, not before. PaTiShared decides *how
   Owner-approved (2026-10-17): PaTiHeal sets the plain left click of a *dead* member's frame to the class resurrection
   (out of combat only, when the dead state changes and after combat). Still one click = one cast on that member.
   Owner-approved (2026-10-14, extended 2026-10-17): PaTiGroup's tank-target line is one secure button — right click
-  `/target <tank>target` + `/startattack` (the assist macro), left click only target. No other target or attack.
+  `/target <tank>target` + `/startattack` (the assist macro), left click only target.
+  Owner-approved (2026-10-18): two more secure buttons over the tank and the healer name; a click targets that member. No other target or attack.
 - Never work around Blizzard protection (taint tricks, hidden click forwarding, OnUpdate spamming protected calls).
 - Keybindings and macros are the player's: never bind keys, call SaveBindings or create/edit macros automatically.
   Offer bindings through `Bindings.xml` (PaTiLead is the pattern).
