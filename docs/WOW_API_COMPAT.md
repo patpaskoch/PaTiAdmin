@@ -78,6 +78,8 @@ explicit test recorded) · **assumed** (not yet used/tested).
 | Yes/no API flags (`IsInInstance`, `UnitAffectingCombat`, `UnitIsGroupLeader` …) return true/false or 1/nil | **unknown which** | PaTiDungeon/PaTiLead/PaTiGroup accept both |
 | `C_QuestLog.GetSelectedQuest`, `GetTitleForQuestID`, `GetQuestObjectives` | in use (PaTiQuest) | all `pcall`-guarded |
 | `GetInstanceInfo`, `IsInInstance`, `GetNumGroupMembers`, `UnitIsGroupLeader` | in use (PaTiDungeon) | |
+| `COMBAT_LOG_EVENT_UNFILTERED` + `CombatLogGetCurrentEventInfo` (modern argument order), numbers readable in combat | **unknown** (PaTiCompetition probe 2026-10-18) | pcall-registered; secret entries only counted. PT-COMP-010/011 |
+| `ENCOUNTER_START` / `ENCOUNTER_END` (id, name, difficulty, size, success) / `BOSS_KILL` in 5-player dungeons | **unknown** (PaTiCompetition probe 2026-10-18) | pcall-registered; fallback: NPC ID of the end boss from `UNIT_DIED` + "Finish" button. PT-COMP-014 |
 | `UnitGroupRolesAssigned` | in use (PaTiHeal, PaTiLead, PaTiGroup) | may return NONE without LFG roles (PaTiGroup then shows "without role", never guesses); checked for secret values first |
 | `issecretvalue` | assumed present only in clients with restricted values | code treats a missing function as "nothing is secret" |
 | `BackdropTemplate` | in use (all) | |

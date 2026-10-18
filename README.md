@@ -20,6 +20,7 @@ sind optionale Ergänzungen.
 | [PaTiQuest](https://github.com/patpaskoch/PaTiQuest) | **Quests:** ausgewählte Quest und ihre Ziele |
 | [PaTiDungeon](https://github.com/patpaskoch/PaTiDungeon) | **Dungeon-Kontext:** Instanz-, Gruppen- und Kampfstatus |
 | [PaTiSocial](https://github.com/patpaskoch/PaTiSocial) | **Kommunikation:** „Party Social“, Schnellbuttons für Emotes und kurze Nachrichten |
+| [PaTiCompetition](https://github.com/patpaskoch/PaTiCompetition) | **Wettkampf:** Dungeon-Laufzeit bis zum Endboss, Endbildschirm mit Schaden, erlittenem Schaden, Heilung und Score (0.1.0: Testlauf) |
 | [PaTiAlerts](https://github.com/patpaskoch/PaTiAlerts) | **Probleme:** zentrales Fenster für offene Probleme aus PaTiAggro, PaTiAuras, PaTiHeal (optional) |
 
 ## Entwicklungs-Repositories

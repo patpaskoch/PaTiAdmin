@@ -27,6 +27,7 @@ Addons complement each other but never depend on each other (AGENTS.md §3).
 | **PaTiQuest** | Quest companion: the selected quest and its objectives | |
 | **PaTiDungeon** | Dungeon context: instance name and type, hand-drawn map per instance (owner 2026-10-17; no recorded map: the client hides the position in dungeons, WOW_API_COMPAT) (later: bosses, dungeon quests, role notes, loot wishlist). No group or combat lines (owner 2026-10-17: PaTiGroup, WoW) | |
 | **PaTiSocial** | Quick communication: emote and short message buttons | chat history, friends/guild/BNet, voice (never) |
+| **PaTiCompetition** (new 2026-10-18) | Dungeon competition: run clock until the end boss, end screen per member (portrait, damage, damage taken, healing, score); display only. 0.1.0 = probe of the combat log and boss events | damage meter for its own sake, threat (→ Aggro), dungeon map (→ Dungeon) |
 | **PaTiAlerts** | One window for currently relevant problems (optional receiver); rows whose producer sends a `cast` are clickable out of combat (PaTiAuras buffs, 2026-10-14) | producing alerts itself |
 | **PaTiSuite** | Optional control panel: show/hide/overview of the windows | gameplay logic (never) |
 | PaTiShared | Dev source of the shared UI, embedded into every addon (`Shared/`) | runtime dependency (never) |
@@ -84,6 +85,7 @@ configuration that is hard to rebuild is kept on purpose; where a list is reset,
 | PaTiRota | all settings | the skill slots, position |
 | PaTiLead | all settings incl. marker order | the local note, position |
 | PaTiSocial | all settings and the button actions (six default buttons, PT-SOCIAL-053) | position |
+| PaTiCompetition | the test results (`/pcomp reset`) | — |
 | PaTiAlerts | all settings incl. source/priority filters | position |
 | PaTiSuite | all settings and the remembered visibility | position |
 
@@ -250,6 +252,15 @@ configuration that is hard to rebuild is kept on purpose; where a list is reset,
 - `PaTiSocialDB`, schema 1: position, locked, collapsed, scale, language, opacity, layout (horizontal|vertical),
   slotCount (4/6/8/10/12), slots = 12 action keys (`NONE` = empty). No secure frames, no test mode.
 - Slash `/psocial`, `/patisocial`.
+
+### PaTiCompetition 0.1.0 — dungeon competition (test run)
+- Files: `Shared/` → `Locales/` → `Logic.lua` (combat-log parsing, totals, run clock, migration; pure, tested) →
+  `PaTiCompetition.lua` (adapters, events, commands). No window yet.
+- Optional events (`COMBAT_LOG_EVENT_UNFILTERED`, `ENCOUNTER_START/END`, `BOSS_KILL`) are registered in `pcall`; the
+  probe records which exist. Entries with a secret field are only counted. Pets count for their owner.
+- `PaTiCompetitionDB`, schema 1: `probe` (events, combat-log counters, totals per member, boss fights, run, last 40
+  NPC deaths). No secure frames, no addon messages.
+- Slash `/pcomp`, `/paticompetition`.
 
 ### PaTiSuite 0.1.0 — optional control panel
 - Files: `Shared/` → `Locales/` → `Logic.lua` (settings, window list, show/hide rules; pure, tested) → `PaTiSuite.lua`.

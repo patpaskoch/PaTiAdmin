@@ -11,7 +11,7 @@ grüne CI heißt nicht, dass es im Spiel funktioniert. Release-Regeln, Beta-Krit
 Jedes Addon hat genau eine Aufgabe ([`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md#addon-responsibilities)):
 PaTiHeal = heilen · PaTiAuras = Buffs/Auren · PaTiAggro (früher PaTiTank) = Aggro für alle Rollen · PaTiRota = Rotation · PaTiGroup = Gruppe
 beobachten · PaTiLead = Gruppe führen · PaTiQuest = Quests · PaTiDungeon = Dungeon-Kontext · PaTiSocial =
-Kommunikation · PaTiAlerts = Probleme · PaTiSuite = Steuerfenster. PaTiShared und PaTiAdmin sind keine Spieler-Addons.
+Kommunikation · PaTiCompetition = Dungeon-Wettkampf · PaTiAlerts = Probleme · PaTiSuite = Steuerfenster. PaTiShared und PaTiAdmin sind keine Spieler-Addons.
 
 ## Release-Reife
 
@@ -27,9 +27,10 @@ Kommunikation · PaTiAlerts = Probleme · PaTiSuite = Steuerfenster. PaTiShared 
 | PaTiDungeon | 0.1.0 + [Unreleased] | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
 | PaTiAlerts | 0.1.0 | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ nur `/pal test` | Nein |
 | PaTiSocial | 0.1.0 | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ teilweise (Laden, Icon, Buttons, Layout, Emote) | Nein |
+| PaTiCompetition | 0.1.0 (neu, Testlauf) | ✅ | ⏳ | ⏳ | ✅ | ⏳ | ⏳ | Nein |
 | PaTiSuite | 0.1.0 (Steuerung) | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ teilweise (Ein-/Ausblenden, Farben, Hover) | Nein |
 
-✅ = erledigt und geprüft · ⏳ = offen. Lizenz: MIT in allen dreizehn Repos. Icons: PaTiSuite-Set in allen elf Addons;
+✅ = erledigt und geprüft · ⏳ = offen. Lizenz: MIT in allen vierzehn Repos. Icons: PaTiSuite-Set in allen elf Addons (PaTiCompetition noch ohne);
 im Spiel bestätigt 2026-10-02 für **8 von 11** (Heal, Auras, Tank, Quest, Dungeon, Alerts, Social, Suite). Offen: PaTiGroup
 (Gruppen-Icon übernommen — die alte Bestätigung gilt nach dem Umbau nicht mehr, PT-GROUP-203), PaTiRota und PaTiLead
 (eigene Grafik des Owners 2026-10-02, PT-ROTA-062, PT-LEAD-003).
@@ -113,6 +114,11 @@ im Spiel bestätigt 2026-10-02 für **8 von 11** (Heal, Auras, Tank, Quest, Dung
 - Tests: 14 Unit-Tests
 - Im Spiel bestätigt 2026-10-02: lädt ohne Fehler, Icon, Anzahl der Buttons, horizontal/vertikal, Emote-Button
 - Offen im Spiel: Nachrichten (Sagen/Gruppe), Einstellungen pro Button, PaTiSuite; `/psocial debug`-Ausgabe
+
+## PaTiCompetition (TOC 0.1.0) — Dungeon-Wettkampf
+- Funktion (geplant): Laufzeit bis zum Endboss, Endbildschirm im Stil von Left 4 Dead (Bild, Name, Schaden,
+  erlittener Schaden, Heilung, Score). 0.1.0 = Testlauf: Kampflog, geheime Werte, Boss-Meldungen (`/pcomp probe`)
+- Tests: 10 Unit-Tests · Offen im Spiel: alles (PT-COMP-001…016); kein Icon
 
 ## PaTiSuite (TOC 0.1.0)
 - Funktion: optionales Steuerfenster — installierte PaTi-Fenster einzeln oder alle ein-/ausblenden; Reihenfolge

@@ -62,6 +62,10 @@ files["**/PaTiLead/**/*.lua"] = { globals = { "PaTiLeadDB", "SLASH_PATILEAD1", "
 files["**/PaTiGroup/**/*.lua"] = { globals = { "PaTiGroupDB", "SLASH_PATIGROUP1", "SLASH_PATIGROUP2", "SLASH_PATIGROUP3" } }
 -- PaTiRota (new 2026-10-02): own skill priority; fixed secure cast buttons, nothing casts by itself.
 files["**/PaTiRota/**/*.lua"] = { globals = { "PaTiRotaDB", "SLASH_PATIROTA1", "SLASH_PATIROTA2" } }
+-- PaTiCompetition (new 2026-10-18): dungeon competition, display only; reads the combat log (probe first).
+files["**/PaTiCompetition/**/*.lua"] = {
+    globals = { "PaTiCompetitionDB", "SLASH_PATICOMPETITION1", "SLASH_PATICOMPETITION2" },
+    read_globals = { "CombatLogGetCurrentEventInfo" } }
 
 -- Specs run under tools/lua/test.lua (busted-compatible); mocks install WoW functions as globals.
 files["**/tests/**/*.lua"] = { std = "+busted", globals = { "GetLocale", "InCombatLockdown" } }
