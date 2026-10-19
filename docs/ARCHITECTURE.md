@@ -69,7 +69,7 @@ one `<Addon>.lua` with a clearly separated adapter function, window, settings, c
 | Robust migration | `Migrate` accepts nil/broken saves (`type(db) ~= "table"` → fresh), a broken schema runs the steps, a scale outside 0.5–2 falls back; only broken values are replaced, `Migrate(Migrate(db))` is stable — table-driven `tests/robustness_spec.lua` per addon | all |
 | Caught-error diagnostics | `pcall` around APIs and PaTiAlerts `Sync`; the last error per source is kept as one short string (`<Module>.lastError` / a local) and shown only by `/<cmd> debug` — no chat, nothing saved | Heal, Auras, Tank, Rota, Lead |
 | Window safety | `UI.WindowPosition` (broken saved anchor/offset → default), `SetClampedToScreen`; `window:SetCombatMovable(true)` for windows without secure children (`UI.CanMoveWindow`, never when protected) | PaTiShared; combat-movable: Tank, Group, Quest, Dungeon, Social, Alerts, Suite |
-| Themes | three colour sets in PaTiShared (`UI.THEMES`: default, woforever, dracula); static colours via `UI.Paint`, state colours recomputed and repainted from `UI.OnThemeChanged` (the addon's existing refresh); `db.theme` per addon (validated in `Migrate`, applied by `window:Attach`, chosen under Settings → Window); PaTiSuite switches all through `window:SetSuiteTheme` — never a theme `if` in addon code | PaTiShared, all |
+| Themes | four colour sets in PaTiShared (`UI.THEMES`: default, woforever, dracula, softfantasy — the last added 2026-10-19); static colours via `UI.Paint`, state colours recomputed and repainted from `UI.OnThemeChanged` (the addon's existing refresh); `db.theme` per addon (validated in `Migrate`, applied by `window:Attach`, chosen under Settings → Window); PaTiSuite switches all through `window:SetSuiteTheme` — never a theme `if` in addon code | PaTiShared, all |
 
 ## Reset semantics (checked in code 2026-10-02)
 
@@ -268,7 +268,11 @@ configuration that is hard to rebuild is kept on purpose; where a list is reset,
   `pcall`: `ENCOUNTER_START/END`, `BOSS_KILL`, `UNIT_THREAT_SITUATION_UPDATE`. **`COMBAT_LOG_EVENT_UNFILTERED` is
   never registered** (reserved for the Blizzard UI, 2026-10-19). Times in `time()` seconds (survive `/reload`), aggro
   durations in `GetTime()`.
-- `PaTiChronicleDB` (per character), schema 2: settings, position, `hud`, `probe`, `run`, `report`, `runs[key]` (last
+- Report (redesign 2026-10-19): `Report.lua` (640 × 560, text tabs, five type levels, grid, Overview) →
+  `ReportGroup.lua` (Group result: lineup with 3D characters where `Probe.lua` confirmed PlayerModel, result table in
+  fixed order from `Chronicle.PlayerRows`) → `ReportMine.lua` → `ReportTimeline.lua`. `Probe.lua`: read-only look at
+  C_DamageMeter (never reset), PlayerModel, fonts.
+- `PaTiChronicleDB` (per character), schema 3 (per-member values from schema 3 on; older runs show n/a): settings, position, `hud`, `probe`, `run`, `report`, `runs[key]` (last
   20 summaries), `bests`, `groupBests`, `teams`, `streaks`, `endBosses`. Schema 1 (the PaTiCompetition save, copied
   over once by hand) keeps settings and position. No secure frames, no addon messages.
 - Slash `/pchron`, `/patichronicle`; `/pcomp` until 0.3.0.

@@ -116,11 +116,12 @@ im Spiel bestätigt 2026-10-02 für **8 von 11** (Heal, Auras, Tank, Quest, Dung
 - Offen im Spiel: Nachrichten (Sagen/Gruppe), Einstellungen pro Button, PaTiSuite; `/psocial debug`-Ausgabe
 
 ## PaTiChronicle (TOC 0.2.0) — Chronik der Dungeon-Runs (früher PaTiCompetition)
-- Funktion: „Jeder Run erzählt eine Geschichte“. Run-Bericht nach jedem Dungeon mit den Reitern Übersicht, Meine
-  Leistung und Verlauf; Bestzeiten pro Dungeon und Gruppe; die letzten 20 Runs; Erfolge für Teamplay, Überleben und
+- Funktion: „Jeder Run erzählt eine Geschichte“. Run-Bericht nach jedem Dungeon im Stil eines Game-Results-Screens
+  (Redesign 2026-10-19) mit den Reitern Übersicht, Gruppenergebnis (Aufstellung + Ergebnistabelle in fester
+  Reihenfolge), Meine Leistung und Verlauf; Bestzeiten pro Dungeon und Gruppe; die letzten 20 Runs; Erfolge für Teamplay, Überleben und
   persönliche Bestleistungen, nur mit verlässlichen Daten; Vergleich nur mit den eigenen Runs; Run-Uhr im Dungeon.
   Keine Rangliste, keine Wertung 0–100. `/pchron` (`/pcomp` bis 0.3.0)
-- Tests: 23 Unit-Tests · Offen im Spiel: alles (PT-CHRON-001…052), zuerst die API-Prüfung PT-CHRON-010…016; kein Icon
+- Tests: 31 Unit-Tests · Offen im Spiel: alles (PT-CHRON-001…068), zuerst die API-Prüfung PT-CHRON-010…018; kein Icon
 
 ## PaTiSuite (TOC 0.1.0)
 - Funktion: optionales Steuerfenster — installierte PaTi-Fenster einzeln oder alle ein-/ausblenden; Reihenfolge
@@ -144,8 +145,9 @@ im Spiel bestätigt 2026-10-02 für **8 von 11** (Heal, Auras, Tank, Quest, Dung
   Default (PT-SUITE-168); offene Popups zeichnen sich beim Wechsel neu. Bekannte Grenzen: Tooltip-Rahmen bleibt
   Blizzard, WoForever ohne Verzierung (Entscheidung nach dem visuellen Test). **Code-Freeze** für Themes bis zum
   Ingame-Test.
-- Drei Themes in PaTiShared: Default (wie bisher), WoForever (warmes Braun, Gold/Bronze), Dracula (Lila/Pink/Cyan);
-  nur Farben. Jedes Addon speichert sein Theme selbst (Einstellungen → Fenster → Theme); PaTiSuite schaltet alle um.
+- Vier Themes in PaTiShared: Default (wie bisher), WoForever (warmes Braun, Gold/Bronze), Dracula (Lila/Pink/Cyan),
+  **Soft Fantasy** (Schiefer-Blau, Lavendel; 2026-10-19 auf ausdrücklichen Wunsch des Owners trotz Theme-Freeze ergänzt,
+  in allen zwölf Addons synchronisiert, Migrationen kennen die neue ID; PT-SUITE-169); nur Farben. Jedes Addon speichert sein Theme selbst (Einstellungen → Fenster → Theme); PaTiSuite schaltet alle um.
   Im Spiel bestätigt 2026-10-03: Live-Themewechsel (PT-SUITE-167).
   Offen im Spiel: PT-SUITE-160–166, PT-HEAL-152
 
