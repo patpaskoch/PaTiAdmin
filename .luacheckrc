@@ -66,7 +66,8 @@ files["**/PaTiRota/**/*.lua"] = { globals = { "PaTiRotaDB", "SLASH_PATIROTA1", "
 -- only checked for presence and read guarded (the combat log is reserved for the Blizzard UI in this client).
 -- SLASH_PATICHRONICLE3 = the old /pcomp, kept until 0.3.0.
 files["**/PaTiChronicle/**/*.lua"] = {
-    globals = { "PaTiChronicleDB", "SLASH_PATICHRONICLE1", "SLASH_PATICHRONICLE2", "SLASH_PATICHRONICLE3" },
+    globals = { "PaTiChronicleDB", "SLASH_PATICHRONICLE1", "SLASH_PATICHRONICLE2", "SLASH_PATICHRONICLE3",
+        "PaTiChronicle_Toggle" },
     read_globals = { "C_DamageMeter", "time", "UnitIsGhost" } }
 
 -- Specs run under tools/lua/test.lua (busted-compatible); mocks install WoW functions as globals.
