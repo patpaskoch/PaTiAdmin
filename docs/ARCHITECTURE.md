@@ -269,8 +269,8 @@ configuration that is hard to rebuild is kept on purpose; where a list is reset,
   never registered** (reserved for the Blizzard UI, 2026-10-19). Times in `time()` seconds (survive `/reload`), aggro
   durations in `GetTime()`.
 - Report (redesign 2026-10-19): `Report.lua` (640 × 560, text tabs, five type levels, grid, Overview) →
-  `ReportGroup.lua` (Group result: lineup with 3D characters where `Probe.lua` confirmed PlayerModel, result table in
-  fixed order from `Chronicle.PlayerRows`) → `ReportMine.lua` → `ReportTimeline.lua`. `Probe.lua`: read-only look at
+  `ReportGroup.lua` (Group result: lineup of portraits, result table in fixed order from `Chronicle.PlayerRows`,
+  tabs Survival and Contribution; contribution from `Meter.lua`: C_DamageMeter read after each fight, never reset) → `ReportMine.lua` → `ReportTimeline.lua`. `Probe.lua`: read-only look at
   C_DamageMeter (never reset), PlayerModel, fonts.
 - `PaTiChronicleDB` (per character), schema 3 (per-member values from schema 3 on; older runs show n/a): settings, position, `hud`, `probe`, `run`, `report`, `runs[key]` (last
   20 summaries), `bests`, `groupBests`, `teams`, `streaks`, `endBosses`. Schema 1 (the PaTiCompetition save, copied
