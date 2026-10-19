@@ -79,8 +79,10 @@ explicit test recorded) · **assumed** (not yet used/tested).
 | `C_QuestLog.GetSelectedQuest`, `GetTitleForQuestID`, `GetQuestObjectives` | in use (PaTiQuest) | all `pcall`-guarded |
 | `GetInstanceInfo`, `IsInInstance`, `GetNumGroupMembers`, `UnitIsGroupLeader` | in use (PaTiDungeon) | |
 | `COMBAT_LOG_EVENT_UNFILTERED` for addons | **forbidden — verified 2026-10-19** (owner screenshot: "PaTiCompetition wurde geblockt … der Blizzard-UI vorbehalten" after registering it; pcall does not prevent the popup) | never register it; PaTiCompetition removed it. PT-COMP-001/003 |
-| `C_DamageMeter` (Blizzard damage meter data, Retail 12.0) | **unknown** (PaTiCompetition probe 2026-10-19: only checks that it exists) | possible source for damage/healing. PT-COMP-010 |
-| `ENCOUNTER_START` / `ENCOUNTER_END` (id, name, difficulty, size, success) / `BOSS_KILL` in 5-player dungeons | **unknown** (PaTiCompetition probe 2026-10-18) | pcall-registered; fallback: "Finish" button (`UNIT_DIED` came from the combat log). PT-COMP-014 |
+| `C_DamageMeter` (Blizzard damage meter data, Retail 12.0) | **present — verified 2026-10-19** (owner SavedVariables, probe: `C_DamageMeter ~= nil`); functions and readability **unknown** | possible source for damage/healing; nothing called yet. PaTiChronicle test T6 |
+| `ENCOUNTER_START` / `ENCOUNTER_END` (id, name, difficulty, size, success) / `BOSS_KILL` in 5-player dungeons | **registerable — verified 2026-10-19** (owner SavedVariables: RegisterEvent succeeded); whether they fire in 5-player dungeons **unknown** | fallback: manual "end run". PaTiChronicle test T2 |
+| `UNIT_THREAT_SITUATION_UPDATE` | **registerable — verified 2026-10-19** (owner SavedVariables) | firing for party1-4 and a readable status in combat unknown (test T1) |
+| `CombatLogGetCurrentEventInfo` | **absent — verified 2026-10-19** (owner SavedVariables) | matches the forbidden combat log |
 | Combat-log `SPELL_INTERRUPT` / `PARTY_KILL` | not reachable: the combat log is forbidden (see above) | PT-COMP-025 retired |
 | Fonts `GameFontNormalHuge`, `GameFontHighlightHuge`, `GameFontHighlightLarge` | assumed (PaTiCompetition end screen) | looked up in `_G`, missing → next smaller font. PT-COMP-020 |
 | `UnitGroupRolesAssigned` | in use (PaTiHeal, PaTiLead, PaTiGroup) | may return NONE without LFG roles (PaTiGroup then shows "without role", never guesses); checked for secret values first |
