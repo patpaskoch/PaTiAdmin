@@ -68,7 +68,7 @@ files["**/PaTiRota/**/*.lua"] = { globals = { "PaTiRotaDB", "SLASH_PATIROTA1", "
 files["**/PaTiChronicle/**/*.lua"] = {
     globals = { "PaTiChronicleDB", "SLASH_PATICHRONICLE1", "SLASH_PATICHRONICLE2", "SLASH_PATICHRONICLE3",
         "PaTiChronicle_Toggle" },
-    read_globals = { "C_DamageMeter", "time", "UnitIsGhost" } }
+    read_globals = { "C_DamageMeter", "time", "UnitIsGhost", "Minimap" } }
 
 -- Specs run under tools/lua/test.lua (busted-compatible); mocks install WoW functions as globals.
 files["**/tests/**/*.lua"] = { std = "+busted", globals = { "GetLocale", "InCombatLockdown" } }
