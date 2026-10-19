@@ -85,7 +85,7 @@ configuration that is hard to rebuild is kept on purpose; where a list is reset,
 | PaTiRota | all settings | the skill slots, position |
 | PaTiLead | all settings incl. marker order | the local note, position |
 | PaTiSocial | all settings and the button actions (six default buttons, PT-SOCIAL-053) | position |
-| PaTiCompetition | the test results (`/pcomp reset`) | position |
+| PaTiCompetition | all settings (language, scale, lock, theme, opacity) | the test results (`/pcomp clear`), position |
 | PaTiAlerts | all settings incl. source/priority filters | position |
 | PaTiSuite | all settings and the remembered visibility | position |
 
