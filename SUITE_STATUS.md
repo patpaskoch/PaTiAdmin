@@ -116,9 +116,11 @@ im Spiel bestätigt 2026-10-02 für **8 von 11** (Heal, Auras, Tank, Quest, Dung
 - Offen im Spiel: Nachrichten (Sagen/Gruppe), Einstellungen pro Button, PaTiSuite; `/psocial debug`-Ausgabe
 
 ## PaTiCompetition (TOC 0.1.0) — Dungeon-Wettkampf
-- Funktion (geplant): Laufzeit bis zum Endboss, Endbildschirm (Bild, Name, Schaden, erlittener
-  Schaden, Heilung, Aggro gezogen, Score; Aggro gezogen = Minuspunkte außer beim Tank). 0.1.0 = Testlauf: Kampflog, geheime Werte, Boss-Meldungen (`/pcomp probe`)
-- Tests: 12 Unit-Tests · Offen im Spiel: alles (PT-COMP-001…017); kein Icon
+- Funktion: Endbildschirm „Party Competition“ (`/pcomp show`, `/pcomp test`): fünf Karten mit Bild, Name, Rolle,
+  Schaden, Heilung, erlittenem Schaden, Unterbrechungen, Todesstößen, Aggro gezogen (Minuspunkte außer beim Tank),
+  Toden und Wertung 0–100. Dazu der Testlauf (`/pcomp probe`): Kampflog, geheime Werte, Boss-Meldungen
+- Geplant: Uhr stoppt am Endboss und öffnet den Endbildschirm; Bestzeit pro Dungeon
+- Tests: 19 Unit-Tests · Offen im Spiel: alles (PT-COMP-001…025); kein Icon
 
 ## PaTiSuite (TOC 0.1.0)
 - Funktion: optionales Steuerfenster — installierte PaTi-Fenster einzeln oder alle ein-/ausblenden; Reihenfolge

@@ -85,7 +85,7 @@ configuration that is hard to rebuild is kept on purpose; where a list is reset,
 | PaTiRota | all settings | the skill slots, position |
 | PaTiLead | all settings incl. marker order | the local note, position |
 | PaTiSocial | all settings and the button actions (six default buttons, PT-SOCIAL-053) | position |
-| PaTiCompetition | the test results (`/pcomp reset`) | — |
+| PaTiCompetition | the test results (`/pcomp reset`) | position |
 | PaTiAlerts | all settings incl. source/priority filters | position |
 | PaTiSuite | all settings and the remembered visibility | position |
 
@@ -253,12 +253,15 @@ configuration that is hard to rebuild is kept on purpose; where a list is reset,
   slotCount (4/6/8/10/12), slots = 12 action keys (`NONE` = empty). No secure frames, no test mode.
 - Slash `/psocial`, `/patisocial`.
 
-### PaTiCompetition 0.1.0 — dungeon competition (test run)
+### PaTiCompetition 0.1.0 — dungeon competition (end screen + probe)
 - Files: `Shared/` → `Locales/` → `Logic.lua` (combat-log parsing, totals, run clock, migration; pure, tested) →
-  `PaTiCompetition.lua` (adapters, events, commands). No window yet.
+  `Score.lua` (tank, score 0-100, card order, short numbers, example values; pure, tested) → `Results.lua` (end screen
+  "Party Competition": five cards, role-coloured portrait frames, gold frame for the best) → `PaTiCompetition.lua`
+  (adapters, events, commands `show`, `test`, `probe`, `reset`). Theme default WoForever.
 - Optional events (`COMBAT_LOG_EVENT_UNFILTERED`, `ENCOUNTER_START/END`, `BOSS_KILL`, `UNIT_THREAT_SITUATION_UPDATE`)
   are registered in `pcall`; the probe records which exist. Entries with a secret field are only counted. Pets count
-  for their owner. Pulled aggro = `UnitThreatSituation(unit)` rises from below 2 to 2 or more.
+  for their owner. Pulled aggro = `UnitThreatSituation(unit)` rises from below 2 to 2 or more. Interrupts =
+  `SPELL_INTERRUPT`, killing blows = `PARTY_KILL` by a member. A new run (other instance) starts the totals from zero.
 - `PaTiCompetitionDB`, schema 1: `probe` (events, combat-log counters, totals per member incl. pulled aggro and role,
   boss fights, run, last 40 NPC deaths). No secure frames, no addon messages.
 - Slash `/pcomp`, `/paticompetition`.
