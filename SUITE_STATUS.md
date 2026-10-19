@@ -11,7 +11,7 @@ grüne CI heißt nicht, dass es im Spiel funktioniert. Release-Regeln, Beta-Krit
 Jedes Addon hat genau eine Aufgabe ([`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md#addon-responsibilities)):
 PaTiHeal = heilen · PaTiAuras = Buffs/Auren · PaTiAggro (früher PaTiTank) = Aggro für alle Rollen · PaTiRota = Rotation · PaTiGroup = Gruppe
 beobachten · PaTiLead = Gruppe führen · PaTiQuest = Quests · PaTiDungeon = Dungeon-Kontext · PaTiSocial =
-Kommunikation · PaTiChronicle = Dungeon-Wettkampf · PaTiAlerts = Probleme · PaTiSuite = Steuerfenster. PaTiShared und PaTiAdmin sind keine Spieler-Addons.
+Kommunikation · PaTiChronicle = Chronik der Dungeon-Runs · PaTiAlerts = Probleme · PaTiSuite = Steuerfenster. PaTiShared und PaTiAdmin sind keine Spieler-Addons.
 
 ## Release-Reife
 
@@ -27,7 +27,7 @@ Kommunikation · PaTiChronicle = Dungeon-Wettkampf · PaTiAlerts = Probleme · P
 | PaTiDungeon | 0.1.0 + [Unreleased] | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
 | PaTiAlerts | 0.1.0 | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ nur `/pal test` | Nein |
 | PaTiSocial | 0.1.0 | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ teilweise (Laden, Icon, Buttons, Layout, Emote) | Nein |
-| PaTiChronicle | 0.1.0 (neu, Testlauf) | ✅ | ⏳ | ⏳ | ✅ | ⏳ | ⏳ | Nein |
+| PaTiChronicle | 0.2.0 (Run-Bericht, früher PaTiCompetition) | ✅ | ✅ | ⏳ | ✅ | ⏳ | ⏳ | Nein |
 | PaTiSuite | 0.1.0 (Steuerung) | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ teilweise (Ein-/Ausblenden, Farben, Hover) | Nein |
 
 ✅ = erledigt und geprüft · ⏳ = offen. Lizenz: MIT in allen vierzehn Repos. Icons: PaTiSuite-Set in allen elf Addons (PaTiChronicle noch ohne);
@@ -115,12 +115,12 @@ im Spiel bestätigt 2026-10-02 für **8 von 11** (Heal, Auras, Tank, Quest, Dung
 - Im Spiel bestätigt 2026-10-02: lädt ohne Fehler, Icon, Anzahl der Buttons, horizontal/vertikal, Emote-Button
 - Offen im Spiel: Nachrichten (Sagen/Gruppe), Einstellungen pro Button, PaTiSuite; `/psocial debug`-Ausgabe
 
-## PaTiChronicle (TOC 0.1.0) — Dungeon-Wettkampf
-- Funktion: Endbildschirm „Party Competition“ (`/pchron show`, `/pchron test`): fünf Karten mit Bild, Name, Rolle,
-  Schaden, Heilung, erlittenem Schaden, Unterbrechungen, Todesstößen, Aggro gezogen (Minuspunkte außer beim Tank),
-  Toden und Wertung 0–100. Dazu der Testlauf (`/pchron probe`): Kampflog, geheime Werte, Boss-Meldungen
-- Geplant: Uhr stoppt am Endboss und öffnet den Endbildschirm; Bestzeit pro Dungeon
-- Tests: 19 Unit-Tests · Offen im Spiel: alles (PT-COMP-001…025); kein Icon
+## PaTiChronicle (TOC 0.2.0) — Chronik der Dungeon-Runs (früher PaTiCompetition)
+- Funktion: „Jeder Run erzählt eine Geschichte“. Run-Bericht nach jedem Dungeon mit den Reitern Übersicht, Meine
+  Leistung und Verlauf; Bestzeiten pro Dungeon und Gruppe; die letzten 20 Runs; Erfolge für Teamplay, Überleben und
+  persönliche Bestleistungen, nur mit verlässlichen Daten; Vergleich nur mit den eigenen Runs; Run-Uhr im Dungeon.
+  Keine Rangliste, keine Wertung 0–100. `/pchron` (`/pcomp` bis 0.3.0)
+- Tests: 23 Unit-Tests · Offen im Spiel: alles (PT-CHRON-001…052), zuerst die API-Prüfung PT-CHRON-010…016; kein Icon
 
 ## PaTiSuite (TOC 0.1.0)
 - Funktion: optionales Steuerfenster — installierte PaTi-Fenster einzeln oder alle ein-/ausblenden; Reihenfolge

@@ -253,20 +253,25 @@ configuration that is hard to rebuild is kept on purpose; where a list is reset,
   slotCount (4/6/8/10/12), slots = 12 action keys (`NONE` = empty). No secure frames, no test mode.
 - Slash `/psocial`, `/patisocial`.
 
-### PaTiChronicle 0.1.0 — dungeon competition (end screen + probe)
-- Files: `Shared/` → `Locales/` → `Logic.lua` (combat-log parsing, totals, run clock, migration; pure, tested) →
-  `Score.lua` (tank, score 0-100, card order, short numbers, example values; pure, tested) → `Results.lua` (end screen
-  "Party Competition": five cards, role-coloured portrait frames, gold frame for the best) → `PaTiChronicle.lua`
-  (adapters, events, commands `show`, `test`, `probe`, `reset`). Theme default WoForever.
-- Optional events (`ENCOUNTER_START/END`, `BOSS_KILL`, `UNIT_THREAT_SITUATION_UPDATE`) are registered in `pcall`;
-  the probe records which exist. **`COMBAT_LOG_EVENT_UNFILTERED` is never registered:** this client reserves it for
-  the Blizzard UI (forbidden popup, 2026-10-19). So damage, healing, interrupts, killing blows and deaths have no
-  source yet (shown as 0; `Logic.Parse`/`Record` stay for a later one); the probe checks for `C_DamageMeter`.
-  Pulled aggro = `UnitThreatSituation(unit)` rises from below 2 to 2 or more. A new run (other instance) starts the
-  totals from zero.
-- `PaTiChronicleDB`, schema 1: `probe` (events, combat-log counters, totals per member incl. pulled aggro and role,
-  boss fights, run, last 40 NPC deaths). No secure frames, no addon messages.
-- Slash `/pchron`, `/patichronicle`.
+### PaTiChronicle 0.2.0 — "Every run tells a story" (formerly PaTiCompetition)
+- Files: `Shared/` → `Locales/` → `Logic.lua` (settings, migration, probe, clock) → `Run.lua` (run rules: start,
+  continue, end, abort, counted, without gaps; fights, bosses, deaths, aggro moments) → `Chronicle.lua` (history,
+  best times, achievements, development, learned end boss) → `Sample.lua` (example run through the same rules) — all
+  pure, tested → `Report.lua` (main window, tabs, Overview) → `ReportMine.lua` → `ReportTimeline.lua` → `Hud.lua`
+  (run clock line, plain frame) → `PaTiChronicle.lua` (adapters, events, runs) → `Settings.lua` (settings, menu,
+  commands, probe output). Theme default WoForever.
+- No ranking between players, no score: achievements only for reliable data (`Chronicle.Reliable`; complete run,
+  readable deaths/threat), otherwise "not checkable" with the reason. Others' aggro moments carry no name; causes of
+  death are never named. Comparisons only with your own runs (same dungeon and role, from 3 earlier runs).
+- Events: `PLAYER_REGEN_*` (fights; the first one in a 5-player dungeon starts the run), `UNIT_HEALTH` + `PLAYER_DEAD`
+  (deaths via `UnitIsDeadOrGhost`, player/party1-4 only), zone events (leave/resume, `UnitIsGhost`), optional in
+  `pcall`: `ENCOUNTER_START/END`, `BOSS_KILL`, `UNIT_THREAT_SITUATION_UPDATE`. **`COMBAT_LOG_EVENT_UNFILTERED` is
+  never registered** (reserved for the Blizzard UI, 2026-10-19). Times in `time()` seconds (survive `/reload`), aggro
+  durations in `GetTime()`.
+- `PaTiChronicleDB` (per character), schema 2: settings, position, `hud`, `probe`, `run`, `report`, `runs[key]` (last
+  20 summaries), `bests`, `groupBests`, `teams`, `streaks`, `endBosses`. Schema 1 (the PaTiCompetition save, copied
+  over once by hand) keeps settings and position. No secure frames, no addon messages.
+- Slash `/pchron`, `/patichronicle`; `/pcomp` until 0.3.0.
 
 ### PaTiSuite 0.1.0 — optional control panel
 - Files: `Shared/` → `Locales/` → `Logic.lua` (settings, window list, show/hide rules; pure, tested) → `PaTiSuite.lua`.
