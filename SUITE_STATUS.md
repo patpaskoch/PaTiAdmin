@@ -11,7 +11,7 @@ grüne CI heißt nicht, dass es im Spiel funktioniert. Release-Regeln, Beta-Krit
 Jedes Addon hat genau eine Aufgabe ([`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md#addon-responsibilities)):
 PaTiHeal = heilen · PaTiAuras = Buffs/Auren · PaTiAggro (früher PaTiTank) = Aggro für alle Rollen · PaTiRota = Rotation · PaTiGroup = Gruppe
 beobachten · PaTiLead = Gruppe führen · PaTiQuest = Quests · PaTiDungeon = Dungeon-Kontext · PaTiSocial =
-Kommunikation · PaTiCompetition = Dungeon-Wettkampf · PaTiAlerts = Probleme · PaTiSuite = Steuerfenster. PaTiShared und PaTiAdmin sind keine Spieler-Addons.
+Kommunikation · PaTiChronicle = Dungeon-Wettkampf · PaTiAlerts = Probleme · PaTiSuite = Steuerfenster. PaTiShared und PaTiAdmin sind keine Spieler-Addons.
 
 ## Release-Reife
 
@@ -27,10 +27,10 @@ Kommunikation · PaTiCompetition = Dungeon-Wettkampf · PaTiAlerts = Probleme ·
 | PaTiDungeon | 0.1.0 + [Unreleased] | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
 | PaTiAlerts | 0.1.0 | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ nur `/pal test` | Nein |
 | PaTiSocial | 0.1.0 | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ teilweise (Laden, Icon, Buttons, Layout, Emote) | Nein |
-| PaTiCompetition | 0.1.0 (neu, Testlauf) | ✅ | ⏳ | ⏳ | ✅ | ⏳ | ⏳ | Nein |
+| PaTiChronicle | 0.1.0 (neu, Testlauf) | ✅ | ⏳ | ⏳ | ✅ | ⏳ | ⏳ | Nein |
 | PaTiSuite | 0.1.0 (Steuerung) | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ teilweise (Ein-/Ausblenden, Farben, Hover) | Nein |
 
-✅ = erledigt und geprüft · ⏳ = offen. Lizenz: MIT in allen vierzehn Repos. Icons: PaTiSuite-Set in allen elf Addons (PaTiCompetition noch ohne);
+✅ = erledigt und geprüft · ⏳ = offen. Lizenz: MIT in allen vierzehn Repos. Icons: PaTiSuite-Set in allen elf Addons (PaTiChronicle noch ohne);
 im Spiel bestätigt 2026-10-02 für **8 von 11** (Heal, Auras, Tank, Quest, Dungeon, Alerts, Social, Suite). Offen: PaTiGroup
 (Gruppen-Icon übernommen — die alte Bestätigung gilt nach dem Umbau nicht mehr, PT-GROUP-203), PaTiRota und PaTiLead
 (eigene Grafik des Owners 2026-10-02, PT-ROTA-062, PT-LEAD-003).
@@ -115,10 +115,10 @@ im Spiel bestätigt 2026-10-02 für **8 von 11** (Heal, Auras, Tank, Quest, Dung
 - Im Spiel bestätigt 2026-10-02: lädt ohne Fehler, Icon, Anzahl der Buttons, horizontal/vertikal, Emote-Button
 - Offen im Spiel: Nachrichten (Sagen/Gruppe), Einstellungen pro Button, PaTiSuite; `/psocial debug`-Ausgabe
 
-## PaTiCompetition (TOC 0.1.0) — Dungeon-Wettkampf
-- Funktion: Endbildschirm „Party Competition“ (`/pcomp show`, `/pcomp test`): fünf Karten mit Bild, Name, Rolle,
+## PaTiChronicle (TOC 0.1.0) — Dungeon-Wettkampf
+- Funktion: Endbildschirm „Party Competition“ (`/pchron show`, `/pchron test`): fünf Karten mit Bild, Name, Rolle,
   Schaden, Heilung, erlittenem Schaden, Unterbrechungen, Todesstößen, Aggro gezogen (Minuspunkte außer beim Tank),
-  Toden und Wertung 0–100. Dazu der Testlauf (`/pcomp probe`): Kampflog, geheime Werte, Boss-Meldungen
+  Toden und Wertung 0–100. Dazu der Testlauf (`/pchron probe`): Kampflog, geheime Werte, Boss-Meldungen
 - Geplant: Uhr stoppt am Endboss und öffnet den Endbildschirm; Bestzeit pro Dungeon
 - Tests: 19 Unit-Tests · Offen im Spiel: alles (PT-COMP-001…025); kein Icon
 

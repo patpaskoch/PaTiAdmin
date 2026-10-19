@@ -27,7 +27,7 @@ Addons complement each other but never depend on each other (AGENTS.md §3).
 | **PaTiQuest** | Quest companion: the selected quest and its objectives | |
 | **PaTiDungeon** | Dungeon context: instance name and type, hand-drawn map per instance (owner 2026-10-17; no recorded map: the client hides the position in dungeons, WOW_API_COMPAT) (later: bosses, dungeon quests, role notes, loot wishlist). No group or combat lines (owner 2026-10-17: PaTiGroup, WoW) | |
 | **PaTiSocial** | Quick communication: emote and short message buttons | chat history, friends/guild/BNet, voice (never) |
-| **PaTiCompetition** (new 2026-10-18) | Dungeon competition: run clock until the end boss, end screen per member (portrait, damage, damage taken, healing, pulled aggro, score); display only. 0.1.0 = probe of boss events, threat status and the damage meter API (combat log: reserved for Blizzard) | damage meter for its own sake, threat (→ Aggro), dungeon map (→ Dungeon) |
+| **PaTiChronicle** (new 2026-10-18 as PaTiCompetition, renamed 2026-10-19) | Chronicle of dungeon runs: run clock, run report (overview, my performance, timeline), best times per dungeon and group, run history, achievements for teamplay, survival and personal bests; display only | dungeon help and map (→ Dungeon), live threat (→ Aggro), quests (→ Quest), a damage meter, ranking players against each other |
 | **PaTiAlerts** | One window for currently relevant problems (optional receiver); rows whose producer sends a `cast` are clickable out of combat (PaTiAuras buffs, 2026-10-14) | producing alerts itself |
 | **PaTiSuite** | Optional control panel: show/hide/overview of the windows | gameplay logic (never) |
 | PaTiShared | Dev source of the shared UI, embedded into every addon (`Shared/`) | runtime dependency (never) |
@@ -85,7 +85,7 @@ configuration that is hard to rebuild is kept on purpose; where a list is reset,
 | PaTiRota | all settings | the skill slots, position |
 | PaTiLead | all settings incl. marker order | the local note, position |
 | PaTiSocial | all settings and the button actions (six default buttons, PT-SOCIAL-053) | position |
-| PaTiCompetition | all settings (language, scale, lock, theme, opacity) | the test results (`/pcomp clear`), position |
+| PaTiChronicle | all settings (language, scale, lock, theme, opacity) | the test results (`/pchron clear`), position |
 | PaTiAlerts | all settings incl. source/priority filters | position |
 | PaTiSuite | all settings and the remembered visibility | position |
 
@@ -253,10 +253,10 @@ configuration that is hard to rebuild is kept on purpose; where a list is reset,
   slotCount (4/6/8/10/12), slots = 12 action keys (`NONE` = empty). No secure frames, no test mode.
 - Slash `/psocial`, `/patisocial`.
 
-### PaTiCompetition 0.1.0 — dungeon competition (end screen + probe)
+### PaTiChronicle 0.1.0 — dungeon competition (end screen + probe)
 - Files: `Shared/` → `Locales/` → `Logic.lua` (combat-log parsing, totals, run clock, migration; pure, tested) →
   `Score.lua` (tank, score 0-100, card order, short numbers, example values; pure, tested) → `Results.lua` (end screen
-  "Party Competition": five cards, role-coloured portrait frames, gold frame for the best) → `PaTiCompetition.lua`
+  "Party Competition": five cards, role-coloured portrait frames, gold frame for the best) → `PaTiChronicle.lua`
   (adapters, events, commands `show`, `test`, `probe`, `reset`). Theme default WoForever.
 - Optional events (`ENCOUNTER_START/END`, `BOSS_KILL`, `UNIT_THREAT_SITUATION_UPDATE`) are registered in `pcall`;
   the probe records which exist. **`COMBAT_LOG_EVENT_UNFILTERED` is never registered:** this client reserves it for
@@ -264,9 +264,9 @@ configuration that is hard to rebuild is kept on purpose; where a list is reset,
   source yet (shown as 0; `Logic.Parse`/`Record` stay for a later one); the probe checks for `C_DamageMeter`.
   Pulled aggro = `UnitThreatSituation(unit)` rises from below 2 to 2 or more. A new run (other instance) starts the
   totals from zero.
-- `PaTiCompetitionDB`, schema 1: `probe` (events, combat-log counters, totals per member incl. pulled aggro and role,
+- `PaTiChronicleDB`, schema 1: `probe` (events, combat-log counters, totals per member incl. pulled aggro and role,
   boss fights, run, last 40 NPC deaths). No secure frames, no addon messages.
-- Slash `/pcomp`, `/paticompetition`.
+- Slash `/pchron`, `/patichronicle`.
 
 ### PaTiSuite 0.1.0 — optional control panel
 - Files: `Shared/` → `Locales/` → `Logic.lua` (settings, window list, show/hide rules; pure, tested) → `PaTiSuite.lua`.
@@ -289,4 +289,8 @@ configuration that is hard to rebuild is kept on purpose; where a list is reset,
 - **PaTiGroup → PaTiLead (2026-10-02)**: the old PaTiGroup was a leader tool; it was renamed (history kept) and the
   name PaTiGroup reused for party awareness. Pre-release: no cross-addon SavedVariables migration; test IDs are never
   reused (old ones RETIRED in PaTiLead, the new PaTiGroup counts from 200).
+- **PaTiCompetition → PaTiChronicle (2026-10-19)**: owner decision — a chronicle of runs (play together against your own
+  earlier runs) instead of a competition between players. GitHub repo renamed (history kept). WoW keeps SavedVariables
+  per addon folder, so the old `PaTiCompetitionDB` file is copied over once by hand (README), never read by code (§3).
+  Old PT-COMP-… retired, new PT-CHRON-…; `/pcomp` stays as an alias until 0.3.0.
 - **Tools in plain Lua 5.1 + bash**: run on Windows (Git Bash + LuaJIT), macOS and CI without C modules.

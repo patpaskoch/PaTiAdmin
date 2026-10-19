@@ -30,7 +30,7 @@ it is — never into two, never into PaTiAdmin (not a player addon).
     ├── PaTiAuras/    own buffs, procs, tracking, group buffs, weapon imbues    /pa /patiauras
     ├── PaTiAlerts/   open problems reported by the others (optional receiver) /pal /palerts
     ├── PaTiSocial/   "Party Social": quick emote and message buttons         /psocial /patisocial
-    ├── PaTiCompetition/ dungeon competition: run clock, end screen, score (0.1.0: probe) /pcomp
+    ├── PaTiChronicle/ dungeon run chronicle: run report, best times, achievements (formerly PaTiCompetition) /pchron
     └── PaTiSuite/    optional control panel: show/hide the others' windows   /psuite /patisuite
 ```
 Each addon repo: `<Addon>.toc`, `<Addon>.lua` (+ `Logic.lua` and further files per responsibility), `Locales/`,

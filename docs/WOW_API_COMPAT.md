@@ -70,7 +70,7 @@ explicit test recorded) · **assumed** (not yet used/tested).
 | `GetInventoryItemID` + `GetItemInfoInstant` classID 2 = weapon (shield/held item → no imbue) | assumed (PaTiAuras) | unreadable → UNKNOWN instead of "missing" |
 | `RegisterStateDriver(frame, "visibility", "[combat] hide; show")` on a plain holder frame hides its secure children in combat without addon code | assumed (PaTiAlerts click rows, 2026-10-14) | PT-ALERTS-096 |
 | SecureActionButtons positioned in UIParent coordinates over rows of a non-secure window (not anchored to it) keep the window movable/hideable in combat | assumed (PaTiAlerts) | PT-ALERTS-097/098 |
-| `UnitThreatSituation(unit, enemy)` returns 0-3/nil per enemy | assumed (PaTiAggro aggro) | PaTiCompetition also calls `UnitThreatSituation(unit)` without an enemy (highest status) on `UNIT_THREAT_SITUATION_UPDATE` for pulled aggro, PT-COMP-017 · pcall + secret check; missing/secret → UNKNOWN; `/paggro debug` shows presence |
+| `UnitThreatSituation(unit, enemy)` returns 0-3/nil per enemy | assumed (PaTiAggro aggro) | PaTiChronicle also calls `UnitThreatSituation(unit)` without an enemy (highest status) on `UNIT_THREAT_SITUATION_UPDATE` for pulled aggro, PT-COMP-017 · pcall + secret check; missing/secret → UNKNOWN; `/paggro debug` shows presence |
 | Nameplate unit tokens `nameplateN` + `NAME_PLATE_UNIT_ADDED/REMOVED` | assumed (PaTiAggro aggro) | pcall-registered; without them only target and party targets count |
 | `partyNtarget` tokens and `UNIT_TARGET` | assumed (PaTiAggro aggro) | enemies nobody targets and without a nameplate stay invisible |
 | `UnitCanAttack`, `UnitIsDead`, `UnitGUID` | assumed (PaTiAggro aggro) | GUID used only for de-duplication, secret → skipped; missing APIs → no enemies |
@@ -84,7 +84,7 @@ explicit test recorded) · **assumed** (not yet used/tested).
 | `UNIT_THREAT_SITUATION_UPDATE` | **registerable — verified 2026-10-19** (owner SavedVariables) | firing for party1-4 and a readable status in combat unknown (test T1) |
 | `CombatLogGetCurrentEventInfo` | **absent — verified 2026-10-19** (owner SavedVariables) | matches the forbidden combat log |
 | Combat-log `SPELL_INTERRUPT` / `PARTY_KILL` | not reachable: the combat log is forbidden (see above) | PT-COMP-025 retired |
-| Fonts `GameFontNormalHuge`, `GameFontHighlightHuge`, `GameFontHighlightLarge` | assumed (PaTiCompetition end screen) | looked up in `_G`, missing → next smaller font. PT-COMP-020 |
+| Fonts `GameFontNormalHuge`, `GameFontHighlightHuge`, `GameFontHighlightLarge` | assumed (PaTiChronicle end screen) | looked up in `_G`, missing → next smaller font. PT-COMP-020 |
 | `UnitGroupRolesAssigned` | in use (PaTiHeal, PaTiLead, PaTiGroup) | may return NONE without LFG roles (PaTiGroup then shows "without role", never guesses); checked for secret values first |
 | `issecretvalue` | assumed present only in clients with restricted values | code treats a missing function as "nothing is secret" |
 | `BackdropTemplate` | in use (all) | |

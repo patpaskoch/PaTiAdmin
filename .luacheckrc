@@ -62,10 +62,11 @@ files["**/PaTiLead/**/*.lua"] = { globals = { "PaTiLeadDB", "SLASH_PATILEAD1", "
 files["**/PaTiGroup/**/*.lua"] = { globals = { "PaTiGroupDB", "SLASH_PATIGROUP1", "SLASH_PATIGROUP2", "SLASH_PATIGROUP3" } }
 -- PaTiRota (new 2026-10-02): own skill priority; fixed secure cast buttons, nothing casts by itself.
 files["**/PaTiRota/**/*.lua"] = { globals = { "PaTiRotaDB", "SLASH_PATIROTA1", "SLASH_PATIROTA2" } }
--- PaTiCompetition (new 2026-10-18): dungeon competition, display only. C_DamageMeter: the probe only checks whether
--- it exists (the combat log is reserved for the Blizzard UI in this client, 2026-10-19).
-files["**/PaTiCompetition/**/*.lua"] = {
-    globals = { "PaTiCompetitionDB", "SLASH_PATICOMPETITION1", "SLASH_PATICOMPETITION2" },
+-- PaTiChronicle (formerly PaTiCompetition, renamed 2026-10-19): dungeon run chronicle, display only. C_DamageMeter:
+-- only checked for presence and read guarded (the combat log is reserved for the Blizzard UI in this client).
+-- SLASH_PATICHRONICLE3 = the old /pcomp, kept until 0.3.0.
+files["**/PaTiChronicle/**/*.lua"] = {
+    globals = { "PaTiChronicleDB", "SLASH_PATICHRONICLE1", "SLASH_PATICHRONICLE2", "SLASH_PATICHRONICLE3" },
     read_globals = { "CombatLogGetCurrentEventInfo", "C_DamageMeter" } }
 
 -- Specs run under tools/lua/test.lua (busted-compatible); mocks install WoW functions as globals.
