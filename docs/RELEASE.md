@@ -88,6 +88,8 @@ Goal: first release stable, then build on.
 
 ## Distribution checklist (GitHub, CurseForge, Wago)
 
+Waves, channels and the support model: [`LAUNCH.md`](LAUNCH.md).
+
 Prepared, not done — no accounts, no uploads without an explicit task.
 
 | Item | Where it comes from | State |
