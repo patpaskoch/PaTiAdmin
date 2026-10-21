@@ -12,10 +12,10 @@ Verified = vom Owner im echten Client bestätigt (`[x]`). Failed = im Client feh
 
 | Addon | Verified | Failed | davon Fix da, Retest offen | Open | Tests |
 |---|---:|---:|---:|---:|---:|
-| [PaTiAggro](https://github.com/patpaskoch/PaTiAggro/blob/main/INGAME_TESTING.md) | 1 | 2 | 1 | 78 | 81 |
+| [PaTiAggro](https://github.com/patpaskoch/PaTiAggro/blob/main/INGAME_TESTING.md) | 1 | 2 | 1 | 76 | 79 |
 | [PaTiAlerts](https://github.com/patpaskoch/PaTiAlerts/blob/main/INGAME_TESTING.md) | 2 | 0 | 0 | 46 | 48 |
 | [PaTiAuras](https://github.com/patpaskoch/PaTiAuras/blob/main/INGAME_TESTING.md) | 22 | 1 | 1 | 120 | 143 |
-| [PaTiChronicle](https://github.com/patpaskoch/PaTiChronicle/blob/main/INGAME_TESTING.md) | 0 | 3 | 3 | 47 | 50 |
+| [PaTiChronicle](https://github.com/patpaskoch/PaTiChronicle/blob/main/INGAME_TESTING.md) | 0 | 4 | 4 | 46 | 50 |
 | [PaTiDungeon](https://github.com/patpaskoch/PaTiDungeon/blob/main/INGAME_TESTING.md) | 20 | 0 | 0 | 30 | 50 |
 | [PaTiGroup](https://github.com/patpaskoch/PaTiGroup/blob/main/INGAME_TESTING.md) | 5 | 1 | 0 | 38 | 44 |
 | [PaTiHeal](https://github.com/patpaskoch/PaTiHeal/blob/main/INGAME_TESTING.md) | 22 | 2 | 2 | 89 | 113 |
