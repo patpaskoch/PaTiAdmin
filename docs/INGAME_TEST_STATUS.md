@@ -12,7 +12,7 @@ Verified = vom Owner im echten Client bestätigt (`[x]`). Failed = im Client feh
 
 | Addon | Verified | Failed | davon Fix da, Retest offen | Open | Tests |
 |---|---:|---:|---:|---:|---:|
-| [PaTiAggro](https://github.com/patpaskoch/PaTiAggro/blob/main/INGAME_TESTING.md) | 1 | 2 | 1 | 76 | 79 |
+| [PaTiAggro](https://github.com/patpaskoch/PaTiAggro/blob/main/INGAME_TESTING.md) | 1 | 2 | 1 | 78 | 81 |
 | [PaTiAlerts](https://github.com/patpaskoch/PaTiAlerts/blob/main/INGAME_TESTING.md) | 2 | 0 | 0 | 46 | 48 |
 | [PaTiAuras](https://github.com/patpaskoch/PaTiAuras/blob/main/INGAME_TESTING.md) | 22 | 1 | 1 | 120 | 143 |
 | [PaTiChronicle](https://github.com/patpaskoch/PaTiChronicle/blob/main/INGAME_TESTING.md) | 0 | 4 | 4 | 46 | 50 |
