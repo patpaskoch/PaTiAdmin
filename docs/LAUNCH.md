@@ -32,6 +32,29 @@ so that bug reports of wave 1 are handled first.
 - [ ] Screenshots from the list in RELEASE.md (at least 3 per addon, one with the WoForever theme)
 - [ ] Version: stable 1.0.0 only after the beta; the beta is tagged `-beta.N` (RELEASE.md)
 
+### Launch day (WoW Forever live, 2026-11-04)
+
+The beta realms closed on 2026-10-23; nothing can be tested in game until the live launch on 2026-11-04. Beta results
+are not automatically valid on the live client. Order for the first sessions — stop and report at the first Lua error:
+
+1. **Client facts** (agent updates `AGENTS.md` §1 and `WOW_API_COMPAT.md` with the answers):
+   - live AddOns folder (the beta used `…\_classic_beta_\Interface\AddOns\`) — the deploy target changes with it
+   - `/dump select(4, GetBuildInfo())` → the Interface number. If it is not `16001`, the agent bumps every TOC first;
+     otherwise the addons show as "out of date"
+2. **Deploy and smoke test, all twelve addons together:** login and `/reload` without Lua errors (`…-004`, `…-005`),
+   then `/ph debug`, `/pa debug`, `/prota debug`, `/pg debug` and report the output.
+3. **Wave 1 retests** (fix exists, retest open): PT-HEAL-057 (solo window height), PT-HEAL-172 (offline member: clicks
+   cast nothing), PT-AURAS-201 (Lightning Shield click, shaman).
+4. **Wave 1 main paths** per addon in `INGAME_TESTING.md`: Installation / Laden, the main feature sections
+   (Heal: Party Frames, Click Healing, Combat · Auras: Personal, Group Buffs, Beobachten, Combat · Dungeon: Instanz,
+   Karte, Combat · Suite: Show / Hide, Themes, Combat), then Combined.
+5. **Screenshots** during step 4 (list in RELEASE.md, at least 3 per addon, one with the WoForever theme).
+6. Then the agent tags `-beta.1` per addon; the owner runs the fresh install test from the release zip
+   (`…-001`, `…-002`) and the independence test.
+
+Waiting for owner details (not wave 1): PT-AGGRO-030 and PT-GROUP-243 failed on 2026-10-18 without a note — what went
+wrong? PT-ROTA-033 needs `/prota debug` output out of combat (cooldown code freeze until then).
+
 ## 3. Channels
 
 | Channel | Role | Decision |
