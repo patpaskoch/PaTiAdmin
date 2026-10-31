@@ -2,6 +2,7 @@
 local M = {}
 
 M.SEMVER = "^%d+%.%d+%.%d+$"
+M.SEMVER_BETA = "^%d+%.%d+%.%d+%-beta%.%d+$" -- docs/RELEASE.md: betas are tagged and packaged as x.y.z-beta.N
 
 local function lines(text)
     local result = {}
@@ -84,8 +85,9 @@ function M.validate(addonName, readFile, expectedInterface)
             end
         end
     end
-    if not (meta.Version and meta.Version:match(M.SEMVER)) then
-        errors[#errors + 1] = tocName .. ": ## Version missing or not MAJOR.MINOR.PATCH (" .. tostring(meta.Version) .. ")"
+    if not (meta.Version and (meta.Version:match(M.SEMVER) or meta.Version:match(M.SEMVER_BETA))) then
+        errors[#errors + 1] = tocName .. ": ## Version missing or not MAJOR.MINOR.PATCH[-beta.N] ("
+            .. tostring(meta.Version) .. ")"
     end
     for _, key in ipairs({ "SavedVariables", "SavedVariablesPerCharacter" }) do
         for name in (meta[key] or ""):gmatch("[^,%s]+") do

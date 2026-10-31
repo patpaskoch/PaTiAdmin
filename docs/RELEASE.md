@@ -8,6 +8,8 @@ Current state per addon: [`../SUITE_STATUS.md`](../SUITE_STATUS.md).
 - **Source of truth: `## Version` in `<Addon>.toc`.** PaTiShared: its `VERSION` file (embedded, never released alone).
 - SemVer `MAJOR.MINOR.PATCH`: MAJOR = breaking change (e.g. settings reset, removed command), MINOR = feature,
   PATCH = bug fix. Pre-1.0 addons may treat MINOR as "any user-visible change". `tools/check.sh` rejects other formats.
+- Betas: `MAJOR.MINOR.PATCH-beta.N` in the TOC and the tag (e.g. `v0.7.0-beta.1`), with its own CHANGELOG heading
+  `## [0.7.0-beta.1] - YYYY-MM-DD`. Mark the GitHub draft as pre-release before publishing.
 - The version changes **only when a release is cut** — never for CI, docs or tooling changes, never "in advance".
 - Tags are per repo: `v<version>` (e.g. `v0.7.0` in the PaTiHeal repo). Older notes used `<Addon>-x.y.z`; no such tag exists.
 - Release zip: `<Addon>-<version>.zip`, containing exactly one folder `<Addon>/`.
@@ -49,6 +51,8 @@ code done → check.sh + CI green → manual WoW test → bump TOC version → c
 7. Owner opens the draft on GitHub, checks zip and notes, presses **Publish release**.
 8. Update `SUITE_STATUS.md` and regenerate [`INGAME_TEST_STATUS.md`](INGAME_TEST_STATUS.md).
 
+9. Upload the same zip to the platforms and update the pages: [`PUBLISHING.md`](PUBLISHING.md).
+
 No CurseForge/Wago upload automation until there is a concrete need and an explicit decision.
 
 ## Beta ready (per addon)
@@ -88,9 +92,8 @@ Goal: first release stable, then build on.
 
 ## Distribution checklist (GitHub, CurseForge, Wago)
 
-Waves, channels and the support model: [`LAUNCH.md`](LAUNCH.md).
-
-Prepared, not done — no accounts, no uploads without an explicit task.
+Waves, channels and the support model: [`LAUNCH.md`](LAUNCH.md). Platform setup, uploads, updates and page content:
+[`PUBLISHING.md`](PUBLISHING.md). No uploads without an explicit task.
 
 | Item | Where it comes from | State |
 |---|---|---|

@@ -65,6 +65,13 @@ describe("toc.validate", function()
         assert.matches("Version", errors[1])
     end)
 
+    it("accepts a beta version x.y.z-beta.N and rejects other suffixes", function()
+        files["PaTiDemo.toc"] = VALID:gsub("0%.1%.0", "0.1.0-beta.1")
+        assert.equal(0, #toc.validate("PaTiDemo", reader(files)))
+        files["PaTiDemo.toc"] = VALID:gsub("0%.1%.0", "0.1.0-rc1")
+        assert.matches("Version", toc.validate("PaTiDemo", reader(files))[1])
+    end)
+
     it("warns about an Interface different from the suite", function()
         local _, warnings = toc.validate("PaTiDemo", reader(files), "11507")
         assert.matches("differs", warnings[1])

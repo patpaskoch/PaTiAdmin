@@ -3,6 +3,7 @@
 Owner decision 2026-10-19: "you decide" — the agent chose the first wave, the channels and the support model below.
 Binding together with [`RELEASE.md`](RELEASE.md) (beta gate, beta freeze, distribution checklist). Nothing here
 overrides the beta gate: an addon goes public only when its main paths are `✅ VERIFIED` in game.
+Current status, the to-do list and the income rules: [`BUSINESS_PLAN.md`](BUSINESS_PLAN.md).
 
 ## 1. Positioning
 
