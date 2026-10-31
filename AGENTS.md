@@ -3,6 +3,20 @@
 Binding for every coding agent (Claude Code, Codex, local LLMs) and for humans.
 Short on purpose; details live in [`docs/`](docs/). If a rule here and a doc disagree, this file wins — then fix the doc.
 
+## 0. Home OS Standards
+
+Global rules: Home OS Standards (`~/.home-os/standards/`). WoW addon rules: `~/.home-os/standards/wow-addons.md`.
+This file wins on conflict and also applies where Home OS is not installed. How the two fit together:
+
+- **Default branch:** `main`. **Base branch:** `main`. **Deploying branches:** none; a pushed tag `v*.*.*` only creates
+  a draft release, and the owner publishes it.
+- **Git:** feature branch and pull request, conventional commit messages. Release commits follow
+  [`docs/RELEASE.md`](docs/RELEASE.md) directly on `main`.
+- **Work items:** [`docs/FOLLOW_UPS.md`](docs/FOLLOW_UPS.md) is the backlog; concrete tasks are GitHub issues. Agents
+  implement only issues labelled `ready` or items the owner names.
+- **Review:** §15 applies. Prefer a different agent or model; if none is available, use a fresh `code-reviewer`.
+- **Final output:** §17 replaces the Home OS summary.
+
 ## 1. What this is
 
 PaTiSuite = small, independent World of Warcraft addons for one player/developer, running on the
