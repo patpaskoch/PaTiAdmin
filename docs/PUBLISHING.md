@@ -103,7 +103,7 @@ beim Einrichten siehst, wird hier nachgetragen.
 ### Ko-fi
 
 **Stand 2026-11-03 (vom Owner gemeldet):** Seite **[ko-fi.com/patiaddons](https://ko-fi.com/patiaddons)** steht:
-Name „PaTiSuite“, PaTiSuite-Logo, Bio (englisch, Link zu GitHub). Offen: Zahlungsanbieter verbunden? `FUNDING.yml` und
+Name „PaTiSuite“, PaTiSuite-Logo, Bio (englisch, Link zu GitHub). PayPal verbunden. Offen: `FUNDING.yml` und
 README-Abschnitt „Support“ (Agent).
 
 - Konto anlegen und Stripe oder PayPal verbinden.
