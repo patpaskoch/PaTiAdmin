@@ -70,7 +70,8 @@ beim Einrichten siehst, wird hier nachgetragen.
   | PaTiHeal | `kNMPjjGz` |
   | PaTiSuite | `96EXmaNg` |
 
-- Alle vier Projekte zeigen noch das Standard-Wago-Logo: Projekt-Logo (`assets/icon-512.png`) in den Settings hochladen.
+- Projekt-Logos hochgeladen (2026-11-03, vom Owner gemeldet): `assets/icon-512.png` des jeweiligen Addons, über die
+  Settings des Projekts.
   Projektseite hat die Reiter About, Releases, Gallery, Settings, Analytics; Upload über „New Release“.
 - Die Beschreibung ist aus der README übernommen. Das Logo erscheint dort nur als Text „PaTiAuras icon“ (relativer
   Bildpfad). Für Wago eine absolute Bild-URL verwenden oder die Zeile entfernen.
