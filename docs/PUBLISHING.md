@@ -102,6 +102,10 @@ beim Einrichten siehst, wird hier nachgetragen.
 
 ### Ko-fi
 
+**Stand 2026-11-03 (vom Owner gemeldet):** Seite **[ko-fi.com/patiaddons](https://ko-fi.com/patiaddons)** steht:
+Name „PaTiSuite“, PaTiSuite-Logo, Bio (englisch, Link zu GitHub). Offen: Zahlungsanbieter verbunden? `FUNDING.yml` und
+README-Abschnitt „Support“ (Agent).
+
 - Konto anlegen und Stripe oder PayPal verbinden.
 - Einmalige Spenden kosten laut Drittquellen keine Plattformgebühr; die Zahlungsanbieter berechnen aber Gebühren.
 - Seite kurz halten: PaTiSuite, Logo, Link zu GitHub. Kostenlos bleibt kostenlos; keine Gegenleistung für Spenden.
