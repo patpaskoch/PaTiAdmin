@@ -53,7 +53,8 @@ beim Einrichten siehst, wird hier nachgetragen.
 - Mit genau einem Konto arbeiten.
 - Projekt im Developer-Bereich anlegen. Die Projekt-ID hat 8 Zeichen und steht unter dem Addon-Namen.
 - Version hochladen: Label, Stabilität (`stable`, `beta`, `alpha`), Changelog, unterstützter Patch.
-- Prüfen: Forever als Patch wählbar? Die öffentliche Doku nennt bisher nur Retail, WotLK, BC und Classic.
+- **Forever ist wählbar** (Formular gesehen 2026-11-03): eigenes Feld „Supported Forever patch“. Nur dieses Feld
+  ausfüllen; Retail, MoP, Cataclysm, WOTLKC, BCC und Classic leer lassen.
 
 **Stand 2026-11-03 (vom Owner gemeldet):**
 
@@ -63,7 +64,12 @@ beim Einrichten siehst, wird hier nachgetragen.
   Projektseite hat die Reiter About, Releases, Gallery, Settings, Analytics; Upload über „New Release“.
 - Die Beschreibung ist aus der README übernommen. Das Logo erscheint dort nur als Text „PaTiAuras icon“ (relativer
   Bildpfad). Für Wago eine absolute Bild-URL verwenden oder die Zeile entfernen.
-- Offen: Forever im Formular „New Release“ wählbar? Reward-Programm? Erst danach PaTiHeal, PaTiDungeon, PaTiSuite anlegen.
+- Formular „Create Version“ (über „New Release“), von oben nach unten: „Create from GitHub release“ (das Projekt ist
+  mit dem GitHub-Repo verknüpft und übernimmt dessen Releases) oder „Upload release file“ (Zip) · Label · je ein Feld
+  „Supported … patch“ für Retail, MoP, Cataclysm, WOTLKC, BCC, **Forever**, Classic · Stability · Changelog.
+- **Stability steht standardmäßig auf `stable`.** Für die Beta auf `beta` umstellen.
+- Offen: Welche Werte bietet das Forever-Feld (1.60.1)? Reward-Programm? Danach PaTiHeal, PaTiDungeon, PaTiSuite
+  anlegen.
 
 ### WoWInterface
 
