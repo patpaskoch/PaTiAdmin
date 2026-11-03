@@ -1,6 +1,6 @@
 # Veröffentlichen — Handbuch für Plattformen, Releases und Updates
 
-Stand: 2026-10-31. Dieses Handbuch beschreibt, wie jede Plattform eingerichtet und jedes Release veröffentlicht wird.
+Stand: 2026-11-03. Dieses Handbuch beschreibt, wie jede Plattform eingerichtet und jedes Release veröffentlicht wird.
 
 - **Abhaken:** in den [GitHub-Issues mit Label `launch`](https://github.com/patpaskoch/PaTiAdmin/issues?q=label%3Alaunch).
 - **Jedes neue Release:** ein Issue aus der Vorlage „Release-Checkliste“ anlegen.
@@ -53,9 +53,38 @@ beim Einrichten siehst, wird hier nachgetragen.
 - Mit genau einem Konto arbeiten.
 - Projekt im Developer-Bereich anlegen. Die Projekt-ID hat 8 Zeichen und steht unter dem Addon-Namen.
 - Version hochladen: Label, Stabilität (`stable`, `beta`, `alpha`), Changelog, unterstützter Patch.
-- Prüfen: Forever als Patch wählbar? Die öffentliche Doku nennt bisher nur Retail, WotLK, BC und Classic.
+- **Forever ist wählbar** (Formular gesehen 2026-11-03): eigenes Feld „Supported Forever patch“ mit dem Wert
+  `1.60.1`. Nur dieses Feld ausfüllen; Retail, MoP, Cataclysm, WOTLKC, BCC und Classic leer lassen.
+
+**Stand 2026-11-03 (vom Owner gemeldet):**
+
+- Konto besteht, Anmeldung über **Battle.net**. Nicht zusätzlich über GitHub anmelden: das kann ein zweites Konto
+  anlegen. GitHub höchstens in den Kontoeinstellungen verknüpfen, falls Wago das anbietet.
+- Projekte der Welle 1 angelegt, noch ohne Release. Projekt-IDs (öffentlich; später `X-Wago-ID` in der TOC; aus einem
+  Screenshot abgelesen, vor dem Eintrag in eine TOC auf der Projektseite gegenprüfen):
+
+  | Addon | Wago-Projekt-ID |
+  |---|---|
+  | PaTiAuras | `qGZADbKd` |
+  | PaTiDungeon | `jK8W7x6y` |
+  | PaTiHeal | `kNMPjjGz` |
+  | PaTiSuite | `96EXmaNg` |
+
+- Projekt-Logos hochgeladen (2026-11-03, vom Owner gemeldet): `assets/icon-512.png` des jeweiligen Addons, über die
+  Settings des Projekts.
+  Projektseite hat die Reiter About, Releases, Gallery, Settings, Analytics; Upload über „New Release“.
+- Die Beschreibung ist aus der README übernommen. Das Logo erscheint dort nur als Text „PaTiAuras icon“ (relativer
+  Bildpfad). Für Wago eine absolute Bild-URL verwenden oder die Zeile entfernen.
+- Formular „Create Version“ (über „New Release“), von oben nach unten: „Create from GitHub release“ (das Projekt ist
+  mit dem GitHub-Repo verknüpft und übernimmt dessen Releases) oder „Upload release file“ (Zip) · Label · je ein Feld
+  „Supported … patch“ für Retail, MoP, Cataclysm, WOTLKC, BCC, **Forever**, Classic · Stability · Changelog.
+- **Stability steht standardmäßig auf `stable`.** Für die Beta auf `beta` umstellen.
+- Offen: Reward-Programm? Verknüpfung mit GitHub bei PaTiDungeon, PaTiHeal, PaTiSuite prüfen.
 
 ### WoWInterface
+
+**Stand 2026-11-03:** Konto besteht (vom Owner gemeldet). Offen: Upload-Bedingungen, Forever in der
+Kompatibilitätsliste, Upload-Felder.
 
 - Konto anlegen und die Upload-Bedingungen lesen.
 - Datei hochladen. Das Zip darf nur den Addon-Ordner enthalten; das erfüllt `package.sh`.

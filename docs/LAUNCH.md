@@ -18,9 +18,9 @@ without big addon packs.
 
 | Wave | Addons | Why |
 |---|---|---|
-| **1** | **PaTiHeal, PaTiAuras, PaTiDungeon, PaTiSuite** | most main paths verified (Heal 22, Auras 22, Dungeon 20 tests, Dungeon without any FAIL); Heal + Auras are the most useful for groups; Dungeon's hand-drawn map is unique; PaTiSuite ties the family together and shows the themes |
+| **1** | **PaTiHeal, PaTiAuras, PaTiDungeon, PaTiSuite, PaTiAggro** | most main paths verified (Heal 22, Auras 22, Dungeon 20 tests, Dungeon without any FAIL); Heal + Auras are the most useful for groups; Dungeon's hand-drawn map is unique; PaTiSuite ties the family together and shows the themes; PaTiAggro added on the owner's wish (2026-11-03) — it is released only when its main paths pass on the live client |
 | **2** | PaTiChronicle, PaTiRota, PaTiSocial, PaTiGroup | Chronicle is the showcase ("Every run tells a story") but has no verified test yet; Rota has two open FAILs; Social and Group need more main-path tests |
-| **3** | PaTiAggro, PaTiLead, PaTiQuest, PaTiAlerts | few verified tests so far; Aggro and Lead have open FAILs |
+| **3** | PaTiLead, PaTiQuest, PaTiAlerts | few verified tests so far; Lead has open FAILs |
 
 A wave starts when every addon in it meets the beta gate. Wave 2 follows about four weeks after wave 1 at the earliest,
 so that bug reports of wave 1 are handled first.
@@ -28,7 +28,7 @@ so that bug reports of wave 1 are handled first.
 ### Wave 1 — what is still missing (per addon)
 
 - [ ] Main paths `✅ VERIFIED`: installation/loading (`…-001`–`…-005`), the main feature sections, Combat / Sicherheit
-- [ ] Open FAIL assessed: PT-HEAL-057 (solo window height), PT-AURAS-201 (Lightning Shield) — retest or accept in Known Issues
+- [ ] Open FAIL assessed: PT-HEAL-057 (solo window height), PT-AURAS-201 (Lightning Shield), PT-AGGRO-030 (hint "not the tank's target") — retest or accept in Known Issues
 - [ ] Fresh install from the release zip, the independence test and the combined test (TESTING.md)
 - [ ] Screenshots from the list in RELEASE.md (at least 3 per addon, one with the WoForever theme)
 - [ ] Version: stable 1.0.0 only after the beta; the beta is tagged `-beta.N` (RELEASE.md)
@@ -45,15 +45,15 @@ are not automatically valid on the live client. Order for the first sessions —
 2. **Deploy and smoke test, all twelve addons together:** login and `/reload` without Lua errors (`…-004`, `…-005`),
    then `/ph debug`, `/pa debug`, `/prota debug`, `/pg debug` and report the output.
 3. **Wave 1 retests** (fix exists, retest open): PT-HEAL-057 (solo window height), PT-HEAL-172 (offline member: clicks
-   cast nothing), PT-AURAS-201 (Lightning Shield click, shaman).
+   cast nothing), PT-AURAS-201 (Lightning Shield click, shaman), PT-AGGRO-020 ("0 %" on an enemy not yet attacked).
 4. **Wave 1 main paths** per addon in `INGAME_TESTING.md`: Installation / Laden, the main feature sections
    (Heal: Party Frames, Click Healing, Combat · Auras: Personal, Group Buffs, Beobachten, Combat · Dungeon: Instanz,
-   Karte, Combat · Suite: Show / Hide, Themes, Combat), then Combined.
+   Karte, Combat · Suite: Show / Hide, Themes, Combat · Aggro: Basic HUD, Aggro Control, Rollen, Anzeige, Combat — best in a dungeon, as tank and as healer/damage), then Combined.
 5. **Screenshots** during step 4 (list in RELEASE.md, at least 3 per addon, one with the WoForever theme).
 6. Then the agent tags `-beta.1` per addon; the owner runs the fresh install test from the release zip
    (`…-001`, `…-002`) and the independence test.
 
-Waiting for owner details (not wave 1): PT-AGGRO-030 and PT-GROUP-243 failed on 2026-10-18 without a note — what went
+Waiting for owner details: PT-AGGRO-030 (wave 1) and PT-GROUP-243 failed on 2026-10-18 without a note — what went
 wrong? PT-ROTA-033 needs `/prota debug` output out of combat (cooldown code freeze until then).
 
 ## 3. Channels
