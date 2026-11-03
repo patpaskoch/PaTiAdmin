@@ -60,7 +60,17 @@ beim Einrichten siehst, wird hier nachgetragen.
 
 - Konto besteht, Anmeldung über **Battle.net**. Nicht zusätzlich über GitHub anmelden: das kann ein zweites Konto
   anlegen. GitHub höchstens in den Kontoeinstellungen verknüpfen, falls Wago das anbietet.
-- Projekt **PaTiAuras** existiert, Projekt-ID `qGZADbKd` (öffentlich; später `X-Wago-ID` in der TOC). Noch kein Release.
+- Projekte der Welle 1 angelegt, noch ohne Release. Projekt-IDs (öffentlich; später `X-Wago-ID` in der TOC; aus einem
+  Screenshot abgelesen, vor dem Eintrag in eine TOC auf der Projektseite gegenprüfen):
+
+  | Addon | Wago-Projekt-ID |
+  |---|---|
+  | PaTiAuras | `qGZADbKd` |
+  | PaTiDungeon | `jK8W7x6y` |
+  | PaTiHeal | `kNMPjjGz` |
+  | PaTiSuite | `96EXmaNg` |
+
+- Alle vier Projekte zeigen noch das Standard-Wago-Logo: Projekt-Logo (`assets/icon-512.png`) in den Settings hochladen.
   Projektseite hat die Reiter About, Releases, Gallery, Settings, Analytics; Upload über „New Release“.
 - Die Beschreibung ist aus der README übernommen. Das Logo erscheint dort nur als Text „PaTiAuras icon“ (relativer
   Bildpfad). Für Wago eine absolute Bild-URL verwenden oder die Zeile entfernen.
@@ -68,8 +78,7 @@ beim Einrichten siehst, wird hier nachgetragen.
   mit dem GitHub-Repo verknüpft und übernimmt dessen Releases) oder „Upload release file“ (Zip) · Label · je ein Feld
   „Supported … patch“ für Retail, MoP, Cataclysm, WOTLKC, BCC, **Forever**, Classic · Stability · Changelog.
 - **Stability steht standardmäßig auf `stable`.** Für die Beta auf `beta` umstellen.
-- Offen: Reward-Programm? Danach PaTiHeal, PaTiDungeon, PaTiSuite
-  anlegen.
+- Offen: Reward-Programm? Verknüpfung mit GitHub bei PaTiDungeon, PaTiHeal, PaTiSuite prüfen.
 
 ### WoWInterface
 
