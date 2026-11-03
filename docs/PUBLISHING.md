@@ -83,8 +83,17 @@ beim Einrichten siehst, wird hier nachgetragen.
 
 ### WoWInterface
 
-**Stand 2026-11-03:** Konto besteht (vom Owner gemeldet). Offen: Upload-Bedingungen, Forever in der
-Kompatibilitätsliste, Upload-Felder.
+**Stand 2026-11-03 (vom Owner gesehen):**
+
+- Konto besteht. Upload über Author → „Upload & Update“: „Upload New Interface/Addon“ (Kategorie wählen, „Go“) für den
+  ersten Upload, „Update Addon/File“ für spätere Versionen.
+- Kategorien: „Addons for WoW Classic“ (Cataclysm Classic, The Burning Crusade Classic, Classic - General, WOTLK
+  Classic) und Stand-Alone-Kategorien nach Art (z. B. Buff, Debuff, Spell · Class & Role Specific → Healers, Tank,
+  DPS). **Keine eigene Forever-Kategorie.** Ob Forever im Upload-Formular als Kompatibilität wählbar ist: offen.
+- API: Control Panel → Token Manager („AddOn update API“, „Addon Packager Proxy“). Die API aktualisiert nur Addons,
+  die schon auf WoWInterface liegen; der erste Upload ist immer manuell. Token erst bei der Automatisierung erzeugen,
+  nur als GitHub-Secret ablegen.
+- Offen: Upload-Bedingungen lesen, Kompatibilitätsfeld im Formular prüfen, Felder notieren.
 
 - Konto anlegen und die Upload-Bedingungen lesen.
 - Datei hochladen. Das Zip darf nur den Addon-Ordner enthalten; das erfüllt `package.sh`.
