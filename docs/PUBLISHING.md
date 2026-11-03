@@ -1,6 +1,6 @@
 # Veröffentlichen — Handbuch für Plattformen, Releases und Updates
 
-Stand: 2026-10-31. Dieses Handbuch beschreibt, wie jede Plattform eingerichtet und jedes Release veröffentlicht wird.
+Stand: 2026-11-03. Dieses Handbuch beschreibt, wie jede Plattform eingerichtet und jedes Release veröffentlicht wird.
 
 - **Abhaken:** in den [GitHub-Issues mit Label `launch`](https://github.com/patpaskoch/PaTiAdmin/issues?q=label%3Alaunch).
 - **Jedes neue Release:** ein Issue aus der Vorlage „Release-Checkliste“ anlegen.
@@ -55,7 +55,20 @@ beim Einrichten siehst, wird hier nachgetragen.
 - Version hochladen: Label, Stabilität (`stable`, `beta`, `alpha`), Changelog, unterstützter Patch.
 - Prüfen: Forever als Patch wählbar? Die öffentliche Doku nennt bisher nur Retail, WotLK, BC und Classic.
 
+**Stand 2026-11-03 (vom Owner gemeldet):**
+
+- Konto besteht, Anmeldung über **Battle.net**. Nicht zusätzlich über GitHub anmelden: das kann ein zweites Konto
+  anlegen. GitHub höchstens in den Kontoeinstellungen verknüpfen, falls Wago das anbietet.
+- Projekt **PaTiAuras** existiert, Projekt-ID `qGZADbKd` (öffentlich; später `X-Wago-ID` in der TOC). Noch kein Release.
+  Projektseite hat die Reiter About, Releases, Gallery, Settings, Analytics; Upload über „New Release“.
+- Die Beschreibung ist aus der README übernommen. Das Logo erscheint dort nur als Text „PaTiAuras icon“ (relativer
+  Bildpfad). Für Wago eine absolute Bild-URL verwenden oder die Zeile entfernen.
+- Offen: Forever im Formular „New Release“ wählbar? Reward-Programm? Erst danach PaTiHeal, PaTiDungeon, PaTiSuite anlegen.
+
 ### WoWInterface
+
+**Stand 2026-11-03:** Konto besteht (vom Owner gemeldet). Offen: Upload-Bedingungen, Forever in der
+Kompatibilitätsliste, Upload-Felder.
 
 - Konto anlegen und die Upload-Bedingungen lesen.
 - Datei hochladen. Das Zip darf nur den Addon-Ordner enthalten; das erfüllt `package.sh`.
