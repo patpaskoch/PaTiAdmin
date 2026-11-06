@@ -14,6 +14,7 @@
    - `code/CLAUDE.md` containing `@PaTiAdmin/AGENTS.md` (Claude Code reads CLAUDE.md in parent folders)
    - `code/AGENTS.md` pointing to `PaTiAdmin/AGENTS.md` (Codex started in `code/`)
    - every repo's own `AGENTS.md` starts with a link to the suite rules.
+5. Global agent rules: clone `home-os-standards` and run `./install.sh` (private repo; see `AGENTS.md` §0).
 
 ## Daily loop
 
