@@ -125,12 +125,24 @@ grep -n '\[x\]' PaTiAddons/PaTiAggro/INGAME_TESTING.md   # what is confirmed for
 
 "Does the downloaded zip work like for a stranger?" Per addon, once per release candidate:
 
-1. Build the zip: `PaTiAdmin/tools/package.sh ../PaTiAddons/<Addon>` (or take it from the draft release).
-2. Unpack it: exactly one folder `<Addon>/` must appear, with `<Addon>.toc` directly inside.
-3. Move every PaTi folder out of `Interface/AddOns/` (keep `WTF/` — or also test once with its SavedVariables removed).
+**Use the release asset**, not GitHub's green **Code → Download ZIP** or automatically offered
+**Source code (zip)**. Those are source snapshots and GitHub names their outer folders
+`<Addon>-main/` or `<Addon>-<tag>/`; they are not the installation packages. The intended
+player download is `Releases → <version> → Assets → <Addon>-<version>.zip`.
+The release asset must work **without renaming, moving individual files or removing a wrapper folder**.
+
+1. Download `<Addon>-<version>.zip` from the actual GitHub draft/release **Assets** as a player would.
+   If no draft asset exists yet, build it with `PaTiAdmin/tools/package.sh ../PaTiAddons/<Addon>`,
+   then repeat the test with the downloaded GitHub asset before publishing.
+2. Unpack it: exactly one folder `<Addon>/` must appear, with `<Addon>.toc` directly inside;
+   reject `<Addon>-main/`, `<Addon>-<version>/`, nested `<Addon>/<Addon>/`, or any need to rename folders.
+3. Move every PaTi folder out of the active WoW Forever client's `Interface/AddOns/`
+   (keep `WTF/` — or also test once with its SavedVariables removed).
 4. Copy only `<Addon>/` into `Interface/AddOns/`, start WoW, enable only this addon.
 5. Login: the addon is listed with its description and loads; no Lua error.
 6. `/reload`; open the main window and the settings (`/<cmd> settings`); `/<cmd> test`; no Lua error.
+7. Record the downloaded asset name/version, success or failure and any observed errors in
+   the addon's `INGAME_TESTING.md`. Only the owner's real-client confirmation may mark tests VERIFIED.
 
 **Independence test:** the fresh install test once for each addon alone (PaTiHeal, PaTiAuras, PaTiAggro, PaTiRota,
 PaTiGroup, PaTiLead, PaTiQuest, PaTiDungeon, PaTiAlerts, PaTiSocial, PaTiChronicle). **Combined test:** all together: every window opens, every slash command answers the right
