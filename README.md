@@ -40,6 +40,6 @@ Stand und Release-Reife: [`SUITE_STATUS.md`](SUITE_STATUS.md) · Ingame-Tests:
 
 - Regeln für alle Agenten und Menschen: [`AGENTS.md`](AGENTS.md)
 - Doku: [`docs/`](docs/) — Architektur, Entwicklung, Tests, Übersetzungen, WoW-API, Release, Follow-ups
-- Prüfungen: `tools/check.sh` (lokal und in CI), Release-ZIP: `tools/package.sh`
+- Prüfungen: `tools/check.sh` (lokal und in CI), Release-ZIP: `tools/package.sh`, ins lokale Spiel kopieren: `tools/install-local.sh`
 - Vorlagen für die Addon-Repos: `templates/ci.yml`, `templates/release.yml` (Entwurfs-Release bei Tag `vX.Y.Z`),
   `templates/ISSUE_TEMPLATE/bug_report.md`
