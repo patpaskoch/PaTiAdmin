@@ -2,15 +2,21 @@
 """Read-only cross-addon focus view; never changes INGAME_TESTING.md."""
 import argparse
 import csv
+import os
 import pathlib
 import re
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 MAPPING = ROOT / "docs" / "INGAME_TEST_FOCUS.tsv"
-ADDONS = ROOT.parent / "PaTiAddons"
+ADDONS = pathlib.Path(os.environ.get("PATI_ADDONS_DIR") or ROOT.parent / "PaTiAddons")
 TEST_RE = re.compile(r"^- \[([ x])\] (PT-[A-Z]+-\d{3}) (.*)$")
 DATE_RE = re.compile(r"VERIFIED \d{4}-\d\d-\d\d")
+
+
+def read_manifest(path):
+    # Line endings differ between Git checkouts (autocrlf); the content decides.
+    return path.read_bytes().replace(b"\r\n", b"\n")
 
 
 def parse_tests(path):
@@ -38,12 +44,12 @@ def main():
     with MAPPING.open(encoding="utf-8", newline="") as source:
         mapping = list(csv.DictReader(
             (line for line in source if not line.startswith("#")),
-            fieldnames=["repo", "test_id", "category", "evidence"]))
+            fieldnames=["repo", "test_id", "category", "evidence"], delimiter="	"))
     heal_dir = ADDONS / "PaTiHeal"
     if not (heal_dir / "INGAME_TESTING.md").is_file():
         print("Missing PaTiHeal/INGAME_TESTING.md. Checkout all repos alongside PaTiAdmin.", file=sys.stderr)
         return 2
-    reference_manifest = (heal_dir / "Shared" / ".manifest").read_bytes()
+    reference_manifest = read_manifest(heal_dir / "Shared" / ".manifest")
     heal_tests = parse_tests(heal_dir / "INGAME_TESTING.md")
     cache = {}
     items = []
@@ -57,7 +63,7 @@ def main():
             if not path.is_file() or not manifest.is_file():
                 print(f"Missing test file or Shared manifest: {repo}", file=sys.stderr)
                 return 2
-            cache[repo] = (parse_tests(path), manifest.read_bytes() == reference_manifest)
+            cache[repo] = (parse_tests(path), read_manifest(manifest) == reference_manifest)
         tests, same_shared = cache[repo]
         test = tests.get(record["test_id"])
         if test is None:
