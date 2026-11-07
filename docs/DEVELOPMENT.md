@@ -20,7 +20,8 @@
 ```
 edit in <code>/...                        (your clone folder; never in the WoW AddOns folder)
 PaTiAdmin/tools/check.sh <repo folder>    (or no argument = everything)
-copy the addon's package files (tools/package.sh --dry-run lists them) to <WoW>/_classic_beta_/Interface/AddOns/<Addon>/
+PaTiAdmin/tools/install-local.sh <repo folder>   (package files → <WoW>/_classic_beta_/Interface/AddOns/<Addon>/;
+                                          path: $PATI_WOW_ADDONS or ~/.config/pati/wow-addons)
 /reload in game, test, note what you tested
 commit (one topic), CHANGELOG under [Unreleased] if user-visible
 ```

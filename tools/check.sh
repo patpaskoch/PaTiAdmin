@@ -66,6 +66,15 @@ for target in "${targets[@]}"; do
         if echo "$specs" | "$LUA" "$RUN" test "$ADMIN/tests/mocks"; then record PASS tests "$name"; else record FAIL tests "$name"; fi
     else record NONE tests "$name (no *_spec.lua)"; fi
 
+    # PaTiAdmin's shell tools: tests/*_test.sh (e.g. install-local.sh against a temp folder).
+    if [ "$target" = "$ADMIN" ]; then
+        for script in tests/*_test.sh; do
+            [ -f "$script" ] || continue
+            if bash "$script"; then record PASS tools "$name ($(basename "$script"))"
+            else record FAIL tools "$name ($(basename "$script"))"; fi
+        done
+    fi
+
     if echo "$files" | grep -qE '^(Locales|Shared/Locales|src/Locales)/'; then
         if echo "$files" | "$LUA" "$RUN" locales; then record PASS locales "$name"; else record FAIL locales "$name"; fi
     else record NONE locales "$name (no Locales/ yet)"; fi
