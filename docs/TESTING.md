@@ -121,6 +121,19 @@ PaTiAdmin/tools/ingame-status.sh --list open         # everything never tested y
 grep -n '\[x\]' PaTiAddons/PaTiAggro/INGAME_TESTING.md   # what is confirmed for PaTiAggro
 ```
 
+## Shared-code evidence versus addon verification
+
+For recurring PaTiShared UI controls, use the curated [shared in-game test focus](SHARED_INGAME_TESTING.md)
+and `tools/ingame-focus.py --list shared`. The tool compares each addon's embedded
+`Shared/.manifest` to PaTiHeal and checks the reference owner's verified test IDs.
+Matching code may reduce redundant full UI test passes, **but never changes the canonical
+`[ ]` status for another addon**. Its addon integration and each release's fresh-install,
+combat/secure, and feature tests still need owner confirmation.
+
+Quick per-addon checks: `python3 PaTiAdmin/tools/ingame-focus.py --list smoke`.
+The TSV mapping is explicit per permanent test ID and does not infer equivalence from
+filenames or addon names. The existing `ingame-status.sh` remains the sole state/count tool.
+
 ## Fresh install test
 
 "Does the downloaded zip work like for a stranger?" Per addon, once per release candidate:
