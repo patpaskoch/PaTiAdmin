@@ -172,6 +172,13 @@ in-game test that confirms it.
 | `C_AssistedCombat` (Blizzard's own rotation helper) | **present but not available (owner `/dump` 2026-10-03)**: functions `IsAvailable`, `GetActionSpell`, `GetNextCastSpell`, `GetRotationSpells` exist; `IsAvailable()` → `false, "WRONG_WORLD_STATE_EXPRESSION"`, `GetNextCastSpell()` → empty | switched off in this client — not usable for PaTiRota |
 | `Button:SetEnabled()` on a plain button inside a window with secure children, in combat | **observed blocked** (taint.log 2026-09-28: "An action was blocked in combat because of taint … Button:SetEnabled()") | PaTiLead fixed 2026-10-03: no `SetEnabled` in combat; rule for all windows with secure children |
 
+## Client news (weekly audit)
+
+- 2026-11-08: WoW Forever is live since 2026-11-04 (owner/reports); reported build 1.60.1.70790, Interface 16001 — **not verified
+  here**. The warcraft.wiki.gg page "Patch 1.60.1/API changes" was an empty stub on 2026-11-08 and the wiki lists Forever 1.60.1 as
+  build 69913 (https://warcraft.wiki.gg/wiki/Patch_1.60.1/API_changes). No Blizzard announcement about addon API, secure/protected
+  or combat-lockdown changes was found. Retail/Classic Era notes are not applied. See FOLLOW_UPS F37.
+
 ## Rules that hold regardless of client
 
 - Protected functions and secure attributes: never during `InCombatLockdown()`.

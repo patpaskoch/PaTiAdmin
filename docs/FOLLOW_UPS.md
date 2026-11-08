@@ -153,3 +153,61 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
 - Smallest solution: move painting (`paintTarget`, `paintSelf`, `paintAggro`, rows) into `View.lua` — after the
   owner's first in-game tests of the role views, so a regression can be told apart.
 - Risk: low (no secure frames) · Tests: existing unit tests + PT-AGGRO-010–016.
+
+## Weekly audit 2026-11-08 (new entries)
+Found by the weekly audit. Entries marked "check first" come from the first audit attempt (which could not push) and
+state only what is certain from the code today; re-read the named code before starting.
+
+### F37 · Client: live build / folder name — low · open (check first)
+- Problem: the live client (WoW Forever, live since 2026-11-04) reports another build than the documented 1.60.1.70009 (reports mention 70790); the AddOns folder name in the docs may differ from the beta folder (`_classic_beta_`).
+- Affected code: `docs/WOW_API_COMPAT.md` (client build row), README install texts, `docs/TESTING.md`.
+- Why it matters: players on the live client could look in the wrong folder; a build change may change API behaviour.
+- Smallest solution: the owner runs `/prota debug` (prints build) on the live client; docs updated with the observed value and folder.
+- Alternative without refactor: none. Risk: low · Tests: manual · Priority: low.
+
+### F38 · Blizzard bug: key bindings reset — low · open, documentation only (check first)
+- Problem: reports of the client resetting key bindings (Bindings.xml actions of PaTiLead / PaTiRota). Not verified here.
+- Why it matters: players may think our addons lose their bindings; we never call SaveBindings (AGENTS.md §8).
+- Smallest solution: one README/Known Issues sentence once the owner sees it in game. Risk: none. Priority: low.
+
+### F39 · PaTiAggro: nameplate markers and height difference — low · open (check first)
+- Problem: `Plates.lua` marks nameplates of enemies; enemies on another height level (stairs, balconies) may carry a number that is hard to relate to a visible target.
+- Affected code: `PaTiAggro/Plates.lua`. Smallest solution: collect cases in game first; no change on assumption.
+- Alternative without refactor: none needed. Risk: low · Tests: manual · Priority: low.
+
+### F40 · `GetFrameStrata` / strata of PaTi windows — low · open (check first)
+- Problem: PaTi windows and secure overlay buttons (PaTiGroup, PaTiAlerts, PaTiAuras) sit in strata that can end up above or below Blizzard frames or each other.
+- Smallest solution: one strata decision in PaTiShared `Window.lua` and a sync; owner decides. Risk: low · Priority: low.
+
+### F41 · Performance review of PaTiAggro / PaTiGroup / PaTiAuras / PaTiHeal — low · open (check first)
+- Problem: the OnUpdate frames (`PaTiAggro.lua` scheduler, `PaTiAuras/AuraWindow.lua` ticker, `PaTiAuras.lua` weaponCheck, `PaTiHeal.lua` hotTicker) are throttled, but no measurement in a busy 5-man exists.
+- Smallest solution: owner checks `/dump GetAddOnCPUUsage` style numbers (if `scriptProfile` on) in a busy fight; fix only what shows up. Risk: low · Priority: low.
+
+### F42 · PaTiLead: language change in combat — low · open (check first)
+- Problem: `UI.SetLanguage` rewrites button/secure-frame texts; changing the language in combat could touch protected frames.
+- Affected code: `PaTiLead/PaTiLead.lua` (settings language dropdown, lines ~142 and ~229).
+- Smallest solution: block the language dropdown in combat (pattern: PaTiAuras `combatBlocked`). Risk: low · Tests: manual · Priority: low.
+
+### F43 · PaTiDungeon: sketch map — low · open (check first)
+- Problem: the hand-drawn map (`Sketch.lua`) stores cells per instance in SavedVariables without a size limit.
+- Smallest solution: cap cells per sketch in `Logic` cleaning (+ test). Risk: low · Priority: low.
+
+### F44 · PaTiSocial — low · open (check first)
+- Problem: chat/emote actions depend on a hardware click and group state; behaviour with the live client is unconfirmed (see WOW_API_COMPAT "Rules that hold regardless of client").
+- Smallest solution: owner tests PT-SOCIAL IDs on the live client. Risk: low · Priority: low.
+
+### F45 · PaTiShared: OnDragStop and themes — low · open (check first)
+- Problem: `Modal.lua:307` and `Window.lua:134` end dragging in `OnDragStop`; a drag released outside the frame or interrupted by combat/hide may leave `StartMoving` active. Themes are applied by several addons separately.
+- Smallest solution: also call `StopMovingOrSizing` in `OnHide`; keep themes as they are. Change in PaTiShared + `sync-shared.sh --all`. Risk: low · Priority: low.
+
+### F46 · PaTiChronicle: file growth — low · open
+- Problem: `Report.lua` has 517 lines (limit ~400, AGENTS.md §5), `PaTiChronicle.lua` 395, `Timeline`/`Run` ~300.
+- Smallest solution: split the Overview building blocks of `Report.lua` into their own file when the report is next touched. Risk: low · Tests: existing specs · Priority: low.
+
+### F47 · Small things — low · open (check first)
+- Collected minor points (wording, doc links) without behaviour effect. Smallest solution: handle together with the next doc change. Priority: low.
+
+### F48 · Audit 2026-11-08: fixes made, awaiting in-game test — FIXED IN CODE, awaiting in-game test
+- PaTiAlerts filters could not be ticked again (PT-ALERTS-045) · PaTiAggro raw key "OTHER" (PT-TANK-065 retest) · PaTiAuras Restore
+  Defaults in combat (PT-AURAS-124) · PaTiHeal target row dead/alive state (PT-HEAL-173) · PaTiChronicle Migrate/probe/death check
+  (PT-CHRON-027 retest) · PaTiLead marker/note validation (unit tests only) · PaTiRota hidden-window repaint (PT-ROTA-071).
