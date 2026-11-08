@@ -58,6 +58,10 @@ imbues: `/pa auras` once without and once with the imbue).
 
 Every concrete test lives in exactly one place: the addon's `INGAME_TESTING.md` (below). This file only has the rules.
 
+Helper for routine checks: the developer tool [PaTiTest](https://github.com/patpaskoch/PaTiTest#readme) (`/patitest`: loaded,
+Lua errors, slash commands, window show/hide, position after `/reload`). Its results are evidence for the owner,
+not a ticked test: the owner still confirms each `INGAME_TESTING.md` entry.
+
 ## In-game test files
 
 Every runtime addon (PaTiHeal, PaTiAuras, PaTiAggro, PaTiRota, PaTiGroup, PaTiLead, PaTiQuest, PaTiDungeon, PaTiSocial,

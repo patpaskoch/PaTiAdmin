@@ -31,7 +31,8 @@ it is — never into two, never into PaTiAdmin (not a player addon).
     ├── PaTiAlerts/   open problems reported by the others (optional receiver) /pal /palerts
     ├── PaTiSocial/   "Party Social": quick emote and message buttons         /psocial /patisocial
     ├── PaTiChronicle/ dungeon run chronicle: run report, best times, achievements (formerly PaTiCompetition) /pchron
-    └── PaTiSuite/    optional control panel: show/hide the others' windows   /psuite /patisuite
+    ├── PaTiSuite/    optional control panel: show/hide the others' windows   /psuite /patisuite
+    └── PaTiTest/     developer self-check of the installed addons, never released /patitest
 ```
 Each addon repo: `<Addon>.toc`, `<Addon>.lua` (+ `Logic.lua` and further files per responsibility), `Locales/`,
 embedded `Shared/`, `tests/`, `README.md`, `CHANGELOG.md`, `AGENTS.md`, `INGAME_TESTING.md`,
@@ -58,6 +59,9 @@ Architecture and data flow: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
   Other addons' frames are only read (position, visibility) or shown/hidden through their own `SetSuiteShown`;
   owner-approved (2026-10-03): the theme may be switched through their own `SetSuiteTheme(id)` (the addon stores it).
   No other cross-addon global.
+- Owner-approved (2026-11-08): the developer tool PaTiTest (own repo `PaTiAddons/PaTiTest`, never released) reads
+  the addon list, `SLASH_*` globals and `PaTiSuiteWindows`, and shows/hides windows through their own
+  `SetSuiteShown` for `/patitest` ([README](https://github.com/patpaskoch/PaTiTest#readme)).
 
 ## 4. Before editing — every time
 
