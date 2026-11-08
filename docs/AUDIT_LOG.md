@@ -7,7 +7,7 @@ Neuester Eintrag oben.
 ### 1. Zusammenfassung
 Der Lauf hat technisch funktioniert: Schreibrechte sind da, alle Prüfungen (`check.sh`) waren vorher und nachher grün. Der Lauf vom
 2026-11-08 (erster Versuch, ohne Push) wurde nachgeholt: sieben Fehler in sieben Addons sind behoben, dazu neue Einträge in
-FOLLOW_UPS. Im Internet gab es keine überprüfbaren neuen API-Änderungen. Eine gründliche neue Code-Durchsicht aller Repos war in
+FOLLOW_UPS. Im Internet gab es (nach wiederholter Recherche) keine addon-relevanten Hotfixes, aber einen Hinweis auf geheime Werte bei GetFrameStrata (F40). Eine gründliche neue Code-Durchsicht aller Repos war in
 diesem Lauf nur oberflächlich möglich (Suche nach verbotenen Aufrufen); sie bleibt für den nächsten Lauf offen.
 
 ### 2. Findings im Code
@@ -27,8 +27,15 @@ diesem Lauf nur oberflächlich möglich (Suche nach verbotenen Aufrufen); sie bl
 - PaTiChronicle `Report.lua` hat 517 Zeilen (Grenze ~400). ⏳ offen (F46, kleines Refactoring später).
 
 ### 3. Neuigkeiten aus dem Internet
-- Die Wiki-Seite „Patch 1.60.1/API changes“ ist leer ([Quelle](https://warcraft.wiki.gg/wiki/Patch_1.60.1/API_changes)); sie nennt für Forever
-  Build 69913. Zum Live-Build 70790 und zu Hotfixes dieser Woche wurde nichts Belegbares gefunden. Keine Auswirkung auf unsere Addons erkennbar.
+(Nachtrag: Recherche mit mehr Suchen wiederholt; die erste hatte nur zwei Anfragen und war zu dünn.)
+- Blizzard hat am 5./6. November Hotfixes für WoW Forever veröffentlicht: Quests, Beute, Gegner-Spawns, kleine Klassenänderungen. Nichts davon betrifft
+  Addons ([Quelle](https://news.blizzard.com/en-gb/article/24315281/wow-forever-hotfixes-november-6-2026)).
+- Aktueller Build laut Tracker: 1.60.1.70862 ([Quelle](https://forevermastery.com/en/guides/wow-forever-patch-notes)). Der bisher genannte Build 70790 ließ sich nicht bestätigen.
+- Die Addon-Einschränkungen von „Midnight“ (geheime Werte, Kampflog für Addons gesperrt) gelten laut Community-Anleitungen auch in Forever
+  ([Quelle](https://wowforevertierlist.com/addons/restrictions)). Das passt zu unseren Regeln; nichts zu ändern.
+- Laut API-Notizen zu 1.60.1 kann `GetFrameStrata` jetzt einen geheimen Wert liefern ([Quelle](https://warcraft.wiki.gg/wiki/Patch_1.60.1/API_changes/notes)).
+  Zwei Stellen geben ihn direkt an `SetFrameStrata` weiter (PaTiAlerts, PaTiGroup). Nicht belegt, ob das stört → Todo F40, im Spiel prüfen.
+- Alles stammt aus Websuche und Community-Seiten, nicht aus dem Spiel selbst; im Wiki konnte ich die Seite wegen Netzsperre nicht direkt lesen.
 
 ### 4. Umgesetzt
 PRs je Repo auf Branch `audit/2026-11-08` (Links siehe Abschlussnachricht/GitHub): PaTiAlerts, PaTiAggro, PaTiAuras, PaTiHeal,
@@ -42,8 +49,8 @@ Nachtrag: Der automatische Codex-Review fand nach dem Merge zwei berechtigte Pun
 - Neue Code-Durchsicht aller Repos (Taint, Hot-Paths): nur oberflächlich (keine `COMBAT_LOG_EVENT_UNFILTERED`-, `SaveBindings`-, Makro-Aufrufe gefunden).
 
 ### 6. Was im Lauf nicht funktioniert hat
-- Die Seite warcraft.wiki.gg ist im Netz dieser Sitzung nicht erreichbar; forevermastery.com lieferte keine Treffer. Patrick kann die Domains in den
-  Netzwerk-Einstellungen freigeben, wenn er genauere News will.
+- Die Seite warcraft.wiki.gg lässt sich im Netz dieser Sitzung nicht direkt abrufen; die Websuche funktioniert und reicht für den Überblick. Die erste Recherche war zu kurz
+  (nur zwei Suchen) und fand deshalb nichts; das wurde nachgeholt (siehe Abschnitt 3).
 - Die Todo-Texte F37–F46 stammen aus Stichworten der Aufgabe, nicht aus dem verlorenen ersten Lauf – bitte beim Anfassen prüfen.
 
 ### 7. Bitte im Spiel testen
