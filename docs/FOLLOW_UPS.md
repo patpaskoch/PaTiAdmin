@@ -159,7 +159,7 @@ Found by the weekly audit. Entries marked "check first" come from the first audi
 state only what is certain from the code today; re-read the named code before starting.
 
 ### F37 · Client: live build / folder name — low · open (check first)
-- Problem: the live client (WoW Forever, live since 2026-11-04) reports another build than the documented 1.60.1.70009 (reports mention 70790); the AddOns folder name in the docs may differ from the beta folder (`_classic_beta_`).
+- Problem: the live client (WoW Forever, live since 2026-11-04) reports another build than the documented 1.60.1.70009 (a tracker lists 1.60.1.70862; "70790" was not confirmed); the AddOns folder name in the docs may differ from the beta folder (`_classic_beta_`).
 - Affected code: `docs/WOW_API_COMPAT.md` (client build row), README install texts, `docs/TESTING.md`.
 - Why it matters: players on the live client could look in the wrong folder; a build change may change API behaviour.
 - Smallest solution: the owner runs `/prota debug` (prints build) on the live client; docs updated with the observed value and folder.
@@ -175,9 +175,13 @@ state only what is certain from the code today; re-read the named code before st
 - Affected code: `PaTiAggro/Plates.lua`. Smallest solution: collect cases in game first; no change on assumption.
 - Alternative without refactor: none needed. Risk: low · Tests: manual · Priority: low.
 
-### F40 · `GetFrameStrata` / strata of PaTi windows — low · open (check first)
-- Problem: PaTi windows and secure overlay buttons (PaTiGroup, PaTiAlerts, PaTiAuras) sit in strata that can end up above or below Blizzard frames or each other.
-- Smallest solution: one strata decision in PaTiShared `Window.lua` and a sync; owner decides. Risk: low · Priority: low.
+### F40 · `GetFrameStrata` may return a secret value — low · open
+- Problem: the 1.60.1 API notes (reported, unverified) say `GetFrameStrata` can return a secret value. We pass it straight to `SetFrameStrata`
+  for the secure click overlays: `PaTiAlerts/Clicks.lua:78`, `PaTiGroup/PaTiGroup.lua:311`.
+- Why it matters: if a secret value is rejected there, the overlay would keep the wrong strata or raise a Lua error (out of combat only).
+- Smallest solution: on the live client run `/dump PaTiGroupFrame:GetFrameStrata()` style checks (owner); if secret, set the strata explicitly
+  ("MEDIUM" like the window) instead of reading it. Alternative without refactor: none needed until proven. Risk: low · Tests: manual · Priority: low.
+- Source: https://warcraft.wiki.gg/wiki/Patch_1.60.1/API_changes/notes
 
 ### F41 · Performance review of PaTiAggro / PaTiGroup / PaTiAuras / PaTiHeal — low · open (check first)
 - Problem: the OnUpdate frames (`PaTiAggro.lua` scheduler, `PaTiAuras/AuraWindow.lua` ticker, `PaTiAuras.lua` weaponCheck, `PaTiHeal.lua` hotTicker) are throttled, but no measurement in a busy 5-man exists.

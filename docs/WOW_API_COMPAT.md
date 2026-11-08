@@ -174,10 +174,23 @@ in-game test that confirms it.
 
 ## Client news (weekly audit)
 
-- 2026-11-08: WoW Forever is live since 2026-11-04 (owner/reports); reported build 1.60.1.70790, Interface 16001 — **not verified
-  here**. The warcraft.wiki.gg page "Patch 1.60.1/API changes" was an empty stub on 2026-11-08 and the wiki lists Forever 1.60.1 as
-  build 69913 (https://warcraft.wiki.gg/wiki/Patch_1.60.1/API_changes). No Blizzard announcement about addon API, secure/protected
-  or combat-lockdown changes was found. Retail/Classic Era notes are not applied. See FOLLOW_UPS F37.
+Status of everything here: **assumed / reported** (web sources, not observed in this client) unless the owner confirms it.
+
+- 2026-11-08 (research repeated with more searches; first attempt had only two):
+  - WoW Forever is live since 2026-11-04. Blizzard posted hotfix notes "WoW: Forever Hotfixes" for Nov 5 and Nov 6 2026 — quests, loot,
+    spawns, some class tweaks; **no addon-API item** (https://news.blizzard.com/en-gb/article/24315281/wow-forever-hotfixes-november-6-2026).
+  - Build: a tracker lists 1.60.1.70862 as current with no notes (https://forevermastery.com/en/guides/wow-forever-patch-notes); the
+    earlier "70790" could not be confirmed. Earlier betas: 69913, 69977, 70291. Interface 16001 is what addon authors list. See F37.
+  - Midnight's addon restrictions (secret values; combat log closed to addons) carry over to Forever, per community guides
+    (https://wowforevertierlist.com/addons/restrictions, https://wowforeverguides.com/addons/patterns) — matches our rules in AGENTS.md
+    (§8 secret values, no `COMBAT_LOG_EVENT_UNFILTERED`). Testers report `UnitHealth("player")` secret in combat.
+  - 1.60.1 API notes (via search summary; the wiki itself is not reachable from the audit session): trial accounts cannot send
+    addon messages; **`GetFrameStrata` can return a secret value**; Edit Mode layouts per input device
+    (https://warcraft.wiki.gg/wiki/Patch_1.60.1/API_changes/notes). Relevant to F40: PaTiAlerts `Clicks.lua:78` and PaTiGroup
+    `PaTiGroup.lua:311` pass `window:GetFrameStrata()` straight into `SetFrameStrata` (allowed for widgets, but unverified).
+  - Known launch issues (PvP vendors, bank pages, a Razorfen Kraul cauldron) are not addon-related
+    (https://www.warcrafttavern.com/forever/news/pvp-vendors-unavailable-other-known-issues-in-wow-forever/).
+  - Retail/Classic Era notes are not applied.
 
 ## Rules that hold regardless of client
 
