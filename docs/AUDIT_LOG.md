@@ -2,6 +2,21 @@
 
 Neuester Eintrag oben.
 
+## Regeln für jeden Audit-Lauf (zuerst lesen)
+
+Gelernt am 2026-11-08; gelten zusätzlich zum Prompt der Routine.
+
+1. **Recherche gründlich:** Das Tool WebSearch funktioniert. Mindestens 6 verschiedene Suchen, mehrere im Modus „extended“
+   (z. B. „WoW Forever hotfixes <Monat>“, „WoW Forever addon API changes secret values“, „Patch 1.60.1 API changes notes“,
+   „WoW Forever known issues addons“). Gute Treffer: news.blizzard.com (Hotfix-Posts), forevermastery.com, wowforevertierlist.com,
+   wowforeverguides.com, icy-veins.com/wow-forever, mmo-champion.com. Nicht nach zwei Suchen „nichts gefunden“ schreiben.
+2. **Netzsperre ist kein Grund aufzugeben:** WebFetch auf warcraft.wiki.gg scheitert in der Sitzung (Domain gesperrt). Dann über
+   WebSearch-Auszüge und andere Seiten lesen. Patrick nicht um Freigabe bitten; im Bericht nur nennen, was nicht lesbar war.
+3. **„Nichts gefunden“** erst melden, wenn alles versucht wurde – und dann die versuchten Suchen auflisten.
+4. **Ehrlich berichten:** Wie tief wurde der Code wirklich geprüft? Keine Todo-Einträge ohne konkrete Angaben (kein Platzhalter).
+5. **Vor dem Merge** auch den automatischen Codex-Review der PRs abwarten und berechtigte Findings beheben.
+6. **PR-Links** im Log nennen (echte URLs); Branch nach dem Löschen prüfen; hängende doppelte CI-Läufe im Bericht erwähnen.
+
 ## 2026-11-08
 
 ### 1. Zusammenfassung
