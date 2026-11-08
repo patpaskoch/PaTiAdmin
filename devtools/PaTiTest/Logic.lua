@@ -29,9 +29,9 @@ end
 
 -- Commands of one slash key and whether another key claims one of them.
 -- registrations: list of { key = "PATIHEAL", command = "/ph" } as found in the SLASH_<KEY><n> globals.
--- Returns status ("ok" | "fail"), detail.
+-- Returns status ("ok" | "fail"), code (locale key) or the command list, and for "clash" the command + other key.
 function Logic.CheckSlash(key, handlerIsFunction, registrations)
-    if not handlerIsFunction then return "fail", "no SlashCmdList." .. key end
+    if not handlerIsFunction then return "fail", "no_handler" end
     local own, owners = {}, {}
     for _, entry in ipairs(registrations) do
         local command = type(entry.command) == "string" and entry.command:lower() or nil
@@ -41,11 +41,11 @@ function Logic.CheckSlash(key, handlerIsFunction, registrations)
             if entry.key == key then own[#own + 1] = command end
         end
     end
-    if #own == 0 then return "fail", "no SLASH_" .. key .. " command" end
+    if #own == 0 then return "fail", "no_command" end
     table.sort(own)
     for _, command in ipairs(own) do
         for other in pairs(owners[command]) do
-            if other ~= key then return "fail", command .. " also used by " .. other end
+            if other ~= key then return "fail", "clash", command, other end
         end
     end
     return "ok", table.concat(own, " ")
@@ -61,25 +61,26 @@ end
 
 local POSITION_TOLERANCE = 1 -- pixels; WoW may round saved offsets
 
--- Same window placement? a, b: { point, relativePoint, x, y, shown } or nil.
-function Logic.SamePlace(a, b)
+-- Same window position? a, b: { point, relativePoint, x, y } or nil. Visibility is not part of it: most PaTi
+-- windows keep "hidden by the player" for the session only, so it may change on /reload by design.
+function Logic.SamePosition(a, b)
     if type(a) ~= "table" or type(b) ~= "table" then return false end
-    if a.point ~= b.point or a.relativePoint ~= b.relativePoint or a.shown ~= b.shown then return false end
+    if a.point ~= b.point or a.relativePoint ~= b.relativePoint then return false end
     if type(a.x) ~= "number" or type(b.x) ~= "number" or type(a.y) ~= "number" or type(b.y) ~= "number" then
         return a.x == b.x and a.y == b.y
     end
     return math.abs(a.x - b.x) <= POSITION_TOLERANCE and math.abs(a.y - b.y) <= POSITION_TOLERANCE
 end
 
--- Placement after /reload compared with the snapshot of an earlier session.
--- Returns status, detail ("skip" while no earlier session exists).
-function Logic.CheckReload(snapshot, session, name, now)
-    if type(snapshot) ~= "table" or snapshot.session == session or type(snapshot.windows) ~= "table" then
+-- Position now compared with the one taken when the previous session ended (PLAYER_LOGOUT also fires on /reload).
+-- Returns status, code ("skip" while there is no earlier session for this window).
+function Logic.CheckReload(atLogout, session, name, now)
+    if type(atLogout) ~= "table" or atLogout.session == session or type(atLogout.windows) ~= "table" then
         return "skip", "reload_pending"
     end
-    local before = snapshot.windows[name]
+    local before = atLogout.windows[name]
     if before == nil then return "skip", "reload_pending" end
-    if Logic.SamePlace(before, now) then return "ok", "same" end
+    if Logic.SamePosition(before, now) then return "ok", "same" end
     return "fail", "moved"
 end
 

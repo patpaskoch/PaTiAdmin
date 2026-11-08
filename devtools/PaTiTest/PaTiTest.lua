@@ -9,9 +9,15 @@ local Logic = ns.Logic
 local L = ns.Locales[GetLocale()] or ns.Locales.enUS
 if L ~= ns.Locales.enUS then setmetatable(L, { __index = ns.Locales.enUS }) end
 
--- One id per game session: a snapshot from another session means a /reload or relog happened since.
+-- One id per game session: data from another session means a /reload or relog happened since.
 local session = tostring(time()) .. "-" .. tostring(math.random(1000000))
 local errors = {}
+local errorTotal = 0 -- every error, also repeats and those beyond Logic.MAX_ERRORS
+
+local function recordError(message)
+    errorTotal = errorTotal + 1
+    pcall(Logic.AddError, errors, message, date and date("%H:%M:%S"))
+end
 
 -- Collect Lua errors from the moment this file loads (after the PaTi addons that load before it, alphabetically:
 -- their PLAYER_LOGIN setup is still covered). The previous handler keeps running, so nothing is hidden.
@@ -19,7 +25,7 @@ do
     local previous = geterrorhandler and geterrorhandler()
     if seterrorhandler and previous then
         seterrorhandler(function(message, ...)
-            pcall(Logic.AddError, errors, message, date and date("%H:%M:%S"))
+            recordError(message)
             return previous(message, ...)
         end)
     end
@@ -27,18 +33,22 @@ end
 
 local function say(text) print("|cff4fc3f7PaTiTest|r " .. text) end
 
+-- "loaded" | "missing" | "disabled" | "notloaded", plus the client's reason.
 local function addonState(name)
     local isLoaded = (C_AddOns and C_AddOns.IsAddOnLoaded) or IsAddOnLoaded
     if isLoaded and isLoaded(name) then return "loaded" end
     local getInfo = (C_AddOns and C_AddOns.GetAddOnInfo) or GetAddOnInfo
-    local reason = getInfo and select(5, getInfo(name))
+    local reason = getInfo and select(6, pcall(getInfo, name)) or nil -- pcall ok, name, title, notes, loadable, reason
     if reason == "MISSING" then return "missing" end
+    if reason == "DISABLED" then return "disabled", reason end
     return "notloaded", reason
 end
 
+-- Only asked for loaded addons (unknown names are not documented for this client).
 local function version(name)
     local getMetadata = (C_AddOns and C_AddOns.GetAddOnMetadata) or GetAddOnMetadata
-    return getMetadata and getMetadata(name, "Version") or "?"
+    local ok, value = pcall(getMetadata, name, "Version")
+    return ok and value or "?"
 end
 
 -- Every SLASH_<KEY><n> global, so a command claimed by two addons shows up.
@@ -59,32 +69,43 @@ local function shownOf(frame)
     return ok and shown == true
 end
 
+-- A Lua error caught here is recorded like any other, so its message is not lost.
 local function setShown(frame, shown)
-    if type(frame.SetSuiteShown) == "function" then return pcall(frame.SetSuiteShown, frame, shown) end
-    return pcall(frame.SetShown, frame, shown)
+    local method = type(frame.SetSuiteShown) == "function" and frame.SetSuiteShown or frame.SetShown
+    local ok, message = pcall(method, frame, shown)
+    if not ok then recordError(message) end
 end
 
-local function placeOf(frame)
-    local point, _, relativePoint, x, y = frame:GetPoint()
-    return { point = point, relativePoint = relativePoint, x = x, y = y, shown = shownOf(frame) }
+local function positionOf(frame)
+    local ok, point, _, relativePoint, x, y = pcall(frame.GetPoint, frame)
+    if not ok then return nil end
+    return { point = point, relativePoint = relativePoint, x = x, y = y }
 end
 
--- Show/hide round trip; errors raised by OnShow/OnHide scripts arrive through the error handler, so count those too.
+-- Show/hide round trip; errors raised by OnShow/OnHide scripts arrive through the error handler.
 local function toggle(frame)
-    local before, errorsBefore = shownOf(frame), #errors
-    local okSet = setShown(frame, not before)
+    local before, errorsBefore = shownOf(frame), errorTotal
+    setShown(frame, not before)
     local after = shownOf(frame)
-    local okBack = setShown(frame, before)
+    setShown(frame, before)
     local final = shownOf(frame)
-    local newErrors = #errors - errorsBefore + ((okSet and okBack) and 0 or 1)
-    return Logic.ToggleVerdict(before, after, final, newErrors)
+    return Logic.ToggleVerdict(before, after, final, errorTotal - errorsBefore)
 end
 
-local function checkAddon(entry, registry, registrations, snapshot, windows)
+local function slashDetail(status, code, command, other)
+    if status == "ok" then return code end
+    if code == "clash" then return L.clash:format(command, other) end
+    return L[code]
+end
+
+local function checkAddon(entry, registry, registrations)
     local results = {}
-    local function add(check, status, detail) results[#results + 1] = { check = check, status = status, detail = detail } end
+    local function add(check, status, detail)
+        results[#results + 1] = { check = check, status = status, detail = detail }
+    end
     local state, reason = addonState(entry.name)
     if state == "missing" then add("loaded", "skip", L.NOT_INSTALLED) return results end
+    if state == "disabled" then add("loaded", "skip", L.DISABLED) return results end
     if state ~= "loaded" then add("loaded", "fail", L.NOT_LOADED:format(tostring(reason))) return results end
     add("loaded", "ok", version(entry.name))
 
@@ -92,15 +113,19 @@ local function checkAddon(entry, registry, registrations, snapshot, windows)
     if #own > 0 then add("errors", "fail", L.ERROR_COUNT:format(#own, own[1].message:sub(1, 160)))
     else add("errors", "ok") end
 
-    add("slash", Logic.CheckSlash(entry.key, type(SlashCmdList[entry.key]) == "function", registrations))
+    local status, code, command, other = Logic.CheckSlash(entry.key, type(SlashCmdList[entry.key]) == "function",
+        registrations)
+    add("slash", status, slashDetail(status, code, command, other))
 
     local frame = registry[entry.name]
-    if type(frame) ~= "table" or type(frame.GetPoint) ~= "function" then add("window", "fail", L.NO_WINDOW) return results end
+    if type(frame) ~= "table" or type(frame.GetPoint) ~= "function" then
+        add("window", "fail", L.NO_WINDOW)
+        return results
+    end
     add("window", "ok")
-    local status, code = toggle(frame)
-    add("toggle", status, L[code] or code)
-    windows[entry.name] = placeOf(frame)
-    local reloadStatus, reloadCode = Logic.CheckReload(snapshot, session, entry.name, windows[entry.name])
+    local toggleStatus, toggleCode = toggle(frame)
+    add("toggle", toggleStatus, L[toggleCode] or toggleCode)
+    local reloadStatus, reloadCode = Logic.CheckReload(PaTiTestDB.atLogout, session, entry.name, positionOf(frame))
     add("reload", reloadStatus, L[reloadCode] or reloadCode)
     return results
 end
@@ -108,10 +133,15 @@ end
 local LABELS = { loaded = "CHECK_LOADED", errors = "CHECK_ERRORS", slash = "CHECK_SLASH", window = "CHECK_WINDOW",
     toggle = "CHECK_TOGGLE", reload = "CHECK_RELOAD" }
 
-local function report(name, ver, results)
+local function report(name, results)
     local counts = Logic.Count(results)
+    local ver = results[1].status == "ok" and results[1].detail or ""
     local problems = counts.fail + counts.warn
-    if problems == 0 then say(L.LINE_OK:format(name, ver, counts.ok)) return end
+    if problems == 0 then
+        if counts.ok == 0 then say(("%s: %s"):format(name, tostring(results[1].detail))) return end
+        say(L.LINE_OK:format(name, ver, counts.ok))
+        return
+    end
     say(L.LINE_PROBLEMS:format(name, ver, counts.ok, problems))
     for _, result in ipairs(results) do
         if result.status == "fail" or result.status == "warn" then
@@ -126,23 +156,16 @@ local function run()
     say(L.START)
     local registry = type(_G.PaTiSuiteWindows) == "table" and _G.PaTiSuiteWindows or {}
     local registrations = slashRegistrations()
-    -- A snapshot from an earlier session becomes the base for the "after /reload" check (also on later runs).
-    if type(PaTiTestDB.snapshot) == "table" and PaTiTestDB.snapshot.session ~= session then
-        PaTiTestDB.previous, PaTiTestDB.snapshot = PaTiTestDB.snapshot, nil
-    end
-    local snapshot, windows, all, reloadPending = PaTiTestDB.previous, {}, {}, false
-    local stored = {}
+    local all, stored, reloadPending = {}, {}, false
     for _, entry in ipairs(Logic.ADDONS) do
-        local results = checkAddon(entry, registry, registrations, snapshot, windows)
-        report(entry.name, version(entry.name), results)
+        local results = checkAddon(entry, registry, registrations)
+        report(entry.name, results)
         stored[entry.name] = results
         for _, result in ipairs(results) do
             all[#all + 1] = result
             if result.check == "reload" and result.status == "skip" then reloadPending = true end
         end
     end
-    -- Keep the first snapshot of a session: the next session compares against it.
-    if PaTiTestDB.snapshot == nil then PaTiTestDB.snapshot = { session = session, windows = windows } end
     PaTiTestDB.last = { at = date("%Y-%m-%d %H:%M:%S"), session = session, results = stored, errors = errors,
         build = select(4, GetBuildInfo()) }
     local counts = Logic.Count(all)
@@ -156,13 +179,24 @@ local function showErrors()
     for _, entry in ipairs(errors) do say(("%s ×%d %s"):format(entry.at or "", entry.count, entry.message)) end
 end
 
+-- Window positions as the session ends (PLAYER_LOGOUT also fires on /reload): the next session compares with them.
+local function saveLogoutPositions()
+    local windows = {}
+    for name, frame in pairs(type(_G.PaTiSuiteWindows) == "table" and _G.PaTiSuiteWindows or {}) do
+        if type(frame) == "table" and type(frame.GetPoint) == "function" then windows[name] = positionOf(frame) end
+    end
+    PaTiTestDB.atLogout = { session = session, windows = windows }
+end
+
 local events = CreateFrame("Frame")
 events:RegisterEvent("ADDON_LOADED")
 events:RegisterEvent("PLAYER_LOGOUT")
 events:SetScript("OnEvent", function(self, event, name)
     if event == "ADDON_LOADED" and name == "PaTiTest" then
         if type(PaTiTestDB) ~= "table" then PaTiTestDB = {} end
+        PaTiTestDB.snapshot, PaTiTestDB.previous = nil, nil -- replaced by atLogout (first test build)
     elseif event == "PLAYER_LOGOUT" then
+        saveLogoutPositions()
         PaTiTestDB.sessionErrors = errors -- errors of the last session, even without a /patitest run
     end
 end)

@@ -37,6 +37,9 @@ explicit test recorded) · **assumed** (not yet used/tested).
 | `RegisterUnitWatch` / `UnregisterUnitWatch` on `SecureUnitButtonTemplate` rows | assumed (PaTiHeal) | fallback: Show/Hide out of combat only |
 | Unassigned modifier click (e.g. Shift+Left with only Left bound) falls back to the plain `type1` binding or does nothing | **unknown** (PaTiHeal, same in 0.6.0) | test: bind only Left, Shift+Left-click a row |
 | `C_AddOns.GetAddOnMetadata` | assumed (PaTiHeal debug) | fallback `GetAddOnMetadata` |
+| `C_AddOns.IsAddOnLoaded`, `C_AddOns.GetAddOnInfo` (5th value = reason, e.g. `MISSING`, `DISABLED`) | assumed (PaTiTest, dev tool) | fallbacks `IsAddOnLoaded` / `GetAddOnInfo`, pcall-guarded |
+| `geterrorhandler` / `seterrorhandler` (wrap, then call the previous handler) | assumed (PaTiTest, dev tool) | without them no Lua errors are counted |
+| `PLAYER_LOGOUT` also fires on `/reload` (SavedVariables are written after it) | assumed (PaTiTest "after /reload" check) | standard client behaviour |
 | Priest spell IDs 588, 1243, 21562, 14752, 27681, 976, 27683 (`C_Spell.GetSpellInfo`) | **verified 2026-09-28** (owner, deDE client) | PaTiAuras Priest profile |
 | `C_UnitAuras.GetAuraDataByIndex` present, `issecretvalue` present | **verified 2026-09-28** (owner: `/pa debug`) | aura data values themselves not yet observed |
 | Shaman spell IDs 24398, 974, 61295, 53390 | assumed | `/pa auras` as Shaman |

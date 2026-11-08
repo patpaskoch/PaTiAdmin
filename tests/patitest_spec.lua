@@ -27,20 +27,16 @@ describe("PaTiTest Logic.CheckSlash", function()
     }
 
     it("is ok with the addon's own commands", function()
-        local status, detail = load().CheckSlash("PATISOCIAL", true, regs)
-        assert.equal("ok", status)
-        assert.equal("/patisocial /psocial", detail)
+        assert.same({ "ok", "/patisocial /psocial" }, { load().CheckSlash("PATISOCIAL", true, regs) })
     end)
 
     it("fails when another addon claims the same command (case-insensitive)", function()
-        local status, detail = load().CheckSlash("PATIAGGRO", true, regs)
-        assert.equal("fail", status)
-        assert.equal("/pt also used by OTHERADDON", detail)
+        assert.same({ "fail", "clash", "/pt", "OTHERADDON" }, { load().CheckSlash("PATIAGGRO", true, regs) })
     end)
 
     it("fails without a handler or without commands", function()
-        assert.equal("fail", (load().CheckSlash("PATISOCIAL", false, regs)))
-        assert.equal("fail", (load().CheckSlash("PATIHEAL", true, regs)))
+        assert.same({ "fail", "no_handler" }, { load().CheckSlash("PATISOCIAL", false, regs) })
+        assert.same({ "fail", "no_command" }, { load().CheckSlash("PATIHEAL", true, regs) })
     end)
 end)
 
@@ -61,24 +57,24 @@ describe("PaTiTest Logic.ToggleVerdict", function()
 end)
 
 describe("PaTiTest Logic.CheckReload", function()
-    local place = { point = "CENTER", relativePoint = "CENTER", x = 10, y = -20.4, shown = true }
+    local place = { point = "CENTER", relativePoint = "CENTER", x = 10, y = -20.4 }
 
-    it("skips until an earlier session left a snapshot", function()
+    it("skips until an earlier session saved positions at logout", function()
         local Logic = load()
         assert.equal("skip", (Logic.CheckReload(nil, "s2", "PaTiHeal", place)))
         assert.equal("skip", (Logic.CheckReload({ session = "s2", windows = { PaTiHeal = place } }, "s2", "PaTiHeal", place)))
         assert.equal("skip", (Logic.CheckReload({ session = "s1", windows = {} }, "s2", "PaTiHeal", place)))
     end)
 
-    it("ok for the same place within a pixel, fail when moved or visibility changed", function()
+    it("ok for the same position within a pixel, fail when moved or the anchor changed", function()
         local Logic = load()
-        local snap = { session = "s1", windows = { PaTiHeal = place } }
-        local near = { point = "CENTER", relativePoint = "CENTER", x = 10.6, y = -20, shown = true }
-        assert.equal("ok", (Logic.CheckReload(snap, "s2", "PaTiHeal", near)))
-        local moved = { point = "CENTER", relativePoint = "CENTER", x = 40, y = -20, shown = true }
-        assert.same({ "fail", "moved" }, { Logic.CheckReload(snap, "s2", "PaTiHeal", moved) })
-        local hidden = { point = "CENTER", relativePoint = "CENTER", x = 10, y = -20.4, shown = false }
-        assert.equal("fail", (Logic.CheckReload(snap, "s2", "PaTiHeal", hidden)))
+        local atLogout = { session = "s1", windows = { PaTiHeal = place } }
+        local near = { point = "CENTER", relativePoint = "CENTER", x = 10.6, y = -20 }
+        assert.equal("ok", (Logic.CheckReload(atLogout, "s2", "PaTiHeal", near)))
+        local moved = { point = "CENTER", relativePoint = "CENTER", x = 40, y = -20 }
+        assert.same({ "fail", "moved" }, { Logic.CheckReload(atLogout, "s2", "PaTiHeal", moved) })
+        local other = { point = "TOPLEFT", relativePoint = "CENTER", x = 10, y = -20.4 }
+        assert.equal("fail", (Logic.CheckReload(atLogout, "s2", "PaTiHeal", other)))
     end)
 end)
 
@@ -103,7 +99,7 @@ describe("PaTiTest Logic.Count", function()
     end)
 end)
 
--- Whole addon once with a stand-in client: /patitest, then a "/reload" (files loaded again with the saved table).
+-- Whole addon with a stand-in client: /patitest, "/reload" (PLAYER_LOGOUT, files loaded again with the saved table).
 describe("PaTiTest /patitest run", function()
     -- The addon prints to chat; keep that out of the runner's own output and always restore print.
     local realPrint = print
@@ -115,19 +111,26 @@ describe("PaTiTest /patitest run", function()
         end
     end
 
-    local function frame(shown, x)
-        local f = { shown = shown }
-        function f:IsShown() return self.shown end
-        function f:SetShown(value) self.shown = value end
-        function f:GetPoint() return "CENTER", nil, "CENTER", x, 0 end
-        return f
+    -- Window like PaTiShared's: SetSuiteShown/IsSuiteShown; blocked = the addon's own rule refuses (returns false).
+    local function window(x)
+        local w = { shown = true, x = x }
+        function w:IsShown() return self.shown end
+        function w:IsSuiteShown() return self.shown end
+        function w:SetSuiteShown(value)
+            if self.fail then error("Interface/AddOns/PaTiHeal/PaTiHeal.lua:50: boom") end
+            if self.blocked then return false end
+            self.shown = value
+            return true
+        end
+        function w:GetPoint() return "CENTER", nil, "CENTER", self.x, 0 end
+        return w
     end
 
     local function boot(saved, state)
-        local printed, locale = {}, wow.state.locale
+        local locale = wow.state.locale
         wow.install()
         wow.state.locale = locale
-        _G.print = function(text) printed[#printed + 1] = text end -- restored by quietly()
+        _G.print = function() end -- restored by quietly()
         _G.time = function() return state.clock end
         _G.date = function() return "2026-11-08" end
         _G.GetBuildInfo = function() return "1.60.1", "70009", "", 16001 end
@@ -141,7 +144,9 @@ describe("PaTiTest /patitest run", function()
         end
         _G.C_AddOns = {
             IsAddOnLoaded = function(name) return name == "PaTiHeal" end,
-            GetAddOnInfo = function() return nil, nil, nil, nil, "MISSING" end,
+            GetAddOnInfo = function(name)
+                return name, name, "", false, name == "PaTiAggro" and "DISABLED" or "MISSING"
+            end,
             GetAddOnMetadata = function() return "0.6.0" end,
         }
         _G.SlashCmdList = { PATIHEAL = function() end }
@@ -153,50 +158,104 @@ describe("PaTiTest /patitest run", function()
             wow.loadAddonFile("devtools/PaTiTest/" .. file, ns, "PaTiTest")
         end
         state.onEvent(nil, "ADDON_LOADED", "PaTiTest")
-        return printed
     end
 
-    local function result(check)
-        for _, r in ipairs(_G.PaTiTestDB.last.results.PaTiHeal) do if r.check == check then return r end end
+    local function reload(state)
+        state.onEvent(nil, "PLAYER_LOGOUT")
+        state.clock = state.clock + 1
+        boot(_G.PaTiTestDB, state)
     end
 
-    it("checks an installed addon, restores its window and compares the place after /reload", quietly(function()
-        local state = { clock = 1, window = frame(true, 10) }
+    local function result(check, name)
+        for _, r in ipairs(_G.PaTiTestDB.last.results[name or "PaTiHeal"]) do if r.check == check then return r end end
+    end
+
+    it("checks an installed addon and restores its window", quietly(function()
+        local state = { clock = 1, window = window(10) }
         boot(nil, state)
         _G.SlashCmdList.PATITEST("")
         assert.equal(true, state.window.shown)
-        assert.equal("ok", result("loaded").status)
+        assert.same({ "ok", "0.6.0" }, { result("loaded").status, result("loaded").detail })
         assert.equal("ok", result("slash").status)
         assert.equal("ok", result("toggle").status)
         assert.equal("skip", result("reload").status)
-        assert.equal("skip", _G.PaTiTestDB.last.results.PaTiAggro[1].status) -- not installed
+        assert.equal("skip", result("loaded", "PaTiAggro").status) -- disabled
+        assert.equal("skip", result("loaded", "PaTiRota").status) -- not installed
+    end))
 
-        state.clock = 2 -- new session
-        boot(_G.PaTiTestDB, state)
+    it("compares with the position at /reload, not with the first run", quietly(function()
+        local state = { clock = 1, window = window(10) }
+        boot(nil, state)
+        _G.SlashCmdList.PATITEST("")
+        state.window.x = 300 -- the player moves the window after the first run; the addon saves it
+        reload(state)
         _G.SlashCmdList.PATITEST("")
         assert.equal("ok", result("reload").status)
         _G.SlashCmdList.PATITEST("") -- a second run in the same session keeps the comparison
         assert.equal("ok", result("reload").status)
     end))
 
-    it("reports Lua errors of an addon caught by the error handler", quietly(function()
-        local state = { clock = 3, window = frame(true, 10) }
+    it("fails when the window comes back somewhere else after /reload", quietly(function()
+        local state = { clock = 1, window = window(10) }
+        boot(nil, state)
+        state.onEvent(nil, "PLAYER_LOGOUT")
+        state.window.x = 10 + 200 -- the addon did not keep the place
+        state.clock = 2
+        boot(_G.PaTiTestDB, state)
+        _G.SlashCmdList.PATITEST("")
+        assert.same({ "fail", "window position changed after /reload" }, { result("reload").status, result("reload").detail })
+    end))
+
+    it("a hidden window does not count as moved (visibility is per session by design)", quietly(function()
+        local state = { clock = 1, window = window(10) }
+        boot(nil, state)
+        reload(state)
+        state.window.shown = false
+        _G.SlashCmdList.PATITEST("")
+        assert.equal("ok", result("reload").status)
+    end))
+
+    it("notes a window its own rule keeps unchanged", quietly(function()
+        local state = { clock = 1, window = window(10) }
+        state.window.blocked = true
+        boot(nil, state)
+        _G.SlashCmdList.PATITEST("")
+        assert.same({ "warn", "switching had no effect" }, { result("toggle").status, result("toggle").detail })
+    end))
+
+    it("a Lua error while switching fails the toggle and keeps its message", quietly(function()
+        local state = { clock = 1, window = window(10) }
+        state.window.fail = true
+        boot(nil, state)
+        _G.SlashCmdList.PATITEST("")
+        assert.equal("fail", result("toggle").status)
+        assert.matches("boom", _G.PaTiTestDB.last.errors[1].message)
+    end))
+
+    it("a repeated known error still fails the toggle", quietly(function()
+        local state = { clock = 1, window = window(10) }
         boot(nil, state)
         state.handler("Interface/AddOns/PaTiHeal/PaTiHeal.lua:9: boom")
+        state.window.SetSuiteShown = function(self, value)
+            state.handler("Interface/AddOns/PaTiHeal/PaTiHeal.lua:9: boom") -- same message as at login
+            self.shown = value
+        end
         _G.SlashCmdList.PATITEST("")
         assert.equal("fail", result("errors").status)
+        assert.equal("fail", result("toggle").status)
     end))
 
     it("runs on a German client too", quietly(function()
-        local state = { clock = 5, window = frame(true, 10) }
+        local state = { clock = 1, window = window(10) }
         wow.state.locale = "deDE"
         boot(nil, state)
         _G.SlashCmdList.PATITEST("")
         assert.equal("ok", result("toggle").status)
+        wow.state.locale = "enUS"
     end))
 
     it("does nothing in combat", quietly(function()
-        local state = { clock = 4, window = frame(true, 10) }
+        local state = { clock = 1, window = window(10) }
         boot(nil, state)
         wow.state.inCombat = true
         _G.SlashCmdList.PATITEST("")
