@@ -32,17 +32,19 @@ diesem Lauf nur oberflächlich möglich (Suche nach verbotenen Aufrufen); sie bl
 
 ### 4. Umgesetzt
 PRs je Repo auf Branch `audit/2026-11-08` (Links siehe Abschlussnachricht/GitHub): PaTiAlerts, PaTiAggro, PaTiAuras, PaTiHeal,
-PaTiChronicle, PaTiLead, PaTiRota, PaTiAdmin (Doku + F37–F48).
+PaTiChronicle, PaTiLead, PaTiRota, PaTiAdmin (Doku + F37–F46, F48).
+
+Nachtrag: Der automatische Codex-Review fand nach dem Merge zwei berechtigte Punkte; beide sind in Folge-PRs behoben (Chronicle: verschachtelte Probe-Zähler; Admin: Platzhalter F47 entfernt).
 
 ### 5. Nicht umgesetzt
-- F37–F47 (Live-Build/Ordner, Belegungen-Reset, Plaketten-Höhe, Strata, Performance-Messung, PaTiLead Sprachwechsel im Kampf, PaTiDungeon Skizze,
-  PaTiSocial, PaTiShared OnDragStop, Chronicle-Wachstum, Kleinkram): nur als Todo, weil die Details aus dem ersten Versuch fehlen bzw. Messungen im Spiel nötig sind.
+- F37–F46 (Live-Build/Ordner, Belegungen-Reset, Plaketten-Höhe, Strata, Performance-Messung, PaTiLead Sprachwechsel im Kampf, PaTiDungeon Skizze,
+  PaTiSocial, PaTiShared OnDragStop, Chronicle-Wachstum): nur als Todo, weil die Details aus dem ersten Versuch fehlen bzw. Messungen im Spiel nötig sind.
 - Neue Code-Durchsicht aller Repos (Taint, Hot-Paths): nur oberflächlich (keine `COMBAT_LOG_EVENT_UNFILTERED`-, `SaveBindings`-, Makro-Aufrufe gefunden).
 
 ### 6. Was im Lauf nicht funktioniert hat
 - Die Seite warcraft.wiki.gg ist im Netz dieser Sitzung nicht erreichbar; forevermastery.com lieferte keine Treffer. Patrick kann die Domains in den
   Netzwerk-Einstellungen freigeben, wenn er genauere News will.
-- Die Todo-Texte F37–F47 stammen aus Stichworten der Aufgabe, nicht aus dem verlorenen ersten Lauf – bitte beim Anfassen prüfen.
+- Die Todo-Texte F37–F46 stammen aus Stichworten der Aufgabe, nicht aus dem verlorenen ersten Lauf – bitte beim Anfassen prüfen.
 
 ### 7. Bitte im Spiel testen
 - Filter in PaTiAlerts ab- und wieder anhaken (PT-ALERTS-045).

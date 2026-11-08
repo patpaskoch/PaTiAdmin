@@ -204,9 +204,6 @@ state only what is certain from the code today; re-read the named code before st
 - Problem: `Report.lua` has 517 lines (limit ~400, AGENTS.md §5), `PaTiChronicle.lua` 395, `Timeline`/`Run` ~300.
 - Smallest solution: split the Overview building blocks of `Report.lua` into their own file when the report is next touched. Risk: low · Tests: existing specs · Priority: low.
 
-### F47 · Small things — low · open (check first)
-- Collected minor points (wording, doc links) without behaviour effect. Smallest solution: handle together with the next doc change. Priority: low.
-
 ### F48 · Audit 2026-11-08: fixes made, awaiting in-game test — FIXED IN CODE, awaiting in-game test
 - PaTiAlerts filters could not be ticked again (PT-ALERTS-045) · PaTiAggro raw key "OTHER" (PT-TANK-065 retest) · PaTiAuras Restore
   Defaults in combat (PT-AURAS-124) · PaTiHeal target row dead/alive state (PT-HEAL-173) · PaTiChronicle Migrate/probe/death check
