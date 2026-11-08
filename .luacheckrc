@@ -70,6 +70,11 @@ files["**/PaTiChronicle/**/*.lua"] = {
         "PaTiChronicle_Toggle" },
     read_globals = { "C_DamageMeter", "time", "UnitIsGhost", "Minimap" } }
 
+-- PaTiTest (devtools, never released; owner 2026-11-08): self-check of the installed addons. Reads the addon list,
+-- SLASH_* globals and the PaTiSuiteWindows registry; wraps the error handler to count Lua errors (AGENTS.md §3).
+files["**/devtools/PaTiTest/**/*.lua"] = { globals = { "PaTiTestDB", "SLASH_PATITEST1" },
+    read_globals = { "PaTiSuiteWindows", "seterrorhandler", "date", "time", "GetAddOnInfo", "IsAddOnLoaded" } }
+
 -- Specs run under tools/lua/test.lua (busted-compatible); mocks install WoW functions as globals.
 files["**/tests/**/*.lua"] = { std = "+busted", globals = { "GetLocale", "InCombatLockdown" } }
 

@@ -58,6 +58,8 @@ Architecture and data flow: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
   Other addons' frames are only read (position, visibility) or shown/hidden through their own `SetSuiteShown`;
   owner-approved (2026-10-03): the theme may be switched through their own `SetSuiteTheme(id)` (the addon stores it).
   No other cross-addon global.
+- Owner-approved (2026-11-08): the developer tool `devtools/PaTiTest` (never released) reads the addon list, `SLASH_*`
+  globals and `PaTiSuiteWindows`, and shows/hides windows through their own `SetSuiteShown` for `/patitest` ([README](devtools/PaTiTest/README.md)).
 
 ## 4. Before editing — every time
 

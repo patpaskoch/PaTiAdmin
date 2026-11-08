@@ -1,0 +1,30 @@
+-- PaTiTest strings, German.
+local _, ns = ...
+ns.Locales = ns.Locales or {}
+local L = ns.Locales.deDE or {}
+ns.Locales.deDE = L
+
+L.HELP = "/patitest – Selbsttest aller PaTi-Addons; /patitest fehler – Lua-Fehler seit dem Login anzeigen"
+L.START = "PaTiTest: Selbsttest läuft …"
+L.IN_COMBAT = "PaTiTest: nicht im Kampf – nach dem Kampf noch einmal /patitest."
+L.CHECK_LOADED = "geladen"
+L.CHECK_ERRORS = "Lua-Fehler"
+L.CHECK_WINDOW = "Fenster"
+L.CHECK_SLASH = "Befehl"
+L.CHECK_TOGGLE = "Ein/Aus"
+L.CHECK_RELOAD = "nach /reload"
+L.NOT_INSTALLED = "nicht installiert"
+L.NOT_LOADED = "installiert, aber nicht geladen (%s)"
+L.NO_WINDOW = "kein Fenster angemeldet"
+L.ERROR_COUNT = "%d Lua-Fehler: %s"
+L.no_effect = "Umschalten ohne Wirkung"
+L.not_restored = "Fenster nicht zurückgestellt"
+L.lua_error = "Lua-Fehler beim Umschalten"
+L.reload_pending = "/reload, dann noch einmal /patitest"
+L.moved = "Position oder Sichtbarkeit nach /reload anders"
+L.LINE_OK = "%s %s: alles ok (%d)"
+L.LINE_PROBLEMS = "%s %s: %d ok, %d Problem(e)"
+L.SUMMARY = "Gesamt: %d ok, %d Fehler, %d Hinweise, %d übersprungen. Gespeichert – landet bei /reload oder Logout in der Datei."
+L.RELOAD_HINT = "Für den Positions-Test: /reload, dann noch einmal /patitest."
+L.ERRORS_NONE = "Keine Lua-Fehler seit dem Login."
+L.ERRORS_HEADER = "Lua-Fehler seit dem Login:"
