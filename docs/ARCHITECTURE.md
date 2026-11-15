@@ -228,8 +228,8 @@ configuration that is hard to rebuild is kept on purpose; where a list is reset,
 ### PaTiAlerts 0.1.0 — open problems reported by the other addons (optional receiver)
 - Files: `Shared/` → `Locales/` → `Logic.lua` (settings, auto-hide rule; pure, tested) → `State.lua` (alert store;
   pure, tested) → `Clicks.lua` (secure click buttons) → `PaTiAlerts.lua` (window, `PaTiAlertsAPI`, settings, commands).
-- `PaTiAlertsDB`, schema 1: position, locked, collapsed, scale, language, autoHide, pulseNew, sourceFilters,
-  priorityFilters (schema 2: PaTiTank filter → PaTiAggro). Alerts are never saved. Secure frames only in `Clicks.lua`:
+- `PaTiAlertsDB`, schema 3: position, locked, collapsed, scale, language, autoHide (default off), pulseNew, sourceFilters,
+  priorityFilters (schema 2: PaTiTank filter → PaTiAggro; schema 3: auto-hide off once). Alerts are never saved. Secure frames only in `Clicks.lua`:
   SecureActionButtons on a holder parented to UIParent (not the window) and hidden in combat by a state driver
   `[combat] hide`; armed, moved, cleared only out of combat (cleared on PLAYER_REGEN_DISABLED and window drag).
 - API v1 (`_G.PaTiAlertsAPI`, the one cross-addon global, AGENTS.md §3): `Sync(source, list)` (preferred: the
