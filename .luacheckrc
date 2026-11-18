@@ -57,7 +57,9 @@ files["**/PaTiSocial/**/*.lua"] = { globals = { "PaTiSocialDB", "SLASH_PATISOCIA
 files["**/Shared/Suite.lua"] = { globals = { "PaTiSuiteWindows" } }
 files["**/PaTiShared/src/Suite.lua"] = { globals = { "PaTiSuiteWindows" } }
 -- PaTiLead (the former PaTiGroup, renamed 2026-10-02): PaTiLead_Toggle is the key binding function (Bindings.xml).
-files["**/PaTiLead/**/*.lua"] = { globals = { "PaTiLeadDB", "SLASH_PATILEAD1", "SLASH_PATILEAD2", "PaTiLead_Toggle" } }
+-- SendChatMessage: only the click of the Sheep / Re-sheep buttons (one click = one line, owner 2026-11-18).
+files["**/PaTiLead/**/*.lua"] = { globals = { "PaTiLeadDB", "SLASH_PATILEAD1", "SLASH_PATILEAD2", "PaTiLead_Toggle" },
+    read_globals = { "SendChatMessage" } }
 -- PaTiGroup (new 2026-10-02): party awareness, display only.
 files["**/PaTiGroup/**/*.lua"] = { globals = { "PaTiGroupDB", "SLASH_PATIGROUP1", "SLASH_PATIGROUP2", "SLASH_PATIGROUP3" } }
 -- PaTiRota (new 2026-10-02): own skill priority; fixed secure cast buttons, nothing casts by itself.
