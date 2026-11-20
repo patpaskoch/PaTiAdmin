@@ -126,6 +126,9 @@ Split a file when it mixes responsibilities, not before. PaTiShared decides *how
 - Never work around Blizzard protection (taint tricks, hidden click forwarding, OnUpdate spamming protected calls).
 - Keybindings and macros are the player's: never bind keys, call SaveBindings or create/edit macros automatically.
   Offer bindings through `Bindings.xml` (PaTiLead is the pattern).
+  Owner-approved (2026-11-20): PaTiFish sets temporary override bindings for the arrow keys (`SetOverrideBindingClick`,
+  never saved) while the fishing pole is in the hand — up/right/left/down click its cast, lure, catches and weapons
+  buttons; out of combat only, cleared when the pole leaves the hand, the bar is hidden or the setting is off.
 - Addon messages (none exist yet): versioned prefix, validate every field, never trust remote data, no periodic full-state broadcasts. Document in `docs/PROTOCOL.md` before shipping.
 
 ## 9. SavedVariables

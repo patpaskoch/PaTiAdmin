@@ -60,7 +60,7 @@ files["**/PaTiFish/**/*.lua"] = { globals = { "PaTiFishDB", "SLASH_PATIFISH1", "
     read_globals = { "GetNumSkillLines", "GetSkillLineInfo", "C_Container", "GetContainerNumSlots",
         "GetContainerItemID", "GetItemCount", "GetBindingText", "GetCVar", "SetCVar", "UnitChannelInfo",
         "IsFishingLoot", "GetNumLootItems", "GetLootSlotInfo", "GetLootSlotLink", "GetItemIcon", "GetItemInfo",
-        "Minimap", "GetItemSubClassInfo" } }
+        "Minimap", "GetItemSubClassInfo", "SetOverrideBindingClick", "ClearOverrideBindings" } }
 -- PaTiSuiteWindows: the window registry (frames only) of the embedded PaTiShared copies (AGENTS.md §3).
 files["**/Shared/Suite.lua"] = { globals = { "PaTiSuiteWindows" } }
 files["**/PaTiShared/src/Suite.lua"] = { globals = { "PaTiSuiteWindows" } }
