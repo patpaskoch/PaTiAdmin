@@ -13,7 +13,7 @@ abstraction · existing patterns before new patterns · no bloat.**
 One job per addon ([`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md#addon-responsibilities)): a feature goes into the addon whose job
 it is — never into two, never into PaTiAdmin (not a player addon).
 
-## 2. Repository layout (fourteen Git repos side by side: PaTiAdmin, PaTiShared, eleven gameplay addons, PaTiSuite)
+## 2. Repository layout (fifteen Git repos side by side: PaTiAdmin, PaTiShared, twelve gameplay addons, PaTiSuite)
 
 ```
 <code>/                                  (any folder, not a repo; e.g. ~/code)
@@ -30,6 +30,7 @@ it is — never into two, never into PaTiAdmin (not a player addon).
     ├── PaTiAuras/    own buffs, procs, tracking, group buffs, weapon imbues    /pa /patiauras
     ├── PaTiAlerts/   open problems reported by the others (optional receiver) /pal /palerts
     ├── PaTiSocial/   "Party Social": quick emote and message buttons         /psocial /patisocial
+    ├── PaTiFish/     simple fishing helper: cast, lure, pole/weapons, catch list /pfish /patifish
     ├── PaTiChronicle/ dungeon run chronicle: run report, best times, achievements (formerly PaTiCompetition) /pchron
     ├── PaTiSuite/    optional control panel: show/hide the others' windows   /psuite /patisuite
     └── PaTiTest/     developer self-check of the installed addons, never released /patitest

@@ -64,7 +64,7 @@ not a ticked test: the owner still confirms each `INGAME_TESTING.md` entry.
 
 ## In-game test files
 
-Every runtime addon (PaTiHeal, PaTiAuras, PaTiAggro, PaTiRota, PaTiGroup, PaTiLead, PaTiQuest, PaTiDungeon, PaTiSocial,
+Every runtime addon (PaTiHeal, PaTiAuras, PaTiAggro, PaTiRota, PaTiGroup, PaTiLead, PaTiQuest, PaTiDungeon, PaTiSocial, PaTiFish,
 PaTiChronicle, PaTiAlerts, PaTiSuite) has
 `INGAME_TESTING.md` in its repo root: the permanent, Git-tracked record of what was tested in the real WoW client, what
 is still open and what failed. PaTiShared has none (not a runtime addon). Not shipped in the release zip (`*.md`).
@@ -162,7 +162,7 @@ The release asset must work **without renaming, moving individual files or remov
    the addon's `INGAME_TESTING.md`. Only the owner's real-client confirmation may mark tests VERIFIED.
 
 **Independence test:** the fresh install test once for each addon alone (PaTiHeal, PaTiAuras, PaTiAggro, PaTiRota,
-PaTiGroup, PaTiLead, PaTiQuest, PaTiDungeon, PaTiAlerts, PaTiSocial, PaTiChronicle). **Combined test:** all together: every window opens, every slash command answers the right
+PaTiGroup, PaTiLead, PaTiQuest, PaTiDungeon, PaTiAlerts, PaTiSocial, PaTiFish, PaTiChronicle). **Combined test:** all together: every window opens, every slash command answers the right
 addon (`/ph /pa /paggro /prota /pg /ptg /plead /phq /pd /pal /psocial /pchron /psuite`), each settings window saves its own values, no Lua or taint error.
 
 

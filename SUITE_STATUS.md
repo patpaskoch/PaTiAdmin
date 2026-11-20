@@ -11,7 +11,7 @@ grüne CI heißt nicht, dass es im Spiel funktioniert. Release-Regeln, Beta-Krit
 Jedes Addon hat genau eine Aufgabe ([`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md#addon-responsibilities)):
 PaTiHeal = heilen · PaTiAuras = Buffs/Auren · PaTiAggro (früher PaTiTank) = Aggro für alle Rollen · PaTiRota = Rotation · PaTiGroup = Gruppe
 beobachten · PaTiLead = Gruppe führen · PaTiQuest = Quests · PaTiDungeon = Dungeon-Kontext · PaTiSocial =
-Kommunikation · PaTiChronicle = Chronik der Dungeon-Runs · PaTiAlerts = Probleme · PaTiSuite = Steuerfenster. PaTiShared und PaTiAdmin sind keine Spieler-Addons.
+Kommunikation · PaTiFish = Angeln · PaTiChronicle = Chronik der Dungeon-Runs · PaTiAlerts = Probleme · PaTiSuite = Steuerfenster. PaTiShared und PaTiAdmin sind keine Spieler-Addons.
 
 ## Release-Reife
 
@@ -27,6 +27,7 @@ Kommunikation · PaTiChronicle = Chronik der Dungeon-Runs · PaTiAlerts = Proble
 | PaTiDungeon | 0.1.0 + [Unreleased] | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ | Nein |
 | PaTiAlerts | 0.1.0 | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ nur `/pal test` | Nein |
 | PaTiSocial | 0.1.0 | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ teilweise (Laden, Icon, Buttons, Layout, Emote) | Nein |
+| PaTiFish | 0.1.0 (neu 2026-11-20) | ✅ | ⏳ | ✅ | ✅ | ⏳ | ⏳ | Nein |
 | PaTiChronicle | 0.2.0 (Run-Bericht, früher PaTiCompetition) | ✅ | ✅ | ⏳ | ✅ | ⏳ | ⏳ | Nein |
 | PaTiSuite | 0.1.0 (Steuerung) | ✅ | ✅ | ✅ | ✅ | ⏳ | ⏳ teilweise (Ein-/Ausblenden, Farben, Hover) | Nein |
 
@@ -114,6 +115,11 @@ im Spiel bestätigt 2026-10-02 für **8 von 11** (Heal, Auras, Tank, Quest, Dung
 - Tests: 14 Unit-Tests
 - Im Spiel bestätigt 2026-10-02: lädt ohne Fehler, Icon, Anzahl der Buttons, horizontal/vertikal, Emote-Button
 - Offen im Spiel: Nachrichten (Sagen/Gruppe), Einstellungen pro Button, PaTiSuite; `/psocial debug`-Ausgabe
+
+## PaTiFish (TOC 0.1.0) — Angeln (neu 2026-11-20)
+- Funktion: Minimap-Knopf Angel an / Waffen zurück; Leiste unten mitte mit Angel-Skill, Köder-Restzeit, Wurf-Balken und
+  den Knöpfen Auswerfen, Köder, Fänge, Waffen; Fang-Liste mit Anzahl; lauteres Platschen; Rahmen blinkt vor Wurf-Ende
+- Tests: 35 Unit-Tests · Offen im Spiel: alles (PT-FISH-001…013); Symbol vorläufig (selbst gezeichnet)
 
 ## PaTiChronicle (TOC 0.2.0) — Chronik der Dungeon-Runs (früher PaTiCompetition)
 - Funktion: „Jeder Run erzählt eine Geschichte“. Run-Bericht nach jedem Dungeon im Stil eines Game-Results-Screens
