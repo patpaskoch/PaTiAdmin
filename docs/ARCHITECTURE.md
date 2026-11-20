@@ -27,6 +27,7 @@ Addons complement each other but never depend on each other (AGENTS.md §3).
 | **PaTiQuest** | Quest companion: the selected quest and its objectives | |
 | **PaTiDungeon** | Dungeon context: instance name and type, hand-drawn map per instance (owner 2026-10-17; no recorded map: the client hides the position in dungeons, WOW_API_COMPAT) (later: bosses, dungeon quests, role notes, loot wishlist). No group or combat lines (owner 2026-10-17: PaTiGroup, WoW) | |
 | **PaTiSocial** | Quick communication: emote and short message buttons | chat history, friends/guild/BNet, voice (never) |
+| **PaTiFish** (new 2026-11-20) | Fishing helper: minimap button pole on / weapons back, fishing bar (cast, lure, catches, weapons), catch list, louder splash while fishing, flashing frame near the end of a cast | automatic casting, reeling in or equipping (never); professions other than fishing |
 | **PaTiChronicle** (new 2026-10-18 as PaTiCompetition, renamed 2026-10-19) | Chronicle of dungeon runs: run clock, run report (overview, my performance, timeline), best times per dungeon and group, run history, achievements for teamplay, survival and personal bests; display only | dungeon help and map (→ Dungeon), live threat (→ Aggro), quests (→ Quest), a damage meter, ranking players against each other |
 | **PaTiAlerts** | One window for currently relevant problems (optional receiver); rows whose producer sends a `cast` are clickable out of combat (PaTiAuras buffs, 2026-10-14) | producing alerts itself |
 | **PaTiSuite** | Optional control panel: show/hide/overview of the windows | gameplay logic (never) |
@@ -85,6 +86,7 @@ configuration that is hard to rebuild is kept on purpose; where a list is reset,
 | PaTiRota | all settings | the skill slots, position |
 | PaTiLead | all settings incl. marker order | the local note, position |
 | PaTiSocial | all settings and the button actions (six default buttons, PT-SOCIAL-053) | position |
+| PaTiFish | all settings | the catch list, the remembered weapons, a pending sound backup, position |
 | PaTiChronicle | all settings (language, scale, lock, theme, opacity) | the test results (`/pchron clear`), position |
 | PaTiAlerts | all settings incl. source/priority filters | position |
 | PaTiSuite | all settings and the remembered visibility | position |
@@ -252,6 +254,19 @@ configuration that is hard to rebuild is kept on purpose; where a list is reset,
 - `PaTiSocialDB`, schema 1: position, locked, collapsed, scale, language, opacity, layout (horizontal|vertical),
   slotCount (4/6/8/10/12), slots = 12 action keys (`NONE` = empty). No secure frames, no test mode.
 - Slash `/psocial`, `/patisocial`.
+
+### PaTiFish 0.1.0 — simple fishing helper (new 2026-11-20)
+- Files: `Shared/` → `Locales/` → `Logic.lua` (settings, migration, lures, weapon swap, catches, cast timing, sound
+  plan; pure, tested) → `Catches.lua` (catch list window, loot counting) → `PaTiFish.lua` (adapters, bar, minimap
+  button, settings, commands, events) · `Bindings.xml`.
+- Secure buttons, attributes only out of combat: `PaTiFishCast` (spell Fishing), `PaTiFishLure` (macro `/use item:<lure>`
+  + `/use 16`), `PaTiFishGear` and `PaTiFishMinimap` (macro `/equip` the pole or the remembered weapons; `PreClick`
+  remembers the weapons). One click = one action.
+- Sound: while fishing (setting) the SFX/music/ambience CVars are boosted; the player's values are saved in
+  `soundBackup` first and restored 15 s after the last cast and on the next login.
+- `PaTiFishDB`, schema 1: position, look, loudSplash, flashWarning, minimapButton, minimapAngle, catches
+  (itemID → { name, count }), weapons ({ main, off }), soundBackup. Slash `/pfish`, `/patifish`.
+- WoW sends no bite event (as far as known): `/pfish diagnose` lists the events of one cast to check this client.
 
 ### PaTiChronicle 0.2.0 — "Every run tells a story" (formerly PaTiCompetition)
 - Files: `Shared/` → `Locales/` → `Logic.lua` (settings, migration, probe, clock) → `Run.lua` (run rules: start,

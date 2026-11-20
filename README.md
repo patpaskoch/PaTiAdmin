@@ -20,6 +20,7 @@ sind optionale Ergänzungen.
 | [PaTiQuest](https://github.com/patpaskoch/PaTiQuest) | **Quests:** ausgewählte Quest und ihre Ziele |
 | [PaTiDungeon](https://github.com/patpaskoch/PaTiDungeon) | **Dungeon-Kontext:** Instanz-, Gruppen- und Kampfstatus |
 | [PaTiSocial](https://github.com/patpaskoch/PaTiSocial) | **Kommunikation:** „Party Social“, Schnellbuttons für Emotes und kurze Nachrichten |
+| [PaTiFish](https://github.com/patpaskoch/PaTiFish) | **Angeln:** Minimap-Knopf Angel an / Waffen zurück, Leiste mit Auswerfen und Köder, Fang-Liste, lauteres Platschen |
 | [PaTiChronicle](https://github.com/patpaskoch/PaTiChronicle) | **Chronik:** „Jeder Run erzählt eine Geschichte“ – Run-Bericht nach dem Dungeon (Übersicht, Meine Leistung, Verlauf), Bestzeiten, Erfolge für Teamplay; früher PaTiCompetition |
 | [PaTiAlerts](https://github.com/patpaskoch/PaTiAlerts) | **Probleme:** zentrales Fenster für offene Probleme aus PaTiAggro, PaTiAuras, PaTiHeal (optional) |
 

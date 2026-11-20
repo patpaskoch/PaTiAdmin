@@ -20,7 +20,7 @@ without big addon packs.
 |---|---|---|
 | **1** | **PaTiHeal, PaTiAuras, PaTiDungeon, PaTiSuite, PaTiAggro** | most main paths verified (Heal 22, Auras 22, Dungeon 20 tests, Dungeon without any FAIL); Heal + Auras are the most useful for groups; Dungeon's hand-drawn map is unique; PaTiSuite ties the family together and shows the themes; PaTiAggro added on the owner's wish (2026-11-03) — it is released only when its main paths pass on the live client |
 | **2** | PaTiChronicle, PaTiRota, PaTiSocial, PaTiGroup | Chronicle is the showcase ("Every run tells a story") but has no verified test yet; Rota has two open FAILs; Social and Group need more main-path tests |
-| **3** | PaTiLead, PaTiQuest, PaTiAlerts | few verified tests so far; Lead has open FAILs |
+| **3** | PaTiLead, PaTiQuest, PaTiAlerts, PaTiFish | few verified tests so far; Lead has open FAILs; PaTiFish is new (2026-11-20), no test yet |
 
 A wave starts when every addon in it meets the beta gate. Wave 2 follows about four weeks after wave 1 at the earliest,
 so that bug reports of wave 1 are handled first.
