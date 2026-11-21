@@ -87,6 +87,10 @@ files["**/PaTiTest/**/*.lua"] = { globals = { "PaTiTestDB", "SLASH_PATITEST1" },
         -- /patitest totem (owner 2026-11-21, F27): the player's own totem slots and whether /castsequence exists.
         "GetTotemInfo", "GetTotemTimeLeft", "DestroyTotem", "MAX_TOTEMS", "SLASH_CASTSEQUENCE1", "SecureCmdList" } }
 
+-- PaTiTotem (owner 2026-11-21, F27): the player's own totems, display only.
+files["**/PaTiTotem/**/*.lua"] = { globals = { "PaTiTotemDB", "SLASH_PATITOTEM1", "SLASH_PATITOTEM2" },
+    read_globals = { "GetTotemInfo" } }
+
 -- Specs run under tools/lua/test.lua (busted-compatible); mocks install WoW functions as globals.
 files["**/tests/**/*.lua"] = { std = "+busted", globals = { "GetLocale", "InCombatLockdown" } }
 
