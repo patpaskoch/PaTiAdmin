@@ -92,6 +92,9 @@ explicit test recorded) · **assumed** (not yet used/tested).
 | Combat-log `SPELL_INTERRUPT` / `PARTY_KILL` | not reachable: the combat log is forbidden (see above) | PT-COMP-025 retired |
 | Fonts `GameFontNormalHuge`, `GameFontHighlightHuge`, `GameFontHighlightLarge` | assumed (PaTiChronicle end screen) | looked up in `_G`, missing → next smaller font. PT-COMP-020 |
 | `UnitGroupRolesAssigned` | in use (PaTiHeal, PaTiLead, PaTiGroup) | may return NONE without LFG roles (PaTiGroup then shows "without role", never guesses); checked for secret values first |
+| `GetTotemInfo(slot)`, `GetTotemTimeLeft(slot)`, `DestroyTotem`, `MAX_TOTEMS`, `*_TOTEM_SLOT` | **verified 2026-11-21** (owner, `/patitest totem`, build 16001) | all present; MAX_TOTEMS 4; FIRE=1, EARTH=2, WATER=3, AIR=4; GetTotemInfo gives name, start, duration (Searing 30 s, Stoneskin II 300 s). Right after placing, the name reads "Unbekannt" for ~0.1 s, then the real name follows (same start) |
+| `PLAYER_TOTEM_UPDATE` (arg: slot) on place, expiry and destruction | **place + expiry verified 2026-11-21** (owner log: expiry 0.2 s after start + duration) · destruction still to verify (PT-TEST-023) | "destroyed" = slot empties well before start + duration |
+| `/castsequence` (also as secure button `macrotext`) | command exists, verified 2026-11-21 (`SLASH_CASTSEQUENCE1`) · behaviour with totems still to verify (PT-TEST-026) | planned totem-set key |
 | `issecretvalue` | assumed present only in clients with restricted values | code treats a missing function as "nothing is secret" |
 | `BackdropTemplate` | in use (all) | |
 | `GLOBAL_MOUSE_DOWN` event | assumed (PaTiShared popup, `pcall`-registered) | popup still closes by click/ESC without it |

@@ -107,13 +107,22 @@ still needing an in-game test stay here, marked "FIXED IN CODE … awaiting in-g
   needs a place in the UI (menu or buttons) and a decision which windows belong to which preset. Not built; owner
   decides the presets first.
 
-### F27 · PaTiAuras: totem tracker (possible later feature) — low · not planned
-- Owner decision 2026-10-02: PaTiAuras never watches totem/ground auras (PaTiAuras AGENTS.md) — a member outside the
-  radius would read as "buff missing" and produce false alerts.
-- If ever built, as its own small feature that tracks the **totem itself**: active / not active, remaining time,
-  expired, perhaps destroyed (only if the Forever client reports that reliably — check the totem APIs and events in
-  WOW_API_COMPAT first). Never the group's aura state, never "recast the totem" advice from members' auras, never a cast.
-- Needs an owner decision and an in-game API check first. Not part of the beta.
+### F27 · PaTiTotem: own totem addon (planned, after wave 1) — low · planned
+- Owner decision 2026-10-02 still holds: PaTiAuras never watches totem/ground auras (PaTiAuras AGENTS.md) — a member
+  outside the radius would read as "buff missing" and produce false alerts.
+- Owner decision 2026-11-21: totems get their **own addon, PaTiTotem**, that tracks the **totem itself**:
+  1. Window with four fields (Earth, Fire, Water, Air): icon, remaining time (bar + seconds), warning shortly before
+     it runs out, "destroyed" when it ends well before its time.
+  2. **Totem-set key**: the player picks one totem per element (a few named sets, e.g. Solo / Group); one secure
+     button (`/castsequence` macrotext, set out of combat only) places the *next* totem of the set per key press —
+     still one press = one cast, four presses = four totems; resets after combat or a short pause. WoW allows no
+     multi-cast per press. It cannot skip totems that are still standing (the button may not change in combat).
+     Sets switch only out of combat. Needs an AGENTS.md §8 exception written when it is built.
+  3. Optional, owner still decides: click on a field recasts only that totem (same pattern as PaTiAuras#9).
+- Never: the group's aura state, "recast the totem" advice from members' auras, range checks of members.
+- **Step 1 (in progress):** `/patitest totem` in PaTiTest checks `GetTotemInfo`, `GetTotemTimeLeft`,
+  `PLAYER_TOTEM_UPDATE`, `MAX_TOTEMS`, the slot constants and `/castsequence`, and logs placed / expired / early-gone
+  totems (PaTiTest PT-TEST-020…). Results go into WOW_API_COMPAT; only then the addon is built. Not part of wave 1.
 
 ### F29 · PaTiAuras: tracking for classes without a profile, more tracking types — low
 - Status 2026-10-02: profession tracking (Find Herbs, Find Minerals, Find Treasure) is added to every *class profile*
