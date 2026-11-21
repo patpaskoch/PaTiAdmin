@@ -57,7 +57,7 @@ files["**/PaTiSocial/**/*.lua"] = { globals = { "PaTiSocialDB", "SLASH_PATISOCIA
 -- sound CVars are changed only while fishing (setting "Louder splash") and restored afterwards; SoftTargetInteract
 -- only by the player's click on its setting.
 files["**/PaTiFish/**/*.lua"] = { globals = { "PaTiFishDB", "SLASH_PATIFISH1", "SLASH_PATIFISH2" },
-    read_globals = { "GetNumSkillLines", "GetSkillLineInfo", "C_Container", "GetContainerNumSlots",
+    read_globals = { "PaTiAlertsAPI", "GetNumSkillLines", "GetSkillLineInfo", "C_Container", "GetContainerNumSlots",
         "GetContainerItemID", "GetItemCount", "GetBindingText", "GetCVar", "SetCVar", "UnitChannelInfo",
         "IsFishingLoot", "GetNumLootItems", "GetLootSlotInfo", "GetLootSlotLink", "GetItemIcon", "GetItemInfo",
         "Minimap", "GetItemSubClassInfo", "SetOverrideBindingClick", "ClearOverrideBindings" } }
