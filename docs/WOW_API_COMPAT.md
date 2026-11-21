@@ -92,6 +92,9 @@ explicit test recorded) · **assumed** (not yet used/tested).
 | Combat-log `SPELL_INTERRUPT` / `PARTY_KILL` | not reachable: the combat log is forbidden (see above) | PT-COMP-025 retired |
 | Fonts `GameFontNormalHuge`, `GameFontHighlightHuge`, `GameFontHighlightLarge` | assumed (PaTiChronicle end screen) | looked up in `_G`, missing → next smaller font. PT-COMP-020 |
 | `UnitGroupRolesAssigned` | in use (PaTiHeal, PaTiLead, PaTiGroup) | may return NONE without LFG roles (PaTiGroup then shows "without role", never guesses); checked for secret values first |
+| `GetTotemInfo(slot)`, `GetTotemTimeLeft(slot)`, `MAX_TOTEMS`, `*_TOTEM_SLOT` | to verify (F27, `/patitest totem`) | planned PaTiTotem; slot ↔ element mapping still unknown in this client |
+| `PLAYER_TOTEM_UPDATE` (arg: slot) on place, expiry and destruction | to verify (F27, `/patitest totem`) | "destroyed" = slot empties well before start + duration; must be reliable before PaTiTotem shows it |
+| `/castsequence` (also as secure button `macrotext`) | to verify (F27) | planned totem-set key; `/patitest totem` only checks that the command exists |
 | `issecretvalue` | assumed present only in clients with restricted values | code treats a missing function as "nothing is secret" |
 | `BackdropTemplate` | in use (all) | |
 | `GLOBAL_MOUSE_DOWN` event | assumed (PaTiShared popup, `pcall`-registered) | popup still closes by click/ESC without it |
