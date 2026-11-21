@@ -52,7 +52,7 @@ Architecture and data flow: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 - Small duplication between addons is acceptable when it keeps them independent.
   Shared pattern ≠ shared runtime dependency.
 - Owner-approved exception (2026-09-29): **`PaTiAlertsAPI`**, the versioned global of PaTiAlerts, may be *read* by
-  producers (PaTiAggro, formerly PaTiTank; PaTiAuras, PaTiHeal) — only as `local api = _G.PaTiAlertsAPI; if api and api.version == 1 …`,
+  producers (PaTiAggro, formerly PaTiTank; PaTiAuras, PaTiHeal; PaTiFish since 2026-11-21) — only as `local api = _G.PaTiAlertsAPI; if api and api.version == 1 …`,
   calls wrapped in `pcall`, alerts re-sent on every normal refresh (no load-order assumptions). Without PaTiAlerts
   nothing changes; PaTiAlerts never reads the producers.
 - Owner-approved (2026-09-30): **`PaTiSuiteWindows`** — `[addonName] = main window frame`, written by every embedded
